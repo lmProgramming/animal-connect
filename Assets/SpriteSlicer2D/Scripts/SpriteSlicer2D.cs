@@ -892,8 +892,8 @@ public static class SpriteSlicer2D
 		// Child sprites should inherit the rigid body behaviour of their parents
 		Rigidbody2D childRigidBody = slicedSprite.GetComponent<Rigidbody2D>();
 		childRigidBody.mass = parentRigidBody.mass * (childArea/parentArea);
-		childRigidBody.drag = parentRigidBody.drag;
-		childRigidBody.angularDrag = parentRigidBody.angularDrag;
+		childRigidBody.linearDamping = parentRigidBody.linearDamping;
+		childRigidBody.angularDamping = parentRigidBody.angularDamping;
 		childRigidBody.gravityScale = parentRigidBody.gravityScale;
 		childRigidBody.constraints = parentRigidBody.constraints;
 
@@ -901,7 +901,7 @@ public static class SpriteSlicer2D
 		childRigidBody.interpolation = parentRigidBody.interpolation;
 		childRigidBody.sleepMode = parentRigidBody.sleepMode;
 		childRigidBody.collisionDetectionMode = parentRigidBody.collisionDetectionMode;
-		childRigidBody.velocity = parentRigidBody.velocity;
+		childRigidBody.linearVelocity = parentRigidBody.linearVelocity;
 		childRigidBody.angularVelocity = parentRigidBody.angularVelocity;
 
 		polygonCollider = slicedSprite.GetComponent<PolygonCollider2D>();
