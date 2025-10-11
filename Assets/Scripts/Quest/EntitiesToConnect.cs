@@ -1,16 +1,14 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-[System.Serializable]
-public class EntitiesToConnect
+namespace Quest
 {
-    public List<int> entitiesIDs;
-    // this means that this is only a group of objects that don't need to be connected together, but must be unconnected to something
-    public bool onlyAClump = false;
-
-    public EntitiesToConnect() 
+    [Serializable]
+    public class EntitiesToConnect
     {
-        entitiesIDs = new List<int>();
+        public List<int> entitiesIDs = new();
+
+        // this means that this is only a group of objects that don't need to be connected together, but must be unconnected to something
+        public bool onlyAClump;
     }
 }

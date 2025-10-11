@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-[System.Serializable]
-public class Entity
+namespace Solver
 {
-    public int entityIndex;
-    public PathPoint pathPoint;
-
-    public Entity(int entityIndex, PathPoint pathPoint)
+    [Serializable]
+    public class Entity
     {
-        this.entityIndex = entityIndex;
-        this.pathPoint = pathPoint;
+        public int entityIndex;
+        public PathPoint pathPoint;
+
+        public Entity(int entityIndex, PathPoint pathPoint)
+        {
+            this.entityIndex = entityIndex;
+            this.pathPoint = pathPoint;
+        }
     }
 }

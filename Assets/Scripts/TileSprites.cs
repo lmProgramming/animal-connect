@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileSprites : MonoBehaviour
@@ -14,7 +12,7 @@ public class TileSprites : MonoBehaviour
                 return sprites[0];
             case Tile.TileType.TwoCurves:
                 return sprites[1];
-            case Tile.TileType.TIntersection:
+            case Tile.TileType.Intersection:
                 return sprites[2];
             case Tile.TileType.XIntersection:
                 return sprites[3];

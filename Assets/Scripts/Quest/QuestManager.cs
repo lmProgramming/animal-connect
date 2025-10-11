@@ -1,32 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour
+namespace Quest
 {
-    public float difficulty;
-
-    private void Start()
+    public class QuestManager : MonoBehaviour
     {
-        difficulty = Random.value * Random.value;
+        public float difficulty;
 
-        GenerateQuest();
-    }
-
-    void GenerateQuest()
-    {        
-        Quest quest = QuestGenerator.GenerateQuest(difficulty);
-
-        GameManager.Instance.SetupQuest(quest);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
+        private void Start()
         {
-            FindObjectOfType<QuestVisualizer>().DeleteVisualization();
+            difficulty = Random.value * Random.value;
 
             GenerateQuest();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                FindAnyObjectByType<QuestVisualizer>().DeleteVisualization();
+
+                GenerateQuest();
+            }
+        }
+
+        private void GenerateQuest()
+        {
+            var quest = QuestGenerator.GenerateQuest(difficulty);
+
+            GameManager.Instance.SetupQuest(quest);
         }
     }
 }

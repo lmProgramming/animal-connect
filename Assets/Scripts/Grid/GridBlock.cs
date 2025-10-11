@@ -1,19 +1,21 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-[System.Serializable]
-public class GridBlock
+namespace Grid
 {
-    public List<List<int>> connections;
-
-    public GridBlock()
+    [Serializable]
+    public class GridBlock
     {
-        connections = new List<List<int>>();
-    }
+        public List<List<int>> Connections;
 
-    public GridBlock(List<List<int>> connections)
-    {
-        this.connections = connections;
+        public GridBlock()
+        {
+            Connections = new List<List<int>>();
+        }
+
+        public GridBlock(List<List<int>> connections)
+        {
+            Connections = connections;
+        }
     }
 }

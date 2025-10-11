@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using Grid;
+using Other;
 using UnityEngine;
 
 public sealed class TileDragger : MonoBehaviour
@@ -9,11 +8,9 @@ public sealed class TileDragger : MonoBehaviour
     public float timeDraggedATile;
     public Tile draggedTile;
 
-    [SerializeField]
-    float hoverBias = 0.1f;
+    [SerializeField] private float hoverBias = 0.1f;
 
-    [SerializeField]
-    Grid grid;
+    [SerializeField] private MyGrid grid;
 
     private void Awake()
     {
@@ -21,18 +18,15 @@ public sealed class TileDragger : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (draggedTile != null)
         {
-            if (timeDraggedATile > 0.05f)
-            {
-                draggedTile.transform.position = GameInput.WorldPointerPosition;
-            }
+            if (timeDraggedATile > 0.05f) draggedTile.transform.position = GameInput.WorldPointerPosition;
 
             Vector2 tilePosition = draggedTile.transform.position;
 
-            GridSlot gridSlot = FindClosestSlot(tilePosition);
+            var gridSlot = FindClosestSlot(tilePosition);
 
             tilePosition = gridSlot.GetPosition();
             draggedTile.transform.position = GetTileHoveringPostion(GameInput.WorldPointerPosition, gridSlot);
@@ -41,10 +35,7 @@ public sealed class TileDragger : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                if (timeDraggedATile < 0.2f)
-                {
-                    draggedTile.Rotate();
-                }
+                if (timeDraggedATile < 0.2f) draggedTile.Rotate();
 
                 grid.PlaceTile(draggedTile, tilePosition, gridSlot);
 
@@ -55,47 +46,42 @@ public sealed class TileDragger : MonoBehaviour
         }
     }
 
-    Vector2 GetTileHoveringPostion(Vector2 dragPosition, GridSlot gridSlot)
+    private Vector2 GetTileHoveringPostion(Vector2 dragPosition, GridSlot gridSlot)
     {
-        Vector2 gridSlotPositon = gridSlot.GetPosition();
+        var gridSlotPositon = gridSlot.GetPosition();
 
         return gridSlotPositon + (dragPosition - gridSlotPositon) * 0.1f + new Vector2(0, hoverBias);
     }
 
-    void SwapTilesVisually(GridSlot newGridSlot, Tile draggedTile)
+    private void SwapTilesVisually(GridSlot newGridSlot, Tile draggedTile)
     {
-        Tile otherTile = newGridSlot.GetTile();
+        var otherTile = newGridSlot.GetTile();
 
-        if (otherTile == draggedTile)
-        {
-            return;
-        }
+        if (otherTile == draggedTile) return;
 
-        GridSlot oldGridSlot = draggedTile.slot;
+        var oldGridSlot = draggedTile.slot;
 
         otherTile.transform.position = oldGridSlot.GetPosition() + new Vector2(0, hoverBias);
         otherTile.ResetPositionAfterXFrames(1);
     }
-    
+
     public GridSlot FindClosestSlot(Vector2 position)
     {
-        GridSlot[,] slotsMap = grid.gridSlotsMap;
+        var slotsMap = grid.GridSlotsMap;
 
-        float closestDistance = float.PositiveInfinity;
+        var closestDistance = float.PositiveInfinity;
         GridSlot closestSlot = null;
 
-        for (int x = -1; x <= 1; x++)
+        for (var x = -1; x <= 1; x++)
+        for (var y = -1; y <= 1; y++)
         {
-            for (int y = -1; y <= 1; y++)
+            var distance = Vector2.Distance(new Vector2(x, y), position);
+            if (distance < closestDistance)
             {
-                float distance = Vector2.Distance(new Vector2(x, y), position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
+                closestDistance = distance;
 
-                    Vector2Int gridPosition = new Vector2Int(x + 1, 1 - y);
-                    closestSlot = slotsMap[gridPosition.x, gridPosition.y];
-                }
+                var gridPosition = new Vector2Int(x + 1, 1 - y);
+                closestSlot = slotsMap[gridPosition.x, gridPosition.y];
             }
         }
 

@@ -1,90 +1,86 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Solver;
 using UnityEngine;
 
-public class GridSlot : MonoBehaviour
+namespace Grid
 {
-    [SerializeField]
-    Tile tile;
-    public PathPoint[] pathPoints = new PathPoint[4];
-
-    public Tile GetTile() { return tile; }
-
-    public void UpdateTile(Tile newTile)
+    public class GridSlot : MonoBehaviour
     {
-        newTile.slot = this;
-        tile = newTile;
-    }
+        [SerializeField] private Tile tile;
+        public PathPoint[] pathPoints = new PathPoint[4];
 
-    public void RemovedTile()
-    {
-        tile.slot = null;
-        tile = null;
-    }
+        [SerializeField] private Vector2Int gridPosition;
+        [SerializeField] private Vector2 position;
 
-    [SerializeField]
-    Vector2Int gridPosition;
-    [SerializeField]
-    Vector2 position;
-
-    private void Start()
-    {
-        gridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        position = transform.position;
-    }
-
-    public Vector2Int GetGridPosition()
-    {
-        return gridPosition;
-    }
-
-    public Vector2 GetPosition()
-    {
-        return position;
-    }
-
-    public void UpdateConnections(Grid grid)
-    {
-        if (tile != null)
+        private void Start()
         {
-            List<List<int>> connectionsCopy = new List<List<int>>();
-            for (int i = 0; i < tile.GetGridBlock().connections.Count; i++)
+            gridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+            position = transform.position;
+        }
+
+        public Tile GetTile()
+        {
+            return tile;
+        }
+
+        public void UpdateTile(Tile newTile)
+        {
+            newTile.slot = this;
+            tile = newTile;
+        }
+
+        public void RemovedTile()
+        {
+            tile.slot = null;
+            tile = null;
+        }
+
+        public Vector2Int GetGridPosition()
+        {
+            return gridPosition;
+        }
+
+        public Vector2 GetPosition()
+        {
+            return position;
+        }
+
+        public void UpdateConnections(MyGrid grid)
+        {
+            if (tile != null)
             {
-                connectionsCopy.Add(new List<int>());
-                for (int j = 0; j < tile.GetGridBlock().connections[i].Count; j++)
+                var connectionsCopy = new List<List<int>>();
+                for (var i = 0; i < tile.GetGridBlock().Connections.Count; i++)
                 {
-                    connectionsCopy[i].Add((tile.GetGridBlock().connections[i][j] + tile.rotations) % 4);
-                }
-            }
-
-            foreach (var connection in connectionsCopy)
-            {
-                int pathNum = pathPoints[connection[0]].pathNum;
-
-                // Debug.Log(connection[0]);
-
-                if (pathNum == -1)
-                {
-                    pathNum = grid.GetNewPathNumber();
-                    pathPoints[connection[0]].UpdatePathNum(pathNum);
+                    connectionsCopy.Add(new List<int>());
+                    for (var j = 0; j < tile.GetGridBlock().Connections[i].Count; j++)
+                        connectionsCopy[i].Add((tile.GetGridBlock().Connections[i][j] + tile.rotations) % 4);
                 }
 
-                pathPoints[connection[0]].RaiseConnectionsNumber();
-
-                for (int i = 1; i < connection.Count; i++)
+                foreach (var connection in connectionsCopy)
                 {
-                    // Debug.Log(connection[i]);
+                    var pathNum = pathPoints[connection[0]].pathNum;
 
-                    pathPoints[connection[i]].RaiseConnectionsNumber();
+                    // Debug.Log(connection[0]);
 
-                    if (pathPoints[connection[i]].pathNum >= 0 && pathPoints[connection[i]].pathNum != pathNum)
+                    if (pathNum == -1)
                     {
-                        grid.MergePaths(pathNum, pathPoints[connection[i]].pathNum);
+                        pathNum = grid.GetNewPathNumber();
+                        pathPoints[connection[0]].UpdatePathNum(pathNum);
                     }
-                    else
+
+                    pathPoints[connection[0]].RaiseConnectionsNumber();
+
+                    for (var i = 1; i < connection.Count; i++)
                     {
-                        pathPoints[connection[i]].UpdatePathNum(pathNum);
+                        // Debug.Log(connection[i]);
+
+                        pathPoints[connection[i]].RaiseConnectionsNumber();
+
+                        if (pathPoints[connection[i]].pathNum >= 0 && pathPoints[connection[i]].pathNum != pathNum)
+                            grid.MergePaths(pathNum, pathPoints[connection[i]].pathNum);
+                        else
+                            pathPoints[connection[i]].UpdatePathNum(pathNum);
                     }
                 }
             }

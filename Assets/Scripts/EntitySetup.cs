@@ -1,21 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class EntitySetup : MonoBehaviour
 {
-    [SerializeField]
-    EntitySprites sprites;
+    [SerializeField] private EntitySprites sprites;
 
-    [SerializeField]
-    SpriteRenderer[] entitiesSpriteRenderers = new SpriteRenderer[12];
+    [SerializeField] private Image[] entitiesSpriteRenderers = new Image[12];
 
-    [ExecuteInEditMode]
     private void Start()
     {
-        for (int i = 0; i < entitiesSpriteRenderers.Length; i++)
+        for (var i = 0; i < entitiesSpriteRenderers.Length; i++)
         {
+            Debug.Log(entitiesSpriteRenderers[i]);
             entitiesSpriteRenderers[i].sprite = sprites.sprites[i];
         }
     }

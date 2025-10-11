@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using Grid;
+using Solver;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,33 +8,28 @@ public sealed class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField]
-    Entity[] entities;
+    [SerializeField] private Entity[] entities;
 
-    [SerializeField]
-    Quest quest;
+    [SerializeField] private MyGrid grid;
 
-    [SerializeField]
-    Grid grid;
+    [SerializeField] private TilesSetup tilesSetup;
 
-    [SerializeField]
-    TilesSetup tilesSetup;
+    [field: SerializeField]
+    public Quest.Quest Quest { get; private set; }
 
-    public Quest Quest { get => quest; private set => quest = value; }
-
-    void Awake()
+    private void Awake()
     {
         Instance = this;
     }
 
-    public void SetupQuest(Quest quest)
+    public void SetupQuest(Quest.Quest quest)
     {
         Quest = quest;
 
         StartPuzzle();
     }
 
-    public void StartPuzzle()
+    private void StartPuzzle()
     {
         UIManager.Instance.questVisualizer.GenerateVisualization(Quest);
 
@@ -44,21 +38,14 @@ public sealed class GameManager : MonoBehaviour
 
     public bool CheckIfWon()
     {
-        if (grid.ChechIfValidPaths())
-        {
-            return Quest.CheckIfCompleted(entities);
-        }
-        return false;
+        return grid.ChechIfValidPaths() && Quest.CheckIfCompleted(entities);
     }
 
     public void MoveMade()
     {
         grid.RecalculatePathConnections();
 
-        if (CheckIfWon())
-        {
-            Won();
-        }
+        if (CheckIfWon()) Won();
     }
 
     public void Won()
@@ -68,7 +55,7 @@ public sealed class GameManager : MonoBehaviour
         ReloadScene();
     }
 
-    public void ReloadScene()
+    private static void ReloadScene()
     {
         SceneManager.LoadScene("MainGame");
     }

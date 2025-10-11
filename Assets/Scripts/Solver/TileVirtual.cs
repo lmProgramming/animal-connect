@@ -1,61 +1,64 @@
-using System.Collections;
 using System.Collections.Generic;
+using Grid;
 using UnityEngine;
 
-public class TileVirtual
+namespace Solver
 {
-    public Vector2 restingPosition;
-    public GridBlock gridBlock;
-    public GridSlot slot;
-    public int rotations;
-
-    public Tile.TileType tileType;
-
-    public TileVirtual(Tile.TileType type)
+    public class TileVirtual
     {
-        tileType = type;
+        public readonly GridBlock GridBlock;
 
-        gridBlock = new GridBlock();
+        public readonly Tile.TileType TileType;
+        public Vector2 RestingPosition;
+        public int Rotations;
+        public GridSlot Slot;
 
-        if (type == Tile.TileType.Curve)
+        public TileVirtual(Tile.TileType type)
         {
-            gridBlock.connections.Add(new List<int>() { 1, 2 });
+            TileType = type;
+
+            GridBlock = new GridBlock();
+
+            if (type == Tile.TileType.Curve)
+            {
+                GridBlock.Connections.Add(new List<int> { 1, 2 });
+            }
+            else if (type == Tile.TileType.TwoCurves)
+            {
+                GridBlock.Connections.Add(new List<int> { 0, 3 });
+                GridBlock.Connections.Add(new List<int> { 1, 2 });
+            }
+            else if (type == Tile.TileType.Intersection)
+            {
+                GridBlock.Connections.Add(new List<int> { 0, 1, 2 });
+            }
+            else if (type == Tile.TileType.XIntersection)
+            {
+                GridBlock.Connections.Add(new List<int> { 0, 1, 2, 3 });
+            }
+            else if (type == Tile.TileType.Bridge)
+            {
+                GridBlock.Connections.Add(new List<int> { 0, 2 });
+                GridBlock.Connections.Add(new List<int> { 1, 3 });
+            }
         }
-        else if (type == Tile.TileType.TwoCurves)
+
+        public int Rotate()
         {
-            gridBlock.connections.Add(new List<int>() { 0, 3 });
-            gridBlock.connections.Add(new List<int>() { 1, 2 });
+            Rotations += 1;
+
+            return Rotations;
         }
-        else if (type == Tile.TileType.TIntersection)
-        {
-            gridBlock.connections.Add(new List<int>() { 0, 1, 2 });
-        }
-        else if (type == Tile.TileType.XIntersection)
-        {
-            gridBlock.connections.Add(new List<int>() { 0, 1, 2, 3 });
-        }
-        else if (type == Tile.TileType.Bridge)
-        {
-            gridBlock.connections.Add(new List<int>() { 0, 2 });
-            gridBlock.connections.Add(new List<int>() { 1, 3 });
-        }
+
+        //void OnMouseDown()
+        //{
+        //    if (slot != null)
+        //    {
+        //        slot.tile = null;
+        //        slot = null;
+        //        GameManager.Instance.ResetPathConnections();
+        //    }
+        //    TileDragger.Instance.GrabThisTile(this);
+        //}
     }
-
-    public int Rotate()
-    {
-        rotations += 1;
-
-        return rotations;
-    }
-
-    //void OnMouseDown()
-    //{
-    //    if (slot != null)
-    //    {
-    //        slot.tile = null;
-    //        slot = null;
-    //        GameManager.Instance.ResetPathConnections();
-    //    }
-    //    TileDragger.Instance.GrabThisTile(this);
-    //}
 }

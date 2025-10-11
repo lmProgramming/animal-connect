@@ -1,629 +1,544 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
+using Other;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestVisualizer : MonoBehaviour
+namespace Quest
 {
-    int[] entityIndexesPriority = new int[12] { 4, 7, 1, 11, 8, 10, 3, 9, 5, 6, 2, 0 };
-
-    [SerializeField]
-    EntitySprites sprites;
-    [SerializeField]
-    GameObject arrowPrefab;
-    [SerializeField]
-    GameObject arrowDisconnectPrefab;
-
-    [SerializeField]
-    int distanceBetweenPaths;
-    [SerializeField]
-    int distanceBetweenPathEntities;
-    [SerializeField]
-    int distanceBetweenObjectsInClumps;
-
-    [SerializeField]
-    GameObject entityPrefab;
-
-    [SerializeField]
-    Transform questVisualizationHolder;
-
-    PathSorter pathSorter = new();
-
-    class Path
+    public class QuestVisualizer : MonoBehaviour
     {
-        public int arrowEntityID { get; private set; }
+        [SerializeField] private EntitySprites sprites;
+        [SerializeField] private GameObject arrowPrefab;
+        [SerializeField] private GameObject arrowDisconnectPrefab;
 
-        public List<int> otherEntitiesClump;
+        [SerializeField] private int distanceBetweenPaths;
+        [SerializeField] private int distanceBetweenPathEntities;
+        [SerializeField] private int distanceBetweenObjectsInClumps;
 
-        public List<Path> inferiorPathsToDisconnect = new List<Path>(); 
-        public List<Path> superiorPathsToDisconnect = new List<Path>();
+        [SerializeField] private GameObject entityPrefab;
 
-        public GameObject representantObject;
+        [SerializeField] private Transform questVisualizationHolder;
+        private readonly int[] _entityIndexesPriority = new int[12] { 4, 7, 1, 11, 8, 10, 3, 9, 5, 6, 2, 0 };
 
-        public virtual void Setup(EntitiesToConnect path, int mostPrioritizedEntityID)
+        private readonly PathSorter _pathSorter = new();
+
+        private (List<Path>, int) ConvertToPaths(List<EntitiesToConnect> entitiesToConnectIDs)
         {
-            arrowEntityID = mostPrioritizedEntityID;
+            var paths = new List<Path>();
 
-            // list of entities without the one that will point at others with it's arrow
-            otherEntitiesClump = new List<int>(path.entitiesIDs);
-            otherEntitiesClump.Remove(mostPrioritizedEntityID);
-        }
+            var actualPathsCount = 0;
 
-        public void AddInferiorPathToDisconnect(Path enemyPath)
-        {
-            inferiorPathsToDisconnect.Add(enemyPath);
-        }
-
-        public void AddSuperiorPathToDisconnect(Path enemyPath)
-        {
-            superiorPathsToDisconnect.Add(enemyPath);
-        }
-
-        public bool IsPathEnemy(Path potentialEnemyPath)
-        {
-            return inferiorPathsToDisconnect.Contains(potentialEnemyPath) || superiorPathsToDisconnect.Contains(potentialEnemyPath);
-        }
-    }
-
-    class ClumpPath : Path
-    {
-        public void Setup(EntitiesToConnect path)
-        {
-            otherEntitiesClump = new List<int>(path.entitiesIDs);
-        }
-    }
-    
-    class PathSorter
-    {
-        public List<Path> SortPaths(List<Path> paths)
-        {
-            List<Path> unsortedPaths = new List<Path>(paths);
-
-            Path[] sortedPaths = new Path[paths.Count];
-
-            while (unsortedPaths.Count > 0)
-            {
-                Path selectedPath = MathExt.RandomPullFrom(unsortedPaths);
-
-                int chosenIndex = FindBestSpotForPath(selectedPath, sortedPaths);
-
-                sortedPaths[chosenIndex] = selectedPath;
-            }
-
-            return sortedPaths.ToList();
-        }
-
-        bool CheckIfSortedPathsDecent(List<Path> paths)
-        {
-            List<int> adversariesLeft = new();
-
-            Path[] sortedPaths = paths.ToArray();
-
-            for (int i = 0; i < sortedPaths.Length; i++)
-            {
-                adversariesLeft.Add(Mathf.Max(FindIndexesOfEnemies(sortedPaths[i], sortedPaths).Length, 2));
-            }
-
-            for (int i = 1; i < sortedPaths.Length - 1; i++)
-            {
-                if (sortedPaths[i - 1].IsPathEnemy(sortedPaths[i]))
+            foreach (var path in entitiesToConnectIDs)
+                if (path.onlyAClump)
                 {
-                    adversariesLeft[i]--;
-                }
-                if (sortedPaths[i + 1].IsPathEnemy(sortedPaths[i]))
-                {
-                    adversariesLeft[i]--;
-                }
+                    var newPath = new ClumpPath();
+                    newPath.Setup(path);
 
-                if (adversariesLeft[i] != 0)
-                {
-                    Debug.Log(adversariesLeft[i]);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        int FindBestSpotForPath(Path path, Path[] sortedPaths)
-        {
-            List<int> spotsWithAntagonisticPath = new List<int>();
-
-            for (int i = 0; i < sortedPaths.Length; i++)
-            {
-                if (path.IsPathEnemy(sortedPaths[i]))
-                {
-                    spotsWithAntagonisticPath.Add(i);
-                }
-            }
-
-            if (spotsWithAntagonisticPath.Count == 0)
-            {
-                if (path.inferiorPathsToDisconnect.Count >= 1 || path.superiorPathsToDisconnect.Count >= 1)
-                {
-                    return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
+                    paths.Add(newPath);
                 }
                 else
                 {
+                    var mostPrioritizedEntityID = GetPrioritizedEntity(path.entitiesIDs);
+
+                    var newPath = new Path();
+                    newPath.Setup(path, mostPrioritizedEntityID);
+
+                    paths.Add(newPath);
+
+                    if (path.entitiesIDs.Count > 1) actualPathsCount++;
+                }
+
+            paths = _pathSorter.SortPaths(paths);
+
+            return (paths, actualPathsCount);
+        }
+
+        public void GenerateVisualization(Quest quest)
+        {
+            var entitiesToConnectIDs = quest.entitiesToConnectIDs;
+            var pathsToDisconnectIndexes = quest.pathsToDisconnectIndexes;
+
+            var pathsInfo = ConvertToPaths(entitiesToConnectIDs);
+
+            var paths = pathsInfo.Item1;
+
+            var actualPathsCount = pathsInfo.Item2;
+
+            foreach (var enemyPathsIndexes in pathsToDisconnectIndexes)
+            {
+                var pathOne = paths[enemyPathsIndexes.x];
+                var pathTwo = paths[enemyPathsIndexes.y];
+
+                var pathOneRepresentant = pathOne.ArrowEntityID;
+                var pathTwoRepresentant = pathTwo.ArrowEntityID;
+
+                var moreImportantEntity = GetPrioritizedEntity(pathOneRepresentant, pathTwoRepresentant);
+
+                if (moreImportantEntity == pathOne.ArrowEntityID)
+                {
+                    pathOne.AddInferiorPathToDisconnect(pathTwo);
+                    pathTwo.AddSuperiorPathToDisconnect(pathOne);
+                }
+                else
+                {
+                    pathTwo.AddInferiorPathToDisconnect(pathOne);
+                    pathOne.AddSuperiorPathToDisconnect(pathTwo);
+                }
+            }
+
+            var startingPosition = new Vector2(-(paths.Count - 1) * distanceBetweenPaths / 2, 0);
+
+            foreach (var path in paths)
+            {
+                VisualizePath(path, startingPosition);
+
+                startingPosition += new Vector2(distanceBetweenPaths, 0);
+
+                //if (path.otherEntitiesClump.Count > 0)
+                //{
+                //    startingPosition += new Vector2(distanceBetweenPaths, 0);
+                //}
+            }
+
+            for (var i = 0; i < paths.Count; i++)
+            {
+                var path = paths[i];
+                foreach (var disconnectPath in path.InferiorPathsToDisconnect)
+                {
+                    var distance = Mathf.Abs(i - paths.FindIndex(x => x == disconnectPath));
+
+                    PointDisconnectArrow(path.RepresentantObject.GetComponent<RectTransform>().anchoredPosition,
+                        distance, disconnectPath.RepresentantObject.GetComponent<RectTransform>().anchoredPosition);
+                }
+            }
+
+            ResizeQuestHolder(paths.Count);
+        }
+
+        private void ResizeQuestHolder(int pathsAmount)
+        {
+            var multiplier = pathsAmount > 3 ? Mathf.Clamp(1 - (pathsAmount - 3) / 4f, 0.5f, 1f) : 1;
+            questVisualizationHolder.transform.localScale *= multiplier;
+        }
+
+        private void VisualizePath(Path path, Vector2 position)
+        {
+            var representantPosition = position + new Vector2(0, distanceBetweenPathEntities);
+
+            var representant = CreateEntityVisualization(path.ArrowEntityID, representantPosition);
+
+            path.RepresentantObject = representant;
+
+            var otherEntitiesClump = path.OtherEntitiesClump;
+
+            if (otherEntitiesClump.Count > 0)
+            {
+                var clumpCentrePosition = position - new Vector2(0, distanceBetweenPathEntities);
+
+                CreateEntitiesClump(otherEntitiesClump, clumpCentrePosition);
+
+                PointArrow(representant.GetComponent<RectTransform>().anchoredPosition, clumpCentrePosition, position);
+            }
+        }
+
+        public GameObject CreateEntityVisualization(int entityID, Vector2 position = default)
+        {
+            if (position == default) position = Vector2.zero;
+
+            var entity = Instantiate(entityPrefab, questVisualizationHolder);
+            entity.GetComponent<Image>().sprite = GetSpriteFromEntityID(entityID);
+
+            entity.GetComponent<RectTransform>().anchoredPosition = position;
+
+            return entity;
+        }
+
+        private GameObject[] CreateEntitiesClump(List<int> entitiesClump, Vector2 clumpCentrePosition)
+        {
+            var count = entitiesClump.Count;
+
+            var entities = new GameObject[count];
+
+            var positionBiases = ClumpPositionShifts(count);
+
+            for (var i = 0; i < count; i++)
+            {
+                var position = clumpCentrePosition + positionBiases[i];
+
+                var newEntity = CreateEntityVisualization(entitiesClump[i], position);
+
+                entities[i] = newEntity;
+            }
+
+            return entities;
+        }
+
+        private Vector2[] ClumpPositionShifts(int count)
+        {
+            var distance = distanceBetweenObjectsInClumps;
+            var halfDistance = distanceBetweenObjectsInClumps / 2;
+
+            var shifts = new Vector2[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                var bar = i / 2;
+
+                if (i % 2 == 0)
+                {
+                    if (i == count - 1)
+                        shifts[i] = new Vector2(0, -bar * distance);
+                    else
+                        shifts[i] = new Vector2(-halfDistance, -bar * distance);
+                }
+                else
+                {
+                    shifts[i] = new Vector2(halfDistance, -bar * distance);
+                }
+
+                Debug.Log(i + " " + i % 2 + " " + shifts[i]);
+            }
+
+            Debug.Log("NICE");
+
+            for (var i = 0; i < shifts.Length; i++) Debug.Log(shifts[i]);
+
+            return shifts;
+        }
+
+        //Vector2[] ClumpPositionShifts(int count)
+        //{
+        //    int distance = distanceBetweenObjectsInClumps;
+        //    int halfDistance = distanceBetweenObjectsInClumps / 2;
+        //    switch (count)
+        //    {
+        //        case 1:
+        //            return new Vector2[] { Vector2.zero };
+        //        //case 2:
+        //        //    return new Vector2[] 
+        //        //    { 
+        //        //        new Vector2(-halfDistance, 0), 
+        //        //        new Vector2( halfDistance, 0) 
+        //        //    };
+        //        //case 3:
+        //        //    return MathExt.GetTriangleApexes(distance);
+        //        //case 4:
+        //        //    return new Vector2[] 
+        //        //    {
+        //        //        new Vector2(-halfDistance,  halfDistance), 
+        //        //        new Vector2( halfDistance,  halfDistance),
+        //        //        new Vector2(-halfDistance, -halfDistance),
+        //        //        new Vector2( halfDistance, -halfDistance)
+        //        //    };
+        //        default:
+        //            return ElementsInCircleAroundShifts(count, halfDistance);
+        //    }
+        //}
+
+        //Vector2[] ElementsInCircleAroundShifts(int count, int radius)
+        //{
+        //    double angleBetweenObjects = 2 * Math.PI / count;
+
+        //    List<Vector2> shifts = new();
+
+        //    double startingBias = angleBetweenObjects / 2;
+
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        // Calculate the position of the object
+        //        double x = radius * Math.Cos(i * angleBetweenObjects + startingBias);
+        //        double y = radius * Math.Sin(i * angleBetweenObjects + startingBias);
+
+        //        shifts.Add(new Vector2((float)x, (float)y));
+        //    }
+
+        //    return shifts.ToArray();
+        //}
+
+        private void PointArrow(Vector2 representantPosition, Vector2 clumpCentre, Vector2 position)
+        {
+            var arrow = Instantiate(arrowPrefab, questVisualizationHolder);
+
+            // for some reason this way
+            var angleRadians = MathExt.AngleBetweenTwoPoints(clumpCentre, representantPosition);
+
+            arrow.GetComponent<RectTransform>().anchoredPosition = position;
+            arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, angleRadians);
+        }
+
+        private void PointDisconnectArrow(Vector2 representantPosition, int distanceBetweenPaths,
+            Vector2 submissivePathRepresentant)
+        {
+            var arrow = Instantiate(arrowDisconnectPrefab, questVisualizationHolder);
+
+            // for some reason this way
+            var angleRadians = MathExt.AngleBetweenTwoPoints(submissivePathRepresentant, representantPosition);
+
+            arrow.GetComponent<RectTransform>().anchoredPosition =
+                (representantPosition + submissivePathRepresentant) / 2;
+            arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, angleRadians);
+        }
+
+        public Sprite GetSpriteFromEntityID(int entityID)
+        {
+            return sprites.sprites[entityID];
+        }
+
+        public int GetPrioritizedEntity(List<int> entities)
+        {
+            var mostPrioritizedEntityIndex = 0;
+
+            Debug.Log(entities[0]);
+
+            for (var i = 1; i < entities.Count; i++)
+            {
+                var entityOne = entities[mostPrioritizedEntityIndex];
+                var entityTwo = entities[i];
+                if (GetPrioritizedEntity(entityOne, entityTwo) == entityTwo) mostPrioritizedEntityIndex = i;
+
+                Debug.Log(entityTwo);
+            }
+
+            Debug.Log(mostPrioritizedEntityIndex);
+
+            return entities[mostPrioritizedEntityIndex];
+        }
+
+        public int GetPrioritizedEntity(int entityOne, int entityTwo)
+        {
+            for (var i = 0; i < _entityIndexesPriority.Length; i++)
+            {
+                if (_entityIndexesPriority[i] == entityOne) return entityOne;
+
+                if (_entityIndexesPriority[i] == entityTwo) return entityTwo;
+            }
+
+            return entityOne;
+        }
+
+        //private void OnValidate()
+        //{
+        //    if (GameManager.Instance != null)
+        //    {
+        //        GenerateVisualization(GameManager.Instance.Quest);
+
+        //    }
+        //}
+
+        public void DeleteVisualization()
+        {
+            foreach (Transform child in questVisualizationHolder) Destroy(child.gameObject);
+        }
+
+        private class Path
+        {
+            public readonly List<Path> InferiorPathsToDisconnect = new();
+            public readonly List<Path> SuperiorPathsToDisconnect = new();
+
+            public List<int> OtherEntitiesClump;
+
+            public GameObject RepresentantObject;
+            public int ArrowEntityID { get; private set; }
+
+            public virtual void Setup(EntitiesToConnect path, int mostPrioritizedEntityID)
+            {
+                ArrowEntityID = mostPrioritizedEntityID;
+
+                // list of entities without the one that will point at others with it's arrow
+                OtherEntitiesClump = new List<int>(path.entitiesIDs);
+                OtherEntitiesClump.Remove(mostPrioritizedEntityID);
+            }
+
+            public void AddInferiorPathToDisconnect(Path enemyPath)
+            {
+                InferiorPathsToDisconnect.Add(enemyPath);
+            }
+
+            public void AddSuperiorPathToDisconnect(Path enemyPath)
+            {
+                SuperiorPathsToDisconnect.Add(enemyPath);
+            }
+
+            public bool IsPathEnemy(Path potentialEnemyPath)
+            {
+                return InferiorPathsToDisconnect.Contains(potentialEnemyPath) ||
+                       SuperiorPathsToDisconnect.Contains(potentialEnemyPath);
+            }
+        }
+
+        private class ClumpPath : Path
+        {
+            public void Setup(EntitiesToConnect path)
+            {
+                OtherEntitiesClump = new List<int>(path.entitiesIDs);
+            }
+        }
+
+        private class PathSorter
+        {
+            public List<Path> SortPaths(List<Path> paths)
+            {
+                var unsortedPaths = new List<Path>(paths);
+
+                var sortedPaths = new Path[paths.Count];
+
+                while (unsortedPaths.Count > 0)
+                {
+                    var selectedPath = MathExt.RandomPullFrom(unsortedPaths);
+
+                    var chosenIndex = FindBestSpotForPath(selectedPath, sortedPaths);
+
+                    sortedPaths[chosenIndex] = selectedPath;
+                }
+
+                return sortedPaths.ToList();
+            }
+
+            private bool CheckIfSortedPathsDecent(List<Path> paths)
+            {
+                List<int> adversariesLeft = new();
+
+                var sortedPaths = paths.ToArray();
+
+                for (var i = 0; i < sortedPaths.Length; i++)
+                    adversariesLeft.Add(Mathf.Max(FindIndexesOfEnemies(sortedPaths[i], sortedPaths).Length, 2));
+
+                for (var i = 1; i < sortedPaths.Length - 1; i++)
+                {
+                    if (sortedPaths[i - 1].IsPathEnemy(sortedPaths[i])) adversariesLeft[i]--;
+                    if (sortedPaths[i + 1].IsPathEnemy(sortedPaths[i])) adversariesLeft[i]--;
+
+                    if (adversariesLeft[i] != 0)
+                    {
+                        Debug.Log(adversariesLeft[i]);
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            private int FindBestSpotForPath(Path path, Path[] sortedPaths)
+            {
+                var spotsWithAntagonisticPath = new List<int>();
+
+                for (var i = 0; i < sortedPaths.Length; i++)
+                    if (path.IsPathEnemy(sortedPaths[i]))
+                        spotsWithAntagonisticPath.Add(i);
+
+                if (spotsWithAntagonisticPath.Count == 0)
+                {
+                    if (path.InferiorPathsToDisconnect.Count >= 1 || path.SuperiorPathsToDisconnect.Count >= 1)
+                        return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
+
                     return FindEmptySpotOnEdgePreferably(sortedPaths);
                 }
-            }
-            else if (spotsWithAntagonisticPath.Count == 1)
-            {
-                int indexOfEnemy = FindIndexOfEnemy(path, sortedPaths);
 
-                if (indexOfEnemy != -1)
+                if (spotsWithAntagonisticPath.Count == 1)
                 {
-                    int[] neighbouringSlots = NeighboursOf(indexOfEnemy, sortedPaths.Length);
+                    var indexOfEnemy = FindIndexOfEnemy(path, sortedPaths);
 
-                    for (int i = 0; i < neighbouringSlots.Length; i++)
+                    if (indexOfEnemy != -1)
                     {
-                        if (sortedPaths[neighbouringSlots[i]] == null)
-                        {
-                            return neighbouringSlots[i];
-                        }
+                        var neighbouringSlots = NeighboursOf(indexOfEnemy, sortedPaths.Length);
+
+                        for (var i = 0; i < neighbouringSlots.Length; i++)
+                            if (sortedPaths[neighbouringSlots[i]] == null)
+                                return neighbouringSlots[i];
+
+                        return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
                     }
 
                     return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
                 }
-                else
-                {
-                    return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
-                }
-            }
-            else
-            {
+
                 return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
             }
-        }
 
-        int FindIndexOfEnemy(Path path, Path[] sortedPath)
-        {
-            for (int i = 0; i < sortedPath.Length; i++)
+            private int FindIndexOfEnemy(Path path, Path[] sortedPath)
             {
-                if (path.IsPathEnemy(sortedPath[i]))
-                {
-                    return i;
-                }
+                for (var i = 0; i < sortedPath.Length; i++)
+                    if (path.IsPathEnemy(sortedPath[i]))
+                        return i;
+
+                return -1;
             }
 
-            return -1;
-        }
-
-        int[] FindIndexesOfEnemies(Path path, Path[] sortedPath)
-        {
-            List<int> indexes = new();
-
-            for (int i = 0; i < sortedPath.Length; i++)
+            private int[] FindIndexesOfEnemies(Path path, Path[] sortedPath)
             {
-                if (path.IsPathEnemy(sortedPath[i]))
-                {
-                    indexes.Add(i);
-                }
+                List<int> indexes = new();
+
+                for (var i = 0; i < sortedPath.Length; i++)
+                    if (path.IsPathEnemy(sortedPath[i]))
+                        indexes.Add(i);
+
+                return indexes.ToArray();
             }
 
-            return indexes.ToArray();
-        }
-
-        int[] NeighboursOf(int index, int sortedPathsLength)
-        {
-            List<int> neighbours = new List<int>() { index - 1, index + 1 };
-
-            if (neighbours[0] < 0)
+            private int[] NeighboursOf(int index, int sortedPathsLength)
             {
-                neighbours.RemoveAt(0);
+                var neighbours = new List<int> { index - 1, index + 1 };
 
-                if (neighbours[0] >= sortedPathsLength)
+                if (neighbours[0] < 0)
                 {
-                    Debug.Log("WHAT??????????? 150 quest visualizer");
                     neighbours.RemoveAt(0);
-                }
-            }
-            else if (neighbours[1] >= sortedPathsLength)
-            {
-                neighbours.RemoveAt(1);
-            }
 
-            return neighbours.ToArray();
-        }
-
-        int FindEmptySpotOnEdgePreferably(Path[] sortedPaths)
-        {
-            if (sortedPaths.Length >= 3)
-            {
-                if (sortedPaths[0] == null)
-                {
-                    if (sortedPaths[1] == null)
+                    if (neighbours[0] >= sortedPathsLength)
                     {
-                        return 0;
+                        Debug.Log("WHAT??????????? 150 quest visualizer");
+                        neighbours.RemoveAt(0);
                     }
-                    else if (sortedPaths[sortedPaths.Length - 1] == null)
+                }
+                else if (neighbours[1] >= sortedPathsLength)
+                {
+                    neighbours.RemoveAt(1);
+                }
+
+                return neighbours.ToArray();
+            }
+
+            private int FindEmptySpotOnEdgePreferably(Path[] sortedPaths)
+            {
+                if (sortedPaths.Length >= 3)
+                {
+                    if (sortedPaths[0] == null)
                     {
-                        if (sortedPaths[sortedPaths.Length - 2] == null)
+                        if (sortedPaths[1] == null) return 0;
+
+                        if (sortedPaths[sortedPaths.Length - 1] == null)
                         {
-                            return sortedPaths.Length - 1;
+                            if (sortedPaths[sortedPaths.Length - 2] == null) return sortedPaths.Length - 1;
+                        }
+                        else
+                        {
+                            return 0;
                         }
                     }
-                    else
-                    {
-                        return 0;
-                    }
+
+                    if (sortedPaths[sortedPaths.Length - 1] == null) return sortedPaths.Length - 1;
+
+                    for (var i = 1; i < sortedPaths.Length - 1; i++)
+                        if (sortedPaths[i] == null)
+                            return i;
                 }
 
-                if (sortedPaths[sortedPaths.Length - 1] == null)
-                {
-                    return sortedPaths.Length - 1;
-                }
+                if (sortedPaths[0] == null) return 0;
 
-                for (int i = 1; i < sortedPaths.Length - 1; i++)
-                {
+                return 1;
+            }
+
+
+            private int FindEmptySpotNotOnEdgesPreferably(Path[] sortedPaths)
+            {
+                for (var i = 1; i < sortedPaths.Length; i++)
                     if (sortedPaths[i] == null)
-                    {
                         return i;
-                    }
-                }
+
+                if (sortedPaths[0] == null) return 0;
+
+                return sortedPaths.Length - 1;
             }
-
-            if (sortedPaths[0] == null)
-            {
-                return 0;
-            }
-
-            return 1;
-        }
-
-
-        int FindEmptySpotNotOnEdgesPreferably(Path[] sortedPaths)
-        {
-            for (int i = 1; i < sortedPaths.Length; i++)
-            {
-                if (sortedPaths[i] == null)
-                {
-                    return i;
-                }
-            }
-
-            if (sortedPaths[0] == null)
-            {
-                return 0;
-            }
-
-            return sortedPaths.Length - 1;
-        }
-    }
-
-    (List<Path>, int) ConvertToPaths(List<EntitiesToConnect> entitiesToConnectIDs)
-    {
-        List<Path> paths = new List<Path>();
-
-        int actualPathsCount = 0;
-
-        foreach (var path in entitiesToConnectIDs)
-        {
-            if (path.onlyAClump)
-            {
-                ClumpPath newPath = new ClumpPath();
-                newPath.Setup(path);
-
-                paths.Add(newPath);
-            }
-            else
-            {
-                int mostPrioritizedEntityID = GetPrioritizedEntity(path.entitiesIDs);
-
-                Path newPath = new Path();
-                newPath.Setup(path, mostPrioritizedEntityID);
-
-                paths.Add(newPath);
-
-                if (path.entitiesIDs.Count > 1)
-                {
-                    actualPathsCount++;
-                }
-            }
-        }
-
-        paths = pathSorter.SortPaths(paths);
-
-        return (paths, actualPathsCount);
-    }
-
-    public void GenerateVisualization(Quest quest)
-    {
-        List<EntitiesToConnect> entitiesToConnectIDs = quest.entitiesToConnectIDs;
-        List<Vector2Int> pathsToDisconnectIndexes = quest.pathsToDisconnectIndexes;
-
-        var pathsInfo = ConvertToPaths(entitiesToConnectIDs);
-
-        List<Path> paths = pathsInfo.Item1;
-
-        int actualPathsCount = pathsInfo.Item2;
-
-        foreach (var enemyPathsIndexes in pathsToDisconnectIndexes)
-        {
-            Path pathOne = paths[enemyPathsIndexes.x];
-            Path pathTwo = paths[enemyPathsIndexes.y];
-
-            int pathOneRepresentant = pathOne.arrowEntityID;
-            int pathTwoRepresentant = pathTwo.arrowEntityID;
-
-            int moreImportantEntity = GetPrioritizedEntity(pathOneRepresentant, pathTwoRepresentant);
-
-            if (moreImportantEntity == pathOne.arrowEntityID)
-            {
-                pathOne.AddInferiorPathToDisconnect(pathTwo);
-                pathTwo.AddSuperiorPathToDisconnect(pathOne);
-            }
-            else
-            {
-                pathTwo.AddInferiorPathToDisconnect(pathOne);
-                pathOne.AddSuperiorPathToDisconnect(pathTwo);
-            }
-        }
-
-        Vector2 startingPosition = new Vector2(-(paths.Count - 1) * distanceBetweenPaths / 2, 0);
-
-        foreach (var path in paths)
-        {
-            VisualizePath(path, startingPosition);
-
-            startingPosition += new Vector2(distanceBetweenPaths, 0);
-
-            //if (path.otherEntitiesClump.Count > 0)
-            //{
-            //    startingPosition += new Vector2(distanceBetweenPaths, 0);
-            //}
-        }
-
-        for (int i = 0; i < paths.Count; i++)
-        {
-            Path path = paths[i];
-            foreach (var disconnectPath in path.inferiorPathsToDisconnect)
-            {
-                int distance = Mathf.Abs(i - paths.FindIndex((x) => x == disconnectPath));
-
-                PointDisconnectArrow(path.representantObject.GetComponent<RectTransform>().anchoredPosition, distance, disconnectPath.representantObject.GetComponent<RectTransform>().anchoredPosition);
-            }
-        }
-
-        ResizeQuestHolder(paths.Count);
-    }
-
-    void ResizeQuestHolder(int pathsAmount)
-    {
-        float multiplier = pathsAmount > 3 ? Mathf.Clamp(1 - (pathsAmount - 3) / 4f, 0.5f, 1f) : 1;
-        questVisualizationHolder.transform.localScale *= multiplier;
-    }
-
-    void VisualizePath(Path path, Vector2 position)
-    {
-        Vector2 representantPosition = position + new Vector2(0, distanceBetweenPathEntities);
-
-        GameObject representant = CreateEntityVisualization(path.arrowEntityID, representantPosition);
-
-        path.representantObject = representant;
-
-        List<int> otherEntitiesClump = path.otherEntitiesClump;
-
-        if (otherEntitiesClump.Count > 0)
-        {
-            Vector2 clumpCentrePosition = position - new Vector2(0, distanceBetweenPathEntities);
-
-            CreateEntitiesClump(otherEntitiesClump, clumpCentrePosition);
-
-            PointArrow(representant.GetComponent<RectTransform>().anchoredPosition, clumpCentrePosition, position);
-        }
-    }
-
-    public GameObject CreateEntityVisualization(int entityID, Vector2 position = default)
-    {
-        if (position == default)
-        {
-            position = Vector2.zero;
-        }
-
-        GameObject entity = Instantiate(entityPrefab, questVisualizationHolder);
-        entity.GetComponent<Image>().sprite = GetSpriteFromEntityID(entityID);
-
-        entity.GetComponent<RectTransform>().anchoredPosition = position;
-
-        return entity;
-    }
-
-    GameObject[] CreateEntitiesClump(List<int> entitiesClump, Vector2 clumpCentrePosition)
-    {
-        int count = entitiesClump.Count;
-
-        GameObject[] entities = new GameObject[count];
-
-        Vector2[] positionBiases = ClumpPositionShifts(count);
-
-        for (int i = 0; i < count; i++)
-        {
-            Vector2 position = clumpCentrePosition + positionBiases[i];
-
-            GameObject newEntity = CreateEntityVisualization(entitiesClump[i], position);       
-
-            entities[i] = newEntity;
-        }
-
-        return entities;
-    }
-
-    Vector2[] ClumpPositionShifts(int count)
-    {
-        int distance = distanceBetweenObjectsInClumps;
-        int halfDistance = distanceBetweenObjectsInClumps / 2;
-
-        Vector2[] shifts = new Vector2[count];
-
-        for (int i = 0; i < count; i++)
-        {
-            int bar = i / 2;
-
-            if (i % 2 == 0)
-            {
-                if (i == count - 1)
-                {
-                    shifts[i] = new Vector2(0, -bar * distance);
-                }
-                else
-                {
-                    shifts[i] = new Vector2(-halfDistance, -bar * distance);
-                }
-            }
-            else
-            {
-                shifts[i] = new Vector2(halfDistance, -bar * distance);
-            }
-
-            Debug.Log(i + " " + i % 2 + " " + shifts[i]);
-        }
-
-        Debug.Log("NICE");
-
-        for (int i = 0; i < shifts.Length; i++)
-        {
-            Debug.Log(shifts[i]);
-        }
-
-        return shifts;
-    }
-
-    //Vector2[] ClumpPositionShifts(int count)
-    //{
-    //    int distance = distanceBetweenObjectsInClumps;
-    //    int halfDistance = distanceBetweenObjectsInClumps / 2;
-    //    switch (count)
-    //    {
-    //        case 1:
-    //            return new Vector2[] { Vector2.zero };
-    //        //case 2:
-    //        //    return new Vector2[] 
-    //        //    { 
-    //        //        new Vector2(-halfDistance, 0), 
-    //        //        new Vector2( halfDistance, 0) 
-    //        //    };
-    //        //case 3:
-    //        //    return MathExt.GetTriangleApexes(distance);
-    //        //case 4:
-    //        //    return new Vector2[] 
-    //        //    {
-    //        //        new Vector2(-halfDistance,  halfDistance), 
-    //        //        new Vector2( halfDistance,  halfDistance),
-    //        //        new Vector2(-halfDistance, -halfDistance),
-    //        //        new Vector2( halfDistance, -halfDistance)
-    //        //    };
-    //        default:
-    //            return ElementsInCircleAroundShifts(count, halfDistance);
-    //    }
-    //}
-
-    //Vector2[] ElementsInCircleAroundShifts(int count, int radius)
-    //{
-    //    double angleBetweenObjects = 2 * Math.PI / count;
-
-    //    List<Vector2> shifts = new();
-
-    //    double startingBias = angleBetweenObjects / 2;
-
-    //    for (int i = 0; i < count; i++)
-    //    {
-    //        // Calculate the position of the object
-    //        double x = radius * Math.Cos(i * angleBetweenObjects + startingBias);
-    //        double y = radius * Math.Sin(i * angleBetweenObjects + startingBias);
-
-    //        shifts.Add(new Vector2((float)x, (float)y));
-    //    }
-
-    //    return shifts.ToArray();
-    //}
-
-    void PointArrow(Vector2 representantPosition, Vector2 clumpCentre, Vector2 position)
-    {
-        GameObject arrow = Instantiate(arrowPrefab, questVisualizationHolder);
-
-        // for some reason this way
-        float angleRadians = MathExt.AngleBetweenTwoPoints(clumpCentre, representantPosition);
-
-        arrow.GetComponent<RectTransform>().anchoredPosition = position;
-        arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, angleRadians);
-    }
-
-    void PointDisconnectArrow(Vector2 representantPosition, int distanceBetweenPaths, Vector2 submissivePathRepresentant)
-    {
-        GameObject arrow = Instantiate(arrowDisconnectPrefab, questVisualizationHolder);
-
-        // for some reason this way
-        float angleRadians = MathExt.AngleBetweenTwoPoints(submissivePathRepresentant, representantPosition);
-
-        arrow.GetComponent<RectTransform>().anchoredPosition = (representantPosition + submissivePathRepresentant) / 2;
-        arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, angleRadians);
-    }
-
-    public Sprite GetSpriteFromEntityID(int entityID)
-    {
-        return sprites.sprites[entityID];
-    }
-
-    public int GetPrioritizedEntity(List<int> entities)
-    {
-        int mostPrioritizedEntityIndex = 0;
-
-        Debug.Log(entities[0]);
-
-        for (int i = 1; i < entities.Count; i++)
-        {
-            int entityOne = entities[mostPrioritizedEntityIndex];
-            int entityTwo = entities[i];
-            if (GetPrioritizedEntity(entityOne, entityTwo) == entityTwo)
-            {
-                mostPrioritizedEntityIndex = i;
-            }
-
-            Debug.Log(entityTwo);
-        }
-
-        Debug.Log(mostPrioritizedEntityIndex);
-
-        return entities[mostPrioritizedEntityIndex];
-    }
-
-    public int GetPrioritizedEntity(int entityOne, int entityTwo)
-    {
-        for (int i = 0; i < entityIndexesPriority.Length; i++)
-        {
-            if (entityIndexesPriority[i] == entityOne)
-            {
-                return entityOne;
-            }
-            else if (entityIndexesPriority[i] == entityTwo)
-            {
-                return entityTwo;
-            }
-        }
-
-        return entityOne;
-    }
-
-    //private void OnValidate()
-    //{
-    //    if (GameManager.Instance != null)
-    //    {
-    //        GenerateVisualization(GameManager.Instance.Quest);
-
-    //    }
-    //}
-
-    public void DeleteVisualization()
-    {
-        foreach (Transform child in questVisualizationHolder)
-        {
-            Destroy(child.gameObject);
         }
     }
 }

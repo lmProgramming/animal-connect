@@ -1,34 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class UICurvedArrow : MonoBehaviour
+namespace UI
 {
-    public GameObject Point1;
-    public Transform Point2;
-    public GameObject Point3;
-    public LineRenderer linerenderer;
-    public int vertexCount = 12;
-    public float point2YPositionBias = 2;
-
-    // Update is called once per frame
-    void Update()
+    public class UICurvedArrow : MonoBehaviour
     {
-        Point2.transform.position = new Vector3((Point1.transform.position.x + Point3.transform.position.x) / 2, 
-                                                (Point1.transform.position.y + Point3.transform.position.y) / 2 + point2YPositionBias, 
-                                                (Point1.transform.position.z + Point3.transform.position.z) / 2);
-        var pointList = new List<Vector3>();
+        [FormerlySerializedAs("Point1")] public GameObject point1;
+        [FormerlySerializedAs("Point2")] public Transform point2;
+        [FormerlySerializedAs("Point3")] public GameObject point3;
+        public LineRenderer linerenderer;
+        public int vertexCount = 12;
+        public float point2YPositionBias = 2;
 
-        for (float ratio = 0; ratio <= 1; ratio += 1 / (float)vertexCount)
+        // Update is called once per frame
+        private void Update()
         {
-            var tangent1 = Vector3.Lerp(Point1.transform.position, Point2.position, ratio);
-            var tangent2 = Vector3.Lerp(Point2.position, Point3.transform.position, ratio);
-            var curve = Vector3.Lerp(tangent1, tangent2, ratio);
+            point2.transform.position = new Vector3((point1.transform.position.x + point3.transform.position.x) / 2,
+                (point1.transform.position.y + point3.transform.position.y) / 2 + point2YPositionBias,
+                (point1.transform.position.z + point3.transform.position.z) / 2);
+            var pointList = new List<Vector3>();
 
-            pointList.Add(curve);
+            for (float ratio = 0; ratio <= 1; ratio += 1 / (float)vertexCount)
+            {
+                var tangent1 = Vector3.Lerp(point1.transform.position, point2.position, ratio);
+                var tangent2 = Vector3.Lerp(point2.position, point3.transform.position, ratio);
+                var curve = Vector3.Lerp(tangent1, tangent2, ratio);
+
+                pointList.Add(curve);
+            }
+
+            linerenderer.positionCount = pointList.Count;
+            linerenderer.SetPositions(pointList.ToArray());
         }
-
-        linerenderer.positionCount = pointList.Count;
-        linerenderer.SetPositions(pointList.ToArray());
     }
 }

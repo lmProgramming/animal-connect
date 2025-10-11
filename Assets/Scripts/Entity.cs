@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Solver;
 using UnityEngine;
 
 public class EntityWithSprite : MonoBehaviour
@@ -9,7 +7,7 @@ public class EntityWithSprite : MonoBehaviour
 
     public Entity entity;
 
-    void Awake()
+    private void Awake()
     {
         entity.pathPoint = GetComponent<PathPoint>();
     }

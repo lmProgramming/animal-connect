@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using Quest;
 using UnityEngine;
 
-public sealed class UIManager : MonoBehaviour
+namespace UI
 {
-    public static UIManager Instance;
-
-    public QuestVisualizer questVisualizer;
-
-    private void Awake()
+    public sealed class UIManager : MonoBehaviour
     {
-        Instance = this;
+        public static UIManager Instance;
+
+        public QuestVisualizer questVisualizer;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
     }
 }
