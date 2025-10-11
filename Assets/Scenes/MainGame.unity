@@ -1846,11 +1846,11 @@ MonoBehaviour:
       pathNum: 0
       entityIndex: 0
       connectionsNumber: 0
-  quest:
-    entitiesToConnectIDs: []
-    pathsToDisconnectIndexes: []
   grid: {fileID: 1504830976}
   tilesSetup: {fileID: 1920243526}
+  <Quest>k__BackingField:
+    entitiesToConnectIDs: []
+    pathsToDisconnectIndexes: []
 --- !u!4 &857741511
 Transform:
   m_ObjectHideFlags: 0
@@ -3670,6 +3670,7 @@ GameObject:
   - component: {fileID: 1868421644}
   - component: {fileID: 1868421643}
   - component: {fileID: 1868421642}
+  - component: {fileID: 1868421645}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3727,6 +3728,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1868421645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868421641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124444752912cea44ae3063c01240c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Other.GameInput
+  maxTimeBetweenDoubleClicks: 0.5
 --- !u!1 &1880537941
 GameObject:
   m_ObjectHideFlags: 0

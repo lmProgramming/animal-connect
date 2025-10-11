@@ -1,4 +1,6 @@
 ﻿// ReSharper disable All
+
+#pragma warning disable
 //#define TK2D_SLICING_ENABLED
 
 //#define IGNORE_RAYCAST_TRIGGERS
@@ -53,7 +55,6 @@ namespace SpriteSlicer2D.Scripts
         private static bool GetSpriteBounds(GameObject sprite, out Bounds spriteBounds)
         {
             spriteBounds = new Bounds();
-            var boundsValid = false;
 
 #if TK2D_SLICING_ENABLED
 		tk2dSprite parenttk2dSprite = sprite.GetComponent<tk2dSprite>();
