@@ -14,7 +14,7 @@ namespace Grid
 
         private void Start()
         {
-            gridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+            gridPosition = new Vector2Int((int)transform.localPosition.x, (int)transform.localPosition.y);
             position = transform.position;
         }
 

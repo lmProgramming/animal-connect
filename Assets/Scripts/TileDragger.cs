@@ -29,7 +29,7 @@ public sealed class TileDragger : MonoBehaviour
             var gridSlot = FindClosestSlot(tilePosition);
 
             tilePosition = gridSlot.GetPosition();
-            draggedTile.transform.position = GetTileHoveringPostion(GameInput.WorldPointerPosition, gridSlot);
+            draggedTile.transform.position = GetTileHoveringPosition(GameInput.WorldPointerPosition, gridSlot);
 
             SwapTilesVisually(gridSlot, draggedTile);
 
@@ -46,7 +46,7 @@ public sealed class TileDragger : MonoBehaviour
         }
     }
 
-    private Vector2 GetTileHoveringPostion(Vector2 dragPosition, GridSlot gridSlot)
+    private Vector2 GetTileHoveringPosition(Vector2 dragPosition, GridSlot gridSlot)
     {
         var gridSlotPositon = gridSlot.GetPosition();
 

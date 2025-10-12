@@ -1,7 +1,7 @@
 using Solver;
 using UnityEngine;
 
-public class EntityWithSprite : MonoBehaviour
+public class EntityVisual : MonoBehaviour
 {
     public string entityName;
 

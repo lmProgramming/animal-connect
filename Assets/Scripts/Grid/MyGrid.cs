@@ -120,7 +120,7 @@ namespace Grid
             GameManager.Instance.MoveMade();
         }
 
-        public void SwapTiles(Tile tile, GridSlot formerGridSlot, Tile tileToSwap, GridSlot tileToSwapGridSlot)
+        public static void SwapTiles(Tile tile, GridSlot formerGridSlot, Tile tileToSwap, GridSlot tileToSwapGridSlot)
         {
             tileToSwapGridSlot.UpdateTile(tile);
 

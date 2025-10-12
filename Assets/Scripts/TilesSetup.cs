@@ -15,10 +15,22 @@ public class TilesSetup : MonoBehaviour
     {
         SetupTileSprites();
 
+        const int maxAttempts = 100;
+        var attempts = 0;
+
         do
         {
             InsertTilesIntoGridRandomly();
+            attempts++;
+
+            if (attempts < maxAttempts) continue;
+
+            Debug.LogWarning(
+                "TilesSetup: Reached maximum attempts to generate a non-winning configuration. Using current setup.");
+            break;
         } while (GameManager.Instance.CheckIfWon());
+
+        Debug.Log($"TilesSetup: Generated puzzle in {attempts} attempt(s)");
     }
 
     private void SetupTileSprites()
