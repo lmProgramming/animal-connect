@@ -37,7 +37,7 @@ public sealed class TileDragger : MonoBehaviour
             {
                 if (timeDraggedATile < 0.2f) draggedTile.Rotate();
 
-                grid.PlaceTile(draggedTile, tilePosition, gridSlot);
+                MyGrid.PlaceTile(draggedTile, tilePosition, gridSlot);
 
                 LetGoOfTile();
             }
