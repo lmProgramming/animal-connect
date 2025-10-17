@@ -7,6 +7,10 @@ namespace Grid
     public class GridSlot : MonoBehaviour
     {
         [SerializeField] private Tile tile;
+        
+        // Public accessor for migration compatibility
+        public Tile Tile => tile;
+        
         public PathPoint[] pathPoints = new PathPoint[4];
 
         [SerializeField] private Vector2Int gridPosition;

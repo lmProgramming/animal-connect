@@ -10,6 +10,9 @@ namespace Solver
         public int entityIndex = -1;
 
         [SerializeField] private int connectionsNumber;
+        
+        // Public accessor for migration compatibility
+        public int ConnectionsNumber => connectionsNumber;
 
         public PathPoint(int entityIndex, int connectionsNumber)
         {
