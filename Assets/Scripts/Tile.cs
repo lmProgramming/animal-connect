@@ -3,7 +3,7 @@ using Grid;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Tile : MonoBehaviour, ITile
+public class Tile : MonoBehaviour
 {
     public enum TileType
     {
@@ -27,13 +27,6 @@ public class Tile : MonoBehaviour, ITile
 
 
     private Image _uiImage;
-
-    public int Rotations => rotations;
-
-    public IGridBlock GetGridBlock()
-    {
-        return gridBlock;
-    }
 
     private void Awake()
     {
@@ -114,8 +107,7 @@ public class Tile : MonoBehaviour, ITile
         gridBlock = newGridBlock;
     }
 
-    // Keep legacy method for backward compatibility
-    public GridBlock GetGridBlockConcrete()
+    public GridBlock GetGridBlock()
     {
         return gridBlock;
     }

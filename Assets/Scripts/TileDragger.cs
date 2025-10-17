@@ -1,7 +1,6 @@
 using Grid;
 using Other;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public sealed class TileDragger : MonoBehaviour
 {
@@ -11,8 +10,7 @@ public sealed class TileDragger : MonoBehaviour
 
     [SerializeField] private float hoverBias = 0.1f;
 
-    [FormerlySerializedAs("grid")] [SerializeField]
-    private MyGrid myGrid;
+    [SerializeField] private MyGrid grid;
 
     private void Awake()
     {
@@ -57,7 +55,7 @@ public sealed class TileDragger : MonoBehaviour
 
     private void SwapTilesVisually(GridSlot newGridSlot, Tile draggedTile)
     {
-        var otherTile = newGridSlot.GetTile() as Tile;
+        var otherTile = newGridSlot.GetTile();
 
         if (otherTile == draggedTile) return;
 
@@ -69,7 +67,7 @@ public sealed class TileDragger : MonoBehaviour
 
     public GridSlot FindClosestSlot(Vector2 position)
     {
-        var slotsMap = myGrid.GridSlotsMap;
+        var slotsMap = grid.GridSlotsMap;
 
         var closestDistance = float.PositiveInfinity;
         GridSlot closestSlot = null;

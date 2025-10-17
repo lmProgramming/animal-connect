@@ -4,24 +4,18 @@ using UnityEngine;
 
 namespace Solver
 {
-    /// <summary>
-    /// Virtual tile implementation for testing without Unity dependencies
-    /// </summary>
-    public class TileVirtual : ITile
+    public class TileVirtual
     {
         public readonly GridBlock GridBlock;
 
         public readonly Tile.TileType TileType;
         public Vector2 RestingPosition;
-        private int _rotations;
+        public int Rotations;
         public GridSlot Slot;
 
-        public int Rotations => _rotations;
-
-        public TileVirtual(Tile.TileType type, int rotations = 0)
+        public TileVirtual(Tile.TileType type)
         {
             TileType = type;
-            _rotations = rotations;
 
             GridBlock = new GridBlock();
 
@@ -49,27 +43,22 @@ namespace Solver
             }
         }
 
-        public IGridBlock GetGridBlock()
-        {
-            return GridBlock;
-        }
-
         public int Rotate()
         {
-            _rotations += 1;
+            Rotations += 1;
 
-            // Apply rotation limits based on tile type
-            var rotationsLimit = TileType switch
-            {
-                Tile.TileType.TwoCurves => 2,
-                Tile.TileType.XIntersection => 1,
-                Tile.TileType.Bridge => 1,
-                _ => 4
-            };
-
-            if (_rotations == rotationsLimit) _rotations = 0;
-
-            return _rotations;
+            return Rotations;
         }
+
+        //void OnMouseDown()
+        //{
+        //    if (slot != null)
+        //    {
+        //        slot.tile = null;
+        //        slot = null;
+        //        GameManager.Instance.ResetPathConnections();
+        //    }
+        //    TileDragger.Instance.GrabThisTile(this);
+        //}
     }
 }

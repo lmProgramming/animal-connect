@@ -4,24 +4,12 @@ using UnityEngine;
 namespace Solver
 {
     [Serializable]
-    public class PathPoint : IPathPoint
+    public class PathPoint
     {
         public int pathNum = -1;
         public int entityIndex = -1;
 
         [SerializeField] private int connectionsNumber;
-
-        public int PathNum 
-        { 
-            get => pathNum; 
-            set => pathNum = value; 
-        }
-
-        public int EntityIndex 
-        { 
-            get => entityIndex; 
-            set => entityIndex = value; 
-        }
 
         public PathPoint(int entityIndex, int connectionsNumber)
         {

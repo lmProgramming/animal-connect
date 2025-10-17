@@ -27,15 +27,9 @@ namespace Solver
             _tiles[7] = new TileVirtual(Tile.TileType.Intersection);
             _tiles[8] = new TileVirtual(Tile.TileType.Intersection);
 
-            var i = 0;
-            for (var x = 0; x < 3; x++)
-            for (var y = 0; y < 3; y++)
-            {
-                _gridSlots[i] = new GridSlotVirtual(x, y);
-                i += 1;
-            }
+            for (var i = 0; i < 9; i++) _gridSlots[i] = new GridSlotVirtual();
 
-            for (i = 0; i < 24; i++) _pathPoints[i] = new PathPoint(-1, 0);
+            for (var i = 0; i < 24; i++) _pathPoints[i] = new PathPoint(-1, 0);
 
             _gridSlots[0].PathPoints[0] = _pathPoints[0];
             _gridSlots[0].PathPoints[1] = _pathPoints[13];
@@ -175,14 +169,13 @@ namespace Solver
                         throw new Exception();
                     }
 
-                    // TODO: fix
-                    // tile.Rotations = j;
+                    tile.Rotations = j;
 
-                    // if (!FastCheckIfConnectionsAreValid(tileIndex)) return false;
-                    //
-                    // var won = ExploreFurther(tilesUsed, tilesOccupied, tilesFree, quest);
-                    //
-                    // if (won) return true;
+                    if (!FastCheckIfConnectionsAreValid(tileIndex)) return false;
+
+                    var won = ExploreFurther(tilesUsed, tilesOccupied, tilesFree, quest);
+
+                    if (won) return true;
                 }
 
                 tilesFree.Add(tileIndex);
