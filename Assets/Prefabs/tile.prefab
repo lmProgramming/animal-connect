@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.TileView
   _image: {fileID: 6917148710961647907}
-  _sprites: {fileID: 0}
+  _sprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
   _rotationDuration: 0.3
   _moveDuration: 0.3
   _rotationEase: 9

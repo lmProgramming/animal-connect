@@ -134,7 +134,7 @@ namespace Core.Configuration
         
         /// <summary>
         /// Validates that path point connections are legal.
-        /// Entity points must have exactly 1 connection.
+        /// Entity points can have 0 or 1 connection (0 = unconnected, 1 = connected to path).
         /// Non-entity points must have 0 or 2 connections (no dead ends or branch points).
         /// </summary>
         public static bool IsValidConnectionCount(int pathPoint, int connectionCount)
@@ -143,7 +143,7 @@ namespace Core.Configuration
             
             if (isEntity)
             {
-                return connectionCount == 1;
+                return connectionCount == 0 || connectionCount == 1;
             }
             else
             {

@@ -352,9 +352,9 @@ namespace Tests.Core.Logic
             // Arrange
             var network = new PathNetworkState();
             
-            // Valid: two connections at non-entity point
+            // Valid: two connections at non-entity point (create path 4-7-17)
             network.ConnectPoints(4, 7);
-            network.ConnectPoints(4, 17);
+            network.ConnectPoints(7, 17);
             
             // Invalid: one connection at non-entity point
             network.ConnectPoints(13, 3);

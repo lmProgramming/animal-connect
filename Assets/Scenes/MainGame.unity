@@ -930,6 +930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateManager: {fileID: 857741512}
   _gridView: {fileID: 1504830978}
+  _inputHandler: {fileID: 740230998}
   _tilesSetup: {fileID: 1618323020}
   <Quest>k__BackingField:
     entitiesToConnectIDs: []

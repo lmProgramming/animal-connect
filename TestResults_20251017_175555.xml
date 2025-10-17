@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="160" result="Failed(Child)" total="160" passed="150" failed="10" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.2976513">
+  <test-suite type="TestSuite" id="1188" name="CONFIDENTIAL" fullname="CONFIDENTIAL" runstate="Runnable" testcasecount="160" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.297651" total="160" passed="150" failed="10" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1170" name="TestAssembly.dll" fullname="/home/lmprogramming/Repos/animal-connect/Library/ScriptAssemblies/TestAssembly.dll" runstate="Runnable" testcasecount="159" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.252853" total="159" passed="149" failed="10" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="176006" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1171" name="Tests" fullname="Tests" runstate="Runnable" testcasecount="159" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.247203" total="159" passed="149" failed="10" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1174" name="Core" fullname="Tests.Core" runstate="Runnable" testcasecount="152" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.212603" total="152" passed="142" failed="10" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1177" name="DataStructures" fullname="Tests.Core.DataStructures" runstate="Runnable" testcasecount="25" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.058547" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1144" name="UnionFindTests" fullname="Tests.Core.DataStructures.UnionFindTests" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" testcasecount="25" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.051684" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1153" name="Connected_ReturnsFalse_ForUnconnectedElements" fullname="Tests.Core.DataStructures.UnionFindTests.Connected_ReturnsFalse_ForUnconnectedElements" methodname="Connected_ReturnsFalse_ForUnconnectedElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="330864542" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.010935" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1155" name="Connected_ReturnsTrue_AfterUnion" fullname="Tests.Core.DataStructures.UnionFindTests.Connected_ReturnsTrue_AfterUnion" methodname="Connected_ReturnsTrue_AfterUnion" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1757509571" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000384" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="Connected_ReturnsTrue_ForSameElement" fullname="Tests.Core.DataStructures.UnionFindTests.Connected_ReturnsTrue_ForSameElement" methodname="Connected_ReturnsTrue_ForSameElement" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="171147644" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1145" name="Constructor_InitializesAllElementsAsSeperateSets" fullname="Tests.Core.DataStructures.UnionFindTests.Constructor_InitializesAllElementsAsSeperateSets" methodname="Constructor_InitializesAllElementsAsSeperateSets" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="429067705" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.003357" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1157" name="CountSets_DoesNotChange_WhenUnioningAlreadyConnectedElements" fullname="Tests.Core.DataStructures.UnionFindTests.CountSets_DoesNotChange_WhenUnioningAlreadyConnectedElements" methodname="CountSets_DoesNotChange_WhenUnioningAlreadyConnectedElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1944161102" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000175" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1156" name="CountSets_ReturnsCorrectCount_AfterMultipleUnions" fullname="Tests.Core.DataStructures.UnionFindTests.CountSets_ReturnsCorrectCount_AfterMultipleUnions" methodname="CountSets_ReturnsCorrectCount_AfterMultipleUnions" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1410332313" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000197" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="EdgeCase_EmptySet" fullname="Tests.Core.DataStructures.UnionFindTests.EdgeCase_EmptySet" methodname="EdgeCase_EmptySet" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="248810229" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000145" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="EdgeCase_SingleElement" fullname="Tests.Core.DataStructures.UnionFindTests.EdgeCase_SingleElement" methodname="EdgeCase_SingleElement" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="824141914" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000174" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="EdgeCase_UnionSameElement" fullname="Tests.Core.DataStructures.UnionFindTests.EdgeCase_UnionSameElement" methodname="EdgeCase_UnionSameElement" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1082488588" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000228" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1146" name="Find_ReturnsElementItself_WhenNotConnected" fullname="Tests.Core.DataStructures.UnionFindTests.Find_ReturnsElementItself_WhenNotConnected" methodname="Find_ReturnsElementItself_WhenNotConnected" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="217550819" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000172" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1147" name="Find_ThrowsException_WhenElementOutOfRange" fullname="Tests.Core.DataStructures.UnionFindTests.Find_ThrowsException_WhenElementOutOfRange" methodname="Find_ThrowsException_WhenElementOutOfRange" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1989858633" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.002869" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="GameScenario_24PathPoints_SingleTileConnection" fullname="Tests.Core.DataStructures.UnionFindTests.GameScenario_24PathPoints_SingleTileConnection" methodname="GameScenario_24PathPoints_SingleTileConnection" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1363133925" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000177" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="GameScenario_BridgeTileConnectsThreePaths" fullname="Tests.Core.DataStructures.UnionFindTests.GameScenario_BridgeTileConnectsThreePaths" methodname="GameScenario_BridgeTileConnectsThreePaths" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="231614378" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000295" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="GameScenario_MultipleIntersectingPaths" fullname="Tests.Core.DataStructures.UnionFindTests.GameScenario_MultipleIntersectingPaths" methodname="GameScenario_MultipleIntersectingPaths" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="948657912" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000253" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1159" name="GetSet_ReturnsAllConnectedElements" fullname="Tests.Core.DataStructures.UnionFindTests.GetSet_ReturnsAllConnectedElements" methodname="GetSet_ReturnsAllConnectedElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1187613056" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000826" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="GetSet_ReturnsSameSet_ForAnyElementInSet" fullname="Tests.Core.DataStructures.UnionFindTests.GetSet_ReturnsSameSet_ForAnyElementInSet" methodname="GetSet_ReturnsSameSet_ForAnyElementInSet" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="669368733" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000822" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="GetSet_ReturnsSingleElement_WhenNotConnected" fullname="Tests.Core.DataStructures.UnionFindTests.GetSet_ReturnsSingleElement_WhenNotConnected" methodname="GetSet_ReturnsSingleElement_WhenNotConnected" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="343385539" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000169" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1163" name="PathCompression_OptimizesFindOperations" fullname="Tests.Core.DataStructures.UnionFindTests.PathCompression_OptimizesFindOperations" methodname="PathCompression_OptimizesFindOperations" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="986414665" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000207" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="Reset_AllowsNewUnions" fullname="Tests.Core.DataStructures.UnionFindTests.Reset_AllowsNewUnions" methodname="Reset_AllowsNewUnions" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="484518134" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="Reset_SeparatesAllElements" fullname="Tests.Core.DataStructures.UnionFindTests.Reset_SeparatesAllElements" methodname="Reset_SeparatesAllElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="907571153" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000183" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="Union_AllElements_CreatesOneSet" fullname="Tests.Core.DataStructures.UnionFindTests.Union_AllElements_CreatesOneSet" methodname="Union_AllElements_CreatesOneSet" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1192157232" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000489" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1148" name="Union_ConnectsTwoElements" fullname="Tests.Core.DataStructures.UnionFindTests.Union_ConnectsTwoElements" methodname="Union_ConnectsTwoElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="544452140" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000178" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="Union_MultipleChains_KeepsSetsIndependent" fullname="Tests.Core.DataStructures.UnionFindTests.Union_MultipleChains_KeepsSetsIndependent" methodname="Union_MultipleChains_KeepsSetsIndependent" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="1208464987" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000171" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="Union_ReturnsFalse_WhenElementsAlreadyConnected" fullname="Tests.Core.DataStructures.UnionFindTests.Union_ReturnsFalse_WhenElementsAlreadyConnected" methodname="Union_ReturnsFalse_WhenElementsAlreadyConnected" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="2097850144" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000151" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="Union_TransitiveProperty_ConnectsAllElements" fullname="Tests.Core.DataStructures.UnionFindTests.Union_TransitiveProperty_ConnectsAllElements" methodname="Union_TransitiveProperty_ConnectsAllElements" classname="Tests.Core.DataStructures.UnionFindTests" runstate="Runnable" seed="512562590" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1176" name="Logic" fullname="Tests.Core.Logic" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.077888" total="47" passed="38" failed="9" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1093" name="ConnectionValidatorTests" fullname="Tests.Core.Logic.ConnectionValidatorTests" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.028735" total="22" passed="15" failed="7" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1113" name="GetInvalidPathPoints_InvalidNetwork_ReturnsInvalidPoints" fullname="Tests.Core.Logic.ConnectionValidatorTests.GetInvalidPathPoints_InvalidNetwork_ReturnsInvalidPoints" methodname="GetInvalidPathPoints_InvalidNetwork_ReturnsInvalidPoints" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="2000801383" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.002662" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1114" name="GetInvalidPathPoints_MixedValidityNetwork_ReturnsOnlyInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.GetInvalidPathPoints_MixedValidityNetwork_ReturnsOnlyInvalid" methodname="GetInvalidPathPoints_MixedValidityNetwork_ReturnsOnlyInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1925501433" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.003939" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: not collection containing 7
+  But was:  < 3, 7, 13, 17 >
+]]></message>
+                  <stack-trace><![CDATA[at NUnit.Framework.CollectionAssert.DoesNotContain (System.Collections.IEnumerable collection, System.Object actual, System.String message, System.Object[] args) [0x0000c] in <f577cd9686154d6ab10efd7e65e64366>:0
+at NUnit.Framework.CollectionAssert.DoesNotContain (System.Collections.IEnumerable collection, System.Object actual) [0x00000] in <f577cd9686154d6ab10efd7e65e64366>:0
+at Tests.Core.Logic.ConnectionValidatorTests.GetInvalidPathPoints_MixedValidityNetwork_ReturnsOnlyInvalid () [0x00060] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:369
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1112" name="GetInvalidPathPoints_ValidNetwork_ReturnsEmpty" fullname="Tests.Core.Logic.ConnectionValidatorTests.GetInvalidPathPoints_ValidNetwork_ReturnsEmpty" methodname="GetInvalidPathPoints_ValidNetwork_ReturnsEmpty" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="128406788" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000185" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1111" name="IsPathPointValid_InvalidPoint_ReturnsFalse" fullname="Tests.Core.Logic.ConnectionValidatorTests.IsPathPointValid_InvalidPoint_ReturnsFalse" methodname="IsPathPointValid_InvalidPoint_ReturnsFalse" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1430491641" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000169" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1110" name="IsPathPointValid_ValidPoint_ReturnsTrue" fullname="Tests.Core.Logic.ConnectionValidatorTests.IsPathPointValid_ValidPoint_ReturnsTrue" methodname="IsPathPointValid_ValidPoint_ReturnsTrue" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1078625770" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000166" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1095" name="IsValid_EmptyNetwork_ReturnsTrue" fullname="Tests.Core.Logic.ConnectionValidatorTests.IsValid_EmptyNetwork_ReturnsTrue" methodname="IsValid_EmptyNetwork_ReturnsTrue" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1349365616" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1108" name="ValidateConnections_BridgeTile_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_BridgeTile_IsValid" methodname="ValidateConnections_BridgeTile_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="959577675" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.004894" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Bridge creates two valid straight paths
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_BridgeTile_IsValid () [0x0002e] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:262
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1094" name="ValidateConnections_EmptyNetwork_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EmptyNetwork_IsValid" methodname="ValidateConnections_EmptyNetwork_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1368544555" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000199" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1096" name="ValidateConnections_EntityWithOneConnection_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EntityWithOneConnection_IsValid" methodname="ValidateConnections_EntityWithOneConnection_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1822377060" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000365" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Entity with 1 connection should be valid
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EntityWithOneConnection_IsValid () [0x00028] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:67
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1099" name="ValidateConnections_EntityWithThreeConnections_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EntityWithThreeConnections_IsInvalid" methodname="ValidateConnections_EntityWithThreeConnections_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="577757053" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1098" name="ValidateConnections_EntityWithTwoConnections_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EntityWithTwoConnections_IsInvalid" methodname="ValidateConnections_EntityWithTwoConnections_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="17294652" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000732" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1097" name="ValidateConnections_EntityWithZeroConnections_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_EntityWithZeroConnections_IsValid" methodname="ValidateConnections_EntityWithZeroConnections_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="754448982" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000170" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1106" name="ValidateConnections_IntersectionTile_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_IntersectionTile_IsInvalid" methodname="ValidateConnections_IntersectionTile_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="807562965" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000217" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1102" name="ValidateConnections_NonEntityWithOneConnection_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_NonEntityWithOneConnection_IsInvalid" methodname="ValidateConnections_NonEntityWithOneConnection_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1853612442" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000266" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1103" name="ValidateConnections_NonEntityWithThreeConnections_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_NonEntityWithThreeConnections_IsInvalid" methodname="ValidateConnections_NonEntityWithThreeConnections_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="2015091817" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000240" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1101" name="ValidateConnections_NonEntityWithTwoConnections_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_NonEntityWithTwoConnections_IsValid" methodname="ValidateConnections_NonEntityWithTwoConnections_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="421878443" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000410" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Non-entity with 2 connections should be valid
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_NonEntityWithTwoConnections_IsValid () [0x0002c] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:152
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1100" name="ValidateConnections_NonEntityWithZeroConnections_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_NonEntityWithZeroConnections_IsValid" methodname="ValidateConnections_NonEntityWithZeroConnections_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="2016872743" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000173" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1104" name="ValidateConnections_SingleCurveTile_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_SingleCurveTile_IsValid" methodname="ValidateConnections_SingleCurveTile_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="2069698106" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000402" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Single curve should create valid connections
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_SingleCurveTile_IsValid () [0x0002e] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:205
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1109" name="ValidateConnections_TwoConnectedCurves_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_TwoConnectedCurves_IsValid" methodname="ValidateConnections_TwoConnectedCurves_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="228735549" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000409" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Connected curves should be valid (shared point has 2 connections)
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_TwoConnectedCurves_IsValid () [0x0003b] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:279
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1105" name="ValidateConnections_TwoCurvesTile_IsValid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_TwoCurvesTile_IsValid" methodname="ValidateConnections_TwoCurvesTile_IsValid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="36917306" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000409" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_TwoCurvesTile_IsValid () [0x0002e] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/ConnectionValidatorTests.cs:219
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1107" name="ValidateConnections_XIntersectionTile_IsInvalid" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidateConnections_XIntersectionTile_IsInvalid" methodname="ValidateConnections_XIntersectionTile_IsInvalid" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="1834725254" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000238" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1115" name="ValidationResult_ContainsDetailedErrors" fullname="Tests.Core.Logic.ConnectionValidatorTests.ValidationResult_ContainsDetailedErrors" methodname="ValidationResult_ContainsDetailedErrors" classname="Tests.Core.Logic.ConnectionValidatorTests" runstate="Runnable" seed="729668650" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000872" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1116" name="MoveProcessorTests" fullname="Tests.Core.Logic.MoveProcessorTests" classname="Tests.Core.Logic.MoveProcessorTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.009398" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1117" name="ProcessMove_RotateTile_UpdatesRotation" fullname="Tests.Core.Logic.MoveProcessorTests.ProcessMove_RotateTile_UpdatesRotation" methodname="ProcessMove_RotateTile_UpdatesRotation" classname="Tests.Core.Logic.MoveProcessorTests" runstate="Runnable" seed="239449689" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000662" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Move processor tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1118" name="ProcessMove_SwapTiles_SwapsPositions" fullname="Tests.Core.Logic.MoveProcessorTests.ProcessMove_SwapTiles_SwapsPositions" methodname="ProcessMove_SwapTiles_SwapsPositions" classname="Tests.Core.Logic.MoveProcessorTests" runstate="Runnable" seed="59662730" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000286" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Move processor tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1119" name="ProcessMove_ValidMove_ReturnsValidationResult" fullname="Tests.Core.Logic.MoveProcessorTests.ProcessMove_ValidMove_ReturnsValidationResult" methodname="ProcessMove_ValidMove_ReturnsValidationResult" classname="Tests.Core.Logic.MoveProcessorTests" runstate="Runnable" seed="1789108671" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000277" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Move processor tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1120" name="ProcessMove_WinningMove_FlagsAsWin" fullname="Tests.Core.Logic.MoveProcessorTests.ProcessMove_WinningMove_FlagsAsWin" methodname="ProcessMove_WinningMove_FlagsAsWin" classname="Tests.Core.Logic.MoveProcessorTests" runstate="Runnable" seed="1778304311" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000274" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Move processor tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1121" name="PathCalculatorTests" fullname="Tests.Core.Logic.PathCalculatorTests" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" testcasecount="17" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.019776" total="17" passed="15" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1138" name="CalculatePathNetwork_AllRotations_ProduceValidConnections" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_AllRotations_ProduceValidConnections" methodname="CalculatePathNetwork_AllRotations_ProduceValidConnections" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1139851852" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000642" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1137" name="CalculatePathNetwork_AllTileTypes_ProduceValidConnections" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_AllTileTypes_ProduceValidConnections" methodname="CalculatePathNetwork_AllTileTypes_ProduceValidConnections" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1851867843" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.002581" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1128" name="CalculatePathNetwork_BridgeTile_CreatesTwoIndependentPaths" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_BridgeTile_CreatesTwoIndependentPaths" methodname="CalculatePathNetwork_BridgeTile_CreatesTwoIndependentPaths" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="2106992956" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000347" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1131" name="CalculatePathNetwork_ComplexGrid_CorrectlyTracksAllConnections" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_ComplexGrid_CorrectlyTracksAllConnections" methodname="CalculatePathNetwork_ComplexGrid_CorrectlyTracksAllConnections" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="146722277" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000321" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1124" name="CalculatePathNetwork_CurveTileRotated90_ConnectsCorrectSides" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_CurveTileRotated90_ConnectsCorrectSides" methodname="CalculatePathNetwork_CurveTileRotated90_ConnectsCorrectSides" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="728009163" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000204" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1122" name="CalculatePathNetwork_EmptyGrid_AllPointsDisconnected" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_EmptyGrid_AllPointsDisconnected" methodname="CalculatePathNetwork_EmptyGrid_AllPointsDisconnected" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="2014299536" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000398" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1126" name="CalculatePathNetwork_IntersectionTile_ConnectsThreeSides" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_IntersectionTile_ConnectsThreeSides" methodname="CalculatePathNetwork_IntersectionTile_ConnectsThreeSides" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1881054688" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000276" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1130" name="CalculatePathNetwork_MultipleDisconnectedPaths" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_MultipleDisconnectedPaths" methodname="CalculatePathNetwork_MultipleDisconnectedPaths" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1639847059" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000294" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1123" name="CalculatePathNetwork_SingleCurveTile_ConnectsTwoPoints" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_SingleCurveTile_ConnectsTwoPoints" methodname="CalculatePathNetwork_SingleCurveTile_ConnectsTwoPoints" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="162546268" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000248" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1129" name="CalculatePathNetwork_TwoAdjacentCurves_FormsLongPath" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_TwoAdjacentCurves_FormsLongPath" methodname="CalculatePathNetwork_TwoAdjacentCurves_FormsLongPath" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="423135867" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000229" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1125" name="CalculatePathNetwork_TwoCurvesTile_CreatesTwoSeparatePaths" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_TwoCurvesTile_CreatesTwoSeparatePaths" methodname="CalculatePathNetwork_TwoCurvesTile_CreatesTwoSeparatePaths" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="336112283" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000275" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1127" name="CalculatePathNetwork_XIntersectionTile_ConnectsAllFourSides" fullname="Tests.Core.Logic.PathCalculatorTests.CalculatePathNetwork_XIntersectionTile_ConnectsAllFourSides" methodname="CalculatePathNetwork_XIntersectionTile_ConnectsAllFourSides" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1768833682" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000270" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1132" name="GetAffectedPathPoints_ReturnsCorrectPointsForEachSlot" fullname="Tests.Core.Logic.PathCalculatorTests.GetAffectedPathPoints_ReturnsCorrectPointsForEachSlot" methodname="GetAffectedPathPoints_ReturnsCorrectPointsForEachSlot" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="300722688" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000612" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1135" name="UpdateForTileChange_ProducesSameResultAsFullCalculation" fullname="Tests.Core.Logic.PathCalculatorTests.UpdateForTileChange_ProducesSameResultAsFullCalculation" methodname="UpdateForTileChange_ProducesSameResultAsFullCalculation" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1501986185" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000524" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1136" name="UpdateForTileSwap_ProducesSameResultAsFullCalculation" fullname="Tests.Core.Logic.PathCalculatorTests.UpdateForTileSwap_ProducesSameResultAsFullCalculation" methodname="UpdateForTileSwap_ProducesSameResultAsFullCalculation" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1582556270" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000502" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1133" name="ValidateTilePlacement_ValidPlacement_ReturnsTrue" fullname="Tests.Core.Logic.PathCalculatorTests.ValidateTilePlacement_ValidPlacement_ReturnsTrue" methodname="ValidateTilePlacement_ValidPlacement_ReturnsTrue" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="1539223260" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000514" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.PathCalculatorTests.ValidateTilePlacement_ValidPlacement_ReturnsTrue () [0x0001e] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/PathCalculatorTests.cs:289
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1134" name="ValidateTilePlacement_WouldCreateValidConnections_ReturnsTrue" fullname="Tests.Core.Logic.PathCalculatorTests.ValidateTilePlacement_WouldCreateValidConnections_ReturnsTrue" methodname="ValidateTilePlacement_WouldCreateValidConnections_ReturnsTrue" classname="Tests.Core.Logic.PathCalculatorTests" runstate="Runnable" seed="741363333" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000401" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at Tests.Core.Logic.PathCalculatorTests.ValidateTilePlacement_WouldCreateValidConnections_ReturnsTrue () [0x0002d] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Logic/PathCalculatorTests.cs:303
+]]></stack-trace>
+                </failure>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1139" name="QuestEvaluatorTests" fullname="Tests.Core.Logic.QuestEvaluatorTests" classname="Tests.Core.Logic.QuestEvaluatorTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.009428" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1140" name="EvaluateQuest_EmptyQuest_ReturnsSuccess" fullname="Tests.Core.Logic.QuestEvaluatorTests.EvaluateQuest_EmptyQuest_ReturnsSuccess" methodname="EvaluateQuest_EmptyQuest_ReturnsSuccess" classname="Tests.Core.Logic.QuestEvaluatorTests" runstate="Runnable" seed="1839789340" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000384" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Quest evaluation tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1141" name="EvaluateQuest_EntitiesConnected_ReturnsSuccess" fullname="Tests.Core.Logic.QuestEvaluatorTests.EvaluateQuest_EntitiesConnected_ReturnsSuccess" methodname="EvaluateQuest_EntitiesConnected_ReturnsSuccess" classname="Tests.Core.Logic.QuestEvaluatorTests" runstate="Runnable" seed="770411396" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000287" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Quest evaluation tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1142" name="EvaluateQuest_EntitiesNotConnected_ReturnsIncomplete" fullname="Tests.Core.Logic.QuestEvaluatorTests.EvaluateQuest_EntitiesNotConnected_ReturnsIncomplete" methodname="EvaluateQuest_EntitiesNotConnected_ReturnsIncomplete" classname="Tests.Core.Logic.QuestEvaluatorTests" runstate="Runnable" seed="1368973022" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000267" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Quest evaluation tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1143" name="EvaluateQuest_PathsShouldBeDisconnected_ReturnsCorrectResult" fullname="Tests.Core.Logic.QuestEvaluatorTests.EvaluateQuest_PathsShouldBeDisconnected_ReturnsCorrectResult" methodname="EvaluateQuest_PathsShouldBeDisconnected_ReturnsCorrectResult" classname="Tests.Core.Logic.QuestEvaluatorTests" runstate="Runnable" seed="1565107754" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000294" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Quest evaluation tests - to be implemented]]></message>
+                </reason>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1175" name="Models" fullname="Tests.Core.Models" runstate="Runnable" testcasecount="80" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.070293" total="80" passed="79" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1010" name="GridStateTests" fullname="Tests.Core.Models.GridStateTests" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" testcasecount="32" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.026305" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1041" name="ComplexScenario_MultipleOperationsChained" fullname="Tests.Core.Models.GridStateTests.ComplexScenario_MultipleOperationsChained" methodname="ComplexScenario_MultipleOperationsChained" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="410700994" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.002990" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="Constants_HaveCorrectValues" fullname="Tests.Core.Models.GridStateTests.Constants_HaveCorrectValues" methodname="Constants_HaveCorrectValues" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="804719334" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000159" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="Constructor_CreatesEmptyGrid" fullname="Tests.Core.Models.GridStateTests.Constructor_CreatesEmptyGrid" methodname="Constructor_CreatesEmptyGrid" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1470834381" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000246" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="GetEmptySlots_EmptyGrid_ReturnsAllSlots" fullname="Tests.Core.Models.GridStateTests.GetEmptySlots_EmptyGrid_ReturnsAllSlots" methodname="GetEmptySlots_EmptyGrid_ReturnsAllSlots" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="767271943" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000504" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="GetEmptySlots_FullGrid_ReturnsEmpty" fullname="Tests.Core.Models.GridStateTests.GetEmptySlots_FullGrid_ReturnsEmpty" methodname="GetEmptySlots_FullGrid_ReturnsEmpty" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1229723884" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000221" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="GetEmptySlots_PartiallyFilled_ReturnsOnlyEmpty" fullname="Tests.Core.Models.GridStateTests.GetEmptySlots_PartiallyFilled_ReturnsOnlyEmpty" methodname="GetEmptySlots_PartiallyFilled_ReturnsOnlyEmpty" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="236305281" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000275" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="GetOccupiedSlots_EmptyGrid_ReturnsEmpty" fullname="Tests.Core.Models.GridStateTests.GetOccupiedSlots_EmptyGrid_ReturnsEmpty" methodname="GetOccupiedSlots_EmptyGrid_ReturnsEmpty" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1602180237" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000612" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="GetOccupiedSlots_ReturnsAllTiles" fullname="Tests.Core.Models.GridStateTests.GetOccupiedSlots_ReturnsAllTiles" methodname="GetOccupiedSlots_ReturnsAllTiles" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="648866710" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000976" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="GetTile_ByCoordinates_InvalidCoords_ThrowsException" fullname="Tests.Core.Models.GridStateTests.GetTile_ByCoordinates_InvalidCoords_ThrowsException" methodname="GetTile_ByCoordinates_InvalidCoords_ThrowsException" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1670377647" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000554" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="GetTile_ByCoordinates_ReturnsCorrectTile" fullname="Tests.Core.Models.GridStateTests.GetTile_ByCoordinates_ReturnsCorrectTile" methodname="GetTile_ByCoordinates_ReturnsCorrectTile" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="711220287" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000211" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="GetTile_EmptySlot_ReturnsNull" fullname="Tests.Core.Models.GridStateTests.GetTile_EmptySlot_ReturnsNull" methodname="GetTile_EmptySlot_ReturnsNull" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1290117407" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000170" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="GetTile_InvalidPosition_ThrowsException" fullname="Tests.Core.Models.GridStateTests.GetTile_InvalidPosition_ThrowsException" methodname="GetTile_InvalidPosition_ThrowsException" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1488654183" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000418" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1042" name="Immutability_OriginalRemainsUnchangedAfterOperations" fullname="Tests.Core.Models.GridStateTests.Immutability_OriginalRemainsUnchangedAfterOperations" methodname="Immutability_OriginalRemainsUnchangedAfterOperations" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1672282496" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000414" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="IsEmpty_GridWithTiles_ReturnsFalse" fullname="Tests.Core.Models.GridStateTests.IsEmpty_GridWithTiles_ReturnsFalse" methodname="IsEmpty_GridWithTiles_ReturnsFalse" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1549920809" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000159" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="IsEmpty_NewGrid_ReturnsTrue" fullname="Tests.Core.Models.GridStateTests.IsEmpty_NewGrid_ReturnsTrue" methodname="IsEmpty_NewGrid_ReturnsTrue" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="2125901682" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000130" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="IsFull_CompletelyFilledGrid_ReturnsTrue" fullname="Tests.Core.Models.GridStateTests.IsFull_CompletelyFilledGrid_ReturnsTrue" methodname="IsFull_CompletelyFilledGrid_ReturnsTrue" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="597277545" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000266" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1036" name="IsFull_EmptyGrid_ReturnsFalse" fullname="Tests.Core.Models.GridStateTests.IsFull_EmptyGrid_ReturnsFalse" methodname="IsFull_EmptyGrid_ReturnsFalse" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="571508721" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000138" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1038" name="IsFull_PartiallyFilled_ReturnsFalse" fullname="Tests.Core.Models.GridStateTests.IsFull_PartiallyFilled_ReturnsFalse" methodname="IsFull_PartiallyFilled_ReturnsFalse" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1840051448" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000168" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1039" name="TileCount_EmptyGrid_ReturnsZero" fullname="Tests.Core.Models.GridStateTests.TileCount_EmptyGrid_ReturnsZero" methodname="TileCount_EmptyGrid_ReturnsZero" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1390225118" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000146" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="TileCount_ReturnsCorrectCount" fullname="Tests.Core.Models.GridStateTests.TileCount_ReturnsCorrectCount" methodname="TileCount_ReturnsCorrectCount" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="862377667" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000198" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="WithoutTile_OnEmptySlot_DoesNotThrow" fullname="Tests.Core.Models.GridStateTests.WithoutTile_OnEmptySlot_DoesNotThrow" methodname="WithoutTile_OnEmptySlot_DoesNotThrow" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="2104168080" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000249" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="WithoutTile_RemovesTile" fullname="Tests.Core.Models.GridStateTests.WithoutTile_RemovesTile" methodname="WithoutTile_RemovesTile" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="115583832" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000248" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="WithRotation_OnEmptySlot_ThrowsException" fullname="Tests.Core.Models.GridStateTests.WithRotation_OnEmptySlot_ThrowsException" methodname="WithRotation_OnEmptySlot_ThrowsException" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1195161706" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000846" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="WithRotation_RotatesTile" fullname="Tests.Core.Models.GridStateTests.WithRotation_RotatesTile" methodname="WithRotation_RotatesTile" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1991985604" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000301" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="WithSwap_CanSwapTileWithEmptySlot" fullname="Tests.Core.Models.GridStateTests.WithSwap_CanSwapTileWithEmptySlot" methodname="WithSwap_CanSwapTileWithEmptySlot" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="146035292" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000233" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="WithSwap_SamePosition_Works" fullname="Tests.Core.Models.GridStateTests.WithSwap_SamePosition_Works" methodname="WithSwap_SamePosition_Works" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="757550813" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000213" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="WithSwap_SwappingEmptySlots_Works" fullname="Tests.Core.Models.GridStateTests.WithSwap_SwappingEmptySlots_Works" methodname="WithSwap_SwappingEmptySlots_Works" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="503411249" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000169" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="WithSwap_SwapsTwoTiles" fullname="Tests.Core.Models.GridStateTests.WithSwap_SwapsTwoTiles" methodname="WithSwap_SwapsTwoTiles" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1602608346" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000377" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1019" name="WithTile_CanOverwriteExistingTile" fullname="Tests.Core.Models.GridStateTests.WithTile_CanOverwriteExistingTile" methodname="WithTile_CanOverwriteExistingTile" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="222089720" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000250" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="WithTile_CreatesNewGridState" fullname="Tests.Core.Models.GridStateTests.WithTile_CreatesNewGridState" methodname="WithTile_CreatesNewGridState" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1375423352" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000420" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="WithTile_InvalidPosition_ThrowsException" fullname="Tests.Core.Models.GridStateTests.WithTile_InvalidPosition_ThrowsException" methodname="WithTile_InvalidPosition_ThrowsException" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="811590055" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000379" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="WithTile_PlacesTileAtCorrectPosition" fullname="Tests.Core.Models.GridStateTests.WithTile_PlacesTileAtCorrectPosition" methodname="WithTile_PlacesTileAtCorrectPosition" classname="Tests.Core.Models.GridStateTests" runstate="Runnable" seed="1412501864" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000211" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1043" name="PathNetworkStateTests" fullname="Tests.Core.Models.PathNetworkStateTests" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" testcasecount="32" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.021245" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1050" name="AreConnected_AfterConnection_ReturnsTrue" fullname="Tests.Core.Models.PathNetworkStateTests.AreConnected_AfterConnection_ReturnsTrue" methodname="AreConnected_AfterConnection_ReturnsTrue" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1074353107" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000233" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1048" name="AreConnected_SamePoint_ReturnsTrue" fullname="Tests.Core.Models.PathNetworkStateTests.AreConnected_SamePoint_ReturnsTrue" methodname="AreConnected_SamePoint_ReturnsTrue" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="385476701" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000139" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="AreConnected_TransitiveConnection_ReturnsTrue" fullname="Tests.Core.Models.PathNetworkStateTests.AreConnected_TransitiveConnection_ReturnsTrue" methodname="AreConnected_TransitiveConnection_ReturnsTrue" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1312451562" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000182" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1049" name="AreConnected_UnconnectedPoints_ReturnsFalse" fullname="Tests.Core.Models.PathNetworkStateTests.AreConnected_UnconnectedPoints_ReturnsFalse" methodname="AreConnected_UnconnectedPoints_ReturnsFalse" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="88302797" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000145" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="ConnectPoints_EmptyArray_DoesNothing" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_EmptyArray_DoesNothing" methodname="ConnectPoints_EmptyArray_DoesNothing" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="370976756" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000203" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1054" name="ConnectPoints_MultipleConnections_AccumulatesCounts" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_MultipleConnections_AccumulatesCounts" methodname="ConnectPoints_MultipleConnections_AccumulatesCounts" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="375294731" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000212" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1055" name="ConnectPoints_MultiplePoints_ConnectsAllTogether" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_MultiplePoints_ConnectsAllTogether" methodname="ConnectPoints_MultiplePoints_ConnectsAllTogether" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="619944166" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000192" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="ConnectPoints_MultiplePoints_IncrementsAllCounts" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_MultiplePoints_IncrementsAllCounts" methodname="ConnectPoints_MultiplePoints_IncrementsAllCounts" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="2136773900" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000190" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="ConnectPoints_SinglePoint_DoesNothing" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_SinglePoint_DoesNothing" methodname="ConnectPoints_SinglePoint_DoesNothing" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1571233709" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000178" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="ConnectPoints_TwoPoints_ConnectsThem" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_TwoPoints_ConnectsThem" methodname="ConnectPoints_TwoPoints_ConnectsThem" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1826396786" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000140" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="ConnectPoints_TwoPoints_IncrementsConnectionCounts" fullname="Tests.Core.Models.PathNetworkStateTests.ConnectPoints_TwoPoints_IncrementsConnectionCounts" methodname="ConnectPoints_TwoPoints_IncrementsConnectionCounts" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="817327522" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="Constructor_CustomSize_CreatesCorrectNumberOfPoints" fullname="Tests.Core.Models.PathNetworkStateTests.Constructor_CustomSize_CreatesCorrectNumberOfPoints" methodname="Constructor_CustomSize_CreatesCorrectNumberOfPoints" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1627184427" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000438" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1044" name="Constructor_DefaultSize_Creates24PathPoints" fullname="Tests.Core.Models.PathNetworkStateTests.Constructor_DefaultSize_Creates24PathPoints" methodname="Constructor_DefaultSize_Creates24PathPoints" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="642632902" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000284" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1072" name="GameScenario_BridgeTile_TwoIndependentPaths" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_BridgeTile_TwoIndependentPaths" methodname="GameScenario_BridgeTile_TwoIndependentPaths" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="521228172" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000259" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1074" name="GameScenario_ComplexPathNetwork" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_ComplexPathNetwork" methodname="GameScenario_ComplexPathNetwork" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1995725323" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000336" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1068" name="GameScenario_CurveTileConnection" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_CurveTileConnection" methodname="GameScenario_CurveTileConnection" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1033673800" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000171" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="GameScenario_IntersectionTile_ThreeWayConnection" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_IntersectionTile_ThreeWayConnection" methodname="GameScenario_IntersectionTile_ThreeWayConnection" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1883568307" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000218" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1075" name="GameScenario_InvalidConnection_TooManyConnections" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_InvalidConnection_TooManyConnections" methodname="GameScenario_InvalidConnection_TooManyConnections" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1143477887" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1073" name="GameScenario_MultipleAdjacentTiles_MergePaths" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_MultipleAdjacentTiles_MergePaths" methodname="GameScenario_MultipleAdjacentTiles_MergePaths" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1615426494" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000223" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="GameScenario_TwoCurvesTile_TwoSeparatePaths" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_TwoCurvesTile_TwoSeparatePaths" methodname="GameScenario_TwoCurvesTile_TwoSeparatePaths" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1215443237" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1071" name="GameScenario_XIntersectionTile_FourWayConnection" fullname="Tests.Core.Models.PathNetworkStateTests.GameScenario_XIntersectionTile_FourWayConnection" methodname="GameScenario_XIntersectionTile_FourWayConnection" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="278086271" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000309" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="GetConnectionCount_ConnectedPoint_ReturnsCorrectCount" fullname="Tests.Core.Models.PathNetworkStateTests.GetConnectionCount_ConnectedPoint_ReturnsCorrectCount" methodname="GetConnectionCount_ConnectedPoint_ReturnsCorrectCount" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1244682479" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000161" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="GetConnectionCount_InvalidPoint_ThrowsException" fullname="Tests.Core.Models.PathNetworkStateTests.GetConnectionCount_InvalidPoint_ThrowsException" methodname="GetConnectionCount_InvalidPoint_ThrowsException" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1873334672" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000288" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="GetConnectionCount_UnconnectedPoint_ReturnsZero" fullname="Tests.Core.Models.PathNetworkStateTests.GetConnectionCount_UnconnectedPoint_ReturnsZero" methodname="GetConnectionCount_UnconnectedPoint_ReturnsZero" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="400586606" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000160" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="GetPathId_InvalidPoint_ThrowsException" fullname="Tests.Core.Models.PathNetworkStateTests.GetPathId_InvalidPoint_ThrowsException" methodname="GetPathId_InvalidPoint_ThrowsException" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1577870997" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000364" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="GetPathId_UnconnectedPoint_ReturnsItselfAsId" fullname="Tests.Core.Models.PathNetworkStateTests.GetPathId_UnconnectedPoint_ReturnsItselfAsId" methodname="GetPathId_UnconnectedPoint_ReturnsItselfAsId" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1067943413" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000158" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="GetPointsInPath_ConnectedPoints_ReturnsAllInPath" fullname="Tests.Core.Models.PathNetworkStateTests.GetPointsInPath_ConnectedPoints_ReturnsAllInPath" methodname="GetPointsInPath_ConnectedPoints_ReturnsAllInPath" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="2117250160" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000282" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="GetPointsInPath_IsolatedPoint_ReturnsOnlyThatPoint" fullname="Tests.Core.Models.PathNetworkStateTests.GetPointsInPath_IsolatedPoint_ReturnsOnlyThatPoint" methodname="GetPointsInPath_IsolatedPoint_ReturnsOnlyThatPoint" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="725731377" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000188" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="GetPointsInPath_ReturnsConsistentResultForAnyPointInPath" fullname="Tests.Core.Models.PathNetworkStateTests.GetPointsInPath_ReturnsConsistentResultForAnyPointInPath" methodname="GetPointsInPath_ReturnsConsistentResultForAnyPointInPath" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="174662769" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000204" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="Reset_AllowsNewConnections" fullname="Tests.Core.Models.PathNetworkStateTests.Reset_AllowsNewConnections" methodname="Reset_AllowsNewConnections" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="546857374" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000198" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="Reset_ClearsAllConnectionCounts" fullname="Tests.Core.Models.PathNetworkStateTests.Reset_ClearsAllConnectionCounts" methodname="Reset_ClearsAllConnectionCounts" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="1320101602" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000180" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="Reset_DisconnectsAllPoints" fullname="Tests.Core.Models.PathNetworkStateTests.Reset_DisconnectsAllPoints" methodname="Reset_DisconnectsAllPoints" classname="Tests.Core.Models.PathNetworkStateTests" runstate="Runnable" seed="250090110" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1076" name="TileDataTests" fullname="Tests.Core.Models.TileDataTests" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" testcasecount="16" result="Failed" site="Child" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.014663" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1078" name="Constructor_DefaultRotationIsZero" fullname="Tests.Core.Models.TileDataTests.Constructor_DefaultRotationIsZero" methodname="Constructor_DefaultRotationIsZero" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1683323488" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000157" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1077" name="Constructor_SetsTypeAndRotation" fullname="Tests.Core.Models.TileDataTests.Constructor_SetsTypeAndRotation" methodname="Constructor_SetsTypeAndRotation" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="398038542" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000147" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1089" name="Equals_DifferentRotation_ReturnsFalse" fullname="Tests.Core.Models.TileDataTests.Equals_DifferentRotation_ReturnsFalse" methodname="Equals_DifferentRotation_ReturnsFalse" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1531235951" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000185" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1090" name="Equals_DifferentType_ReturnsFalse" fullname="Tests.Core.Models.TileDataTests.Equals_DifferentType_ReturnsFalse" methodname="Equals_DifferentType_ReturnsFalse" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="2145963673" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000122" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1088" name="Equals_SameTileTypeAndRotation_ReturnsTrue" fullname="Tests.Core.Models.TileDataTests.Equals_SameTileTypeAndRotation_ReturnsTrue" methodname="Equals_SameTileTypeAndRotation_ReturnsTrue" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1240038904" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000163" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="GetConnections_BridgeTile_HasTwoSeparateStraightConnections" fullname="Tests.Core.Models.TileDataTests.GetConnections_BridgeTile_HasTwoSeparateStraightConnections" methodname="GetConnections_BridgeTile_HasTwoSeparateStraightConnections" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="21005868" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000335" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1081" name="GetConnections_CurveTile_ConnectsRightToBottom" fullname="Tests.Core.Models.TileDataTests.GetConnections_CurveTile_ConnectsRightToBottom" methodname="GetConnections_CurveTile_ConnectsRightToBottom" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="2015021655" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000356" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="GetConnections_CurveTileRotated90_ConnectsBottomToLeft" fullname="Tests.Core.Models.TileDataTests.GetConnections_CurveTileRotated90_ConnectsBottomToLeft" methodname="GetConnections_CurveTileRotated90_ConnectsBottomToLeft" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1586105199" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000218" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1087" name="GetConnections_IntersectionRotated180_ConnectsRightBottomLeft" fullname="Tests.Core.Models.TileDataTests.GetConnections_IntersectionRotated180_ConnectsRightBottomLeft" methodname="GetConnections_IntersectionRotated180_ConnectsRightBottomLeft" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="477766605" result="Failed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000770" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: equivalent to < 1, 2, 3 >
+  But was:  < 2, 3, 0 >
+]]></message>
+                  <stack-trace><![CDATA[at NUnit.Framework.CollectionAssert.AreEquivalent (System.Collections.IEnumerable expected, System.Collections.IEnumerable actual, System.String message, System.Object[] args) [0x00007] in <f577cd9686154d6ab10efd7e65e64366>:0
+at NUnit.Framework.CollectionAssert.AreEquivalent (System.Collections.IEnumerable expected, System.Collections.IEnumerable actual) [0x00000] in <f577cd9686154d6ab10efd7e65e64366>:0
+at Tests.Core.Models.TileDataTests.GetConnections_IntersectionRotated180_ConnectsRightBottomLeft () [0x00031] in /home/lmprogramming/Repos/animal-connect/Assets/Tests/Core/Models/TileDataTests.cs:169
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1083" name="GetConnections_IntersectionTile_ConnectsThreeSides" fullname="Tests.Core.Models.TileDataTests.GetConnections_IntersectionTile_ConnectsThreeSides" methodname="GetConnections_IntersectionTile_ConnectsThreeSides" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="471766098" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000194" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1082" name="GetConnections_TwoCurvesTile_HasTwoSeparateConnections" fullname="Tests.Core.Models.TileDataTests.GetConnections_TwoCurvesTile_HasTwoSeparateConnections" methodname="GetConnections_TwoCurvesTile_HasTwoSeparateConnections" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="926169889" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000201" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="GetConnections_XIntersectionTile_ConnectsAllFourSides" fullname="Tests.Core.Models.TileDataTests.GetConnections_XIntersectionTile_ConnectsAllFourSides" methodname="GetConnections_XIntersectionTile_ConnectsAllFourSides" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1311178920" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000191" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1091" name="GetHashCode_EqualTiles_HaveSameHashCode" fullname="Tests.Core.Models.TileDataTests.GetHashCode_EqualTiles_HaveSameHashCode" methodname="GetHashCode_EqualTiles_HaveSameHashCode" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="643993661" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000312" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1080" name="GetMaxRotations_ReturnsCorrectValueForEachTileType" fullname="Tests.Core.Models.TileDataTests.GetMaxRotations_ReturnsCorrectValueForEachTileType" methodname="GetMaxRotations_ReturnsCorrectValueForEachTileType" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="241705008" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000297" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1092" name="ToString_ReturnsReadableFormat" fullname="Tests.Core.Models.TileDataTests.ToString_ReturnsReadableFormat" methodname="ToString_ReturnsReadableFormat" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="1015929574" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000247" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1079" name="WithRotation_CreatesNewTileWithDifferentRotation" fullname="Tests.Core.Models.TileDataTests.WithRotation_CreatesNewTileWithDifferentRotation" methodname="WithRotation_CreatesNewTileWithDifferentRotation" classname="Tests.Core.Models.TileDataTests" runstate="Runnable" seed="665866509" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000190" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+        <test-suite type="TestSuite" id="1173" name="Integration" fullname="Tests.Integration" runstate="Runnable" testcasecount="3" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.014129" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1006" name="FullGameFlowTests" fullname="Tests.Integration.FullGameFlowTests" classname="Tests.Integration.FullGameFlowTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.007226" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1007" name="CompleteGame_FromStartToWin_WorksCorrectly" fullname="Tests.Integration.FullGameFlowTests.CompleteGame_FromStartToWin_WorksCorrectly" methodname="CompleteGame_FromStartToWin_WorksCorrectly" classname="Tests.Integration.FullGameFlowTests" runstate="Runnable" seed="32205650" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000309" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <reason>
+                <message><![CDATA[Integration tests - to be implemented when GameState manager is ready]]></message>
+              </reason>
+            </test-case>
+            <test-case id="1008" name="MultipleMovesSequence_MaintainsConsistentState" fullname="Tests.Integration.FullGameFlowTests.MultipleMovesSequence_MaintainsConsistentState" methodname="MultipleMovesSequence_MaintainsConsistentState" classname="Tests.Integration.FullGameFlowTests" runstate="Runnable" seed="1220599511" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000251" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <reason>
+                <message><![CDATA[Integration tests - to be implemented]]></message>
+              </reason>
+            </test-case>
+            <test-case id="1009" name="UndoRedo_RestoredState_MatchesOriginal" fullname="Tests.Integration.FullGameFlowTests.UndoRedo_RestoredState_MatchesOriginal" methodname="UndoRedo_RestoredState_MatchesOriginal" classname="Tests.Integration.FullGameFlowTests" runstate="Runnable" seed="2143339678" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000240" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <reason>
+                <message><![CDATA[Integration tests - to be implemented]]></message>
+              </reason>
+            </test-case>
+          </test-suite>
+        </test-suite>
+        <test-suite type="TestSuite" id="1172" name="Performance" fullname="Tests.Performance" runstate="Runnable" testcasecount="4" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.014760" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="PerformanceTests" fullname="Tests.Performance.PerformanceTests" classname="Tests.Performance.PerformanceTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.008513" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1004" name="FullRecalculation_ComplexGrid_CompletesQuickly" fullname="Tests.Performance.PerformanceTests.FullRecalculation_ComplexGrid_CompletesQuickly" methodname="FullRecalculation_ComplexGrid_CompletesQuickly" classname="Tests.Performance.PerformanceTests" runstate="Runnable" seed="13706008" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000913" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="PathCalculation_Performance_IsFasterThanTarget" fullname="Tests.Performance.PerformanceTests.PathCalculation_Performance_IsFasterThanTarget" methodname="PathCalculation_Performance_IsFasterThanTarget" classname="Tests.Performance.PerformanceTests" runstate="Runnable" seed="622673177" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000280" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <reason>
+                <message><![CDATA[Performance benchmarks - to be implemented]]></message>
+              </reason>
+            </test-case>
+            <test-case id="1003" name="UnionFind_Performance_IsNearConstantTime" fullname="Tests.Performance.PerformanceTests.UnionFind_Performance_IsNearConstantTime" methodname="UnionFind_Performance_IsNearConstantTime" classname="Tests.Performance.PerformanceTests" runstate="Runnable" seed="635651819" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000243" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <reason>
+                <message><![CDATA[Performance benchmarks - to be implemented]]></message>
+              </reason>
+            </test-case>
+            <test-case id="1005" name="ValidationPerformance_ComplexNetwork_IsEfficient" fullname="Tests.Performance.PerformanceTests.ValidationPerformance_ComplexNetwork_IsEfficient" methodname="ValidationPerformance_ComplexNetwork_IsEfficient" classname="Tests.Performance.PerformanceTests" runstate="Runnable" seed="1608013186" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000332" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1180" name="Unity.Addressables.DocExampleCode.Editor.Tests.dll" fullname="/home/lmprogramming/Repos/animal-connect/Library/ScriptAssemblies/Unity.Addressables.DocExampleCode.Editor.Tests.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.028902" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="176006" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1181" name="AddressableAssets" fullname="AddressableAssets" runstate="Runnable" testcasecount="1" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.022817" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1182" name="DocExampleCode" fullname="AddressableAssets.DocExampleCode" runstate="Runnable" testcasecount="1" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.017229" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1178" name="TestStub" fullname="AddressableAssets.DocExampleCode.TestStub" classname="AddressableAssets.DocExampleCode.TestStub" runstate="Runnable" testcasecount="1" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.006507" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1179" name="RequiredTest" fullname="AddressableAssets.DocExampleCode.TestStub.RequiredTest" methodname="RequiredTest" classname="AddressableAssets.DocExampleCode.TestStub" runstate="Runnable" seed="447080889" result="Passed" start-time="2025-10-17 15:55:40Z" end-time="2025-10-17 15:55:40Z" duration="0.000131" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: /home/lmprogramming/.config/unity3d/LMProgramming/CONFIDENTIAL/TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

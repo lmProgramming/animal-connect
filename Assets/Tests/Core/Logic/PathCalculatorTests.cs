@@ -189,10 +189,10 @@ namespace Tests.Core.Logic
         public void CalculatePathNetwork_TwoAdjacentCurves_FormsLongPath()
         {
             // Arrange - Two curves that connect
-            // Slot 0: right-bottom (13-3)
-            // Slot 3: top-right (3-17) - shares point 3 with slot 0
+            // Slot 0: [0, 13, 3, 12] - rotation 0 connects right-bottom (13-3)
+            // Slot 3: [3, 17, 6, 16] - rotation 3 connects top-right (3-17) - shares point 3 with slot 0
             var curve1 = new TileData(TileType.Curve, 0);
-            var curve2 = new TileData(TileType.Curve, 1); // Rotated to connect properly
+            var curve2 = new TileData(TileType.Curve, 3); // Rotated to connect top-right
             
             var grid = _emptyGrid
                 .WithTile(0, curve1)
@@ -210,9 +210,12 @@ namespace Tests.Core.Logic
         public void CalculatePathNetwork_MultipleDisconnectedPaths()
         {
             // Arrange - Create 3 separate paths
+            // Slot 0: [0, 13, 3, 12] - rotation 0 connects right-bottom (13-3)
+            // Slot 2: [2, 15, 5, 14] - rotation 1 connects bottom-left (5-14)
+            // Slot 8: [8, 23, 11, 22] - rotation 0 connects right-bottom (23-11)
             var grid = _emptyGrid
                 .WithTile(0, new TileData(TileType.Curve, 0))  // Path 1: 13-3
-                .WithTile(2, new TileData(TileType.Curve, 2))  // Path 2: 14-5
+                .WithTile(2, new TileData(TileType.Curve, 1))  // Path 2: 5-14
                 .WithTile(8, new TileData(TileType.Curve, 0)); // Path 3: 23-11
             
             // Act
@@ -220,7 +223,7 @@ namespace Tests.Core.Logic
             
             // Assert - Each path is independent
             Assert.IsTrue(network.AreConnected(13, 3), "Path 1");
-            Assert.IsTrue(network.AreConnected(14, 5), "Path 2");
+            Assert.IsTrue(network.AreConnected(5, 14), "Path 2");
             Assert.IsTrue(network.AreConnected(23, 11), "Path 3");
             
             Assert.IsFalse(network.AreConnected(13, 14), "Paths 1 and 2 disconnected");

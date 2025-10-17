@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AnimalConnect.Managers;
 using AnimalConnect.Views;
+using AnimalConnect.Input;
 using Core.Models;
 
 public sealed class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public sealed class GameManager : MonoBehaviour
     [Header("Core Systems")]
     [SerializeField] private GameStateManager _stateManager;
     [SerializeField] private GridView _gridView;
+    [SerializeField] private TileInputHandler _inputHandler;
     
     [Header("Setup")]
     [SerializeField] private TilesSetup _tilesSetup;
@@ -35,6 +37,16 @@ public sealed class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: GameStateManager not assigned!");
         }
+        
+        // Subscribe to input handler events
+        if (_inputHandler != null)
+        {
+            _inputHandler.OnMoveRequested += OnMoveRequested;
+        }
+        else
+        {
+            Debug.LogError("GameManager: TileInputHandler not assigned!");
+        }
     }
     
     private void OnDestroy()
@@ -44,6 +56,11 @@ public sealed class GameManager : MonoBehaviour
         {
             _stateManager.OnStateChanged -= OnGameStateChanged;
             _stateManager.OnGameWon -= OnGameWon;
+        }
+        
+        if (_inputHandler != null)
+        {
+            _inputHandler.OnMoveRequested -= OnMoveRequested;
         }
     }
 
@@ -91,6 +108,15 @@ public sealed class GameManager : MonoBehaviour
     }
     
     private static int _stateChangeCallCount = 0;
+    
+    private void OnMoveRequested(Move move)
+    {
+        if (_stateManager != null)
+        {
+            Debug.Log($"Processing player move: {move.Type} at slot {move.Slot}");
+            _stateManager.ProcessMove(move);
+        }
+    }
     
     private void OnGameStateChanged(GameState newState)
     {

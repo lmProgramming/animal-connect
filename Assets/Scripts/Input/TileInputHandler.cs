@@ -243,7 +243,9 @@ namespace AnimalConnect.Input
                 return default;
             }
 
-            var newRotation = (currentTile.Value.Rotation + 1) % 4;
+            // Get max rotations for this tile type and wrap around correctly
+            int maxRotations = currentTile.Value.GetMaxRotations();
+            var newRotation = (currentTile.Value.Rotation + 1) % maxRotations;
 
             return Move.Rotate(slot, newRotation);
         }

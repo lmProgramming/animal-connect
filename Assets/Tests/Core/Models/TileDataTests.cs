@@ -166,7 +166,8 @@ namespace Tests.Core.Models
             // Assert
             Assert.AreEqual(1, connections.Count);
             var conn = connections[0];
-            CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, conn.ConnectedSides); // Right, Bottom, Left
+            CollectionAssert.AreEquivalent(new[] { 2, 3, 0 },
+                conn.ConnectedSides); // Bottom, Left, Top (rotated 180° from Top, Right, Bottom)
         }
 
         [Test]

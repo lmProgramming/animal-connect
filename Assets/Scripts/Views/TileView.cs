@@ -154,7 +154,7 @@ namespace AnimalConnect.Views
         /// </summary>
         public void PlayHoverEffect()
         {
-            if (!_scaleOnInteraction) return;
+            if (_currentTween.active) return;
 
             _currentTween?.Kill();
             _currentTween = transform

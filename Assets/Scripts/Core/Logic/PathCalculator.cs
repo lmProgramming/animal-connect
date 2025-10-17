@@ -100,6 +100,7 @@ namespace Core.Logic
         /// <summary>
         /// Validates that a tile placement would create valid connections.
         /// Returns true if the placement is legal (doesn't create invalid connection counts).
+        /// Warnings (like dead ends) are acceptable, only errors make it invalid.
         /// </summary>
         public bool ValidateTilePlacement(GridState grid, int slotIndex, TileData tile)
         {
@@ -107,17 +108,9 @@ namespace Core.Logic
             var tempGrid = grid.WithTile(slotIndex, tile);
             var tempNetwork = CalculatePathNetwork(tempGrid);
             
-            // Check if all connection counts are valid
-            for (int i = 0; i < GridConfiguration.TotalPathPoints; i++)
-            {
-                int connections = tempNetwork.GetConnectionCount(i);
-                if (!GridConfiguration.IsValidConnectionCount(i, connections))
-                {
-                    return false;
-                }
-            }
-            
-            return true;
+            // Use ConnectionValidator to check - only Error-level issues make it invalid
+            var validator = new ConnectionValidator();
+            return validator.IsValid(tempNetwork);
         }
     }
 }
