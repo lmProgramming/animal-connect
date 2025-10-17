@@ -1,3 +1,14 @@
 {
-    "dependencies": []
+    "dependencies": [
+        {
+            "name": "com.cysharp.unitask",
+            "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9",
+            "url": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+        },
+        {
+            "name": "com.svermeulen.extenject",
+            "hash": "ec31a279be809bc98f5d1ed9f2add1ce3ddc77fc",
+            "url": "https://github.com/Mathijs-Bakker/Extenject.git?path=UnityProject/Assets/Plugins/Zenject/Source"
+        }
+    ]
 }
