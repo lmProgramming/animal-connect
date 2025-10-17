@@ -28,25 +28,31 @@ Core/
 ## Key Features
 
 ### ✅ Immutability
+
 All data structures are immutable or use defensive copying. This enables:
+
 - Safe state history (for undo/redo)
 - Predictable behavior
 - Thread-safe operations
 - Easy debugging
 
 ### ✅ No Unity Dependencies
+
 Can run in:
+
 - Unit tests (fast!)
 - Console applications
 - Server-side code
 - Any C# environment
 
 ### ✅ Performance Optimized
+
 - **UnionFind** provides O(α(n)) ≈ O(1) path merging (vs O(n) linear search)
 - **Immutable updates** use structural sharing where possible
 - **Configuration** data is statically initialized once
 
 ### ✅ Well Documented
+
 - XML documentation on all public APIs
 - Clear naming conventions
 - Examples in Phase1Validator
@@ -54,6 +60,7 @@ Can run in:
 ## Usage Examples
 
 ### Creating a Tile
+
 ```csharp
 using Core.Models;
 
@@ -63,6 +70,7 @@ var connections = tile.GetConnections();
 ```
 
 ### Managing Grid State
+
 ```csharp
 using Core.Models;
 
@@ -75,6 +83,7 @@ grid = grid.WithSwap(0, 4);
 ```
 
 ### Tracking Path Connections
+
 ```csharp
 using Core.Models;
 
@@ -85,6 +94,7 @@ int pathId = network.GetPathId(0);
 ```
 
 ### Using UnionFind
+
 ```csharp
 using Core.DataStructures;
 
@@ -95,6 +105,7 @@ bool connected = uf.Connected(0, 2); // true - O(1) amortized!
 ```
 
 ### Configuration Access
+
 ```csharp
 using Core.Configuration;
 
@@ -110,17 +121,20 @@ bool isEntity = GridConfiguration.IsEntityPoint(pathPoint);
 ## Testing
 
 ### Run Validation Tests
+
 1. Create an empty GameObject in your scene
 2. Attach the `Phase1Validator` component
 3. Run the scene
 4. Check console for test results
 
 OR use the context menu:
+
 1. Select the GameObject with `Phase1Validator`
 2. Right-click the component
 3. Choose "Run All Tests"
 
 ### What Gets Tested
+
 - ✅ TileData creation, rotation, and connections
 - ✅ GridState immutability and operations
 - ✅ UnionFind merge and query operations
@@ -131,9 +145,10 @@ OR use the context menu:
 
 ## Performance Improvements
 
-### Path Merging: 222x Faster!
+### Path Merging: 222x Faster
 
 **Before (Current System):**
+
 ```csharp
 // O(n) for each merge operation
 public void MergePaths(int pathNum1, int pathNum2)
@@ -145,6 +160,7 @@ public void MergePaths(int pathNum1, int pathNum2)
 ```
 
 **After (UnionFind):**
+
 ```csharp
 // O(α(n)) ≈ O(1) for each merge operation
 public void Union(int element1, int element2)
@@ -158,14 +174,18 @@ public void Union(int element1, int element2)
 ## Design Principles
 
 ### 1. Single Responsibility
+
 Each class has one clear purpose:
+
 - `TileData` knows about tiles
 - `GridState` knows about the grid
 - `PathNetworkState` knows about paths
 - `GridConfiguration` knows about topology
 
 ### 2. Immutability
+
 State changes create new instances:
+
 ```csharp
 var oldGrid = new GridState();
 var newGrid = oldGrid.WithTile(0, tile);
@@ -173,13 +193,17 @@ var newGrid = oldGrid.WithTile(0, tile);
 ```
 
 ### 3. Pure Functions
+
 No side effects, testable:
+
 ```csharp
 var connections = tile.GetConnections(); // No state mutation
 ```
 
 ### 4. Explicit Configuration
+
 No magic numbers:
+
 ```csharp
 // ❌ Before: tile.pathPoints[13]
 // ✅ After:  GridConfiguration.SlotToPathPoints[slot][1]
@@ -188,6 +212,7 @@ No magic numbers:
 ## Compatibility with Existing Code
 
 These classes are **completely independent** of the existing codebase. They can:
+
 - Coexist with current code
 - Be used incrementally
 - Be validated in parallel
@@ -196,6 +221,7 @@ These classes are **completely independent** of the existing codebase. They can:
 ## Next Steps (Phase 2)
 
 With these foundations, we can now build:
+
 - **PathCalculator** - Uses GridState + PathNetworkState
 - **ConnectionValidator** - Uses GridConfiguration rules
 - **QuestEvaluator** - Uses QuestData + PathNetworkState
