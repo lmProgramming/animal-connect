@@ -714,17 +714,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -778,17 +778,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -842,17 +842,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   timeDraggedATile: 0
   draggedTile: {fileID: 0}
   hoverBias: 0.1
-  grid: {fileID: 1504830976}
+  grid: {fileID: 0}
 --- !u!1 &620461665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,7 +1802,7 @@ MonoBehaviour:
       pathNum: 0
       entityIndex: 0
       connectionsNumber: 0
-  grid: {fileID: 1504830976}
+  grid: {fileID: 0}
   tilesSetup: {fileID: 1920243526}
   <Quest>k__BackingField:
     entitiesToConnectIDs: []
@@ -1894,17 +1894,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -2413,17 +2413,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -2615,17 +2615,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -2679,17 +2679,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -3581,17 +3581,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -3727,17 +3727,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   pathPoints:
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
-  - pathNum: -1
-    entityIndex: -1
+  - pathNum: 0
+    entityIndex: 0
     connectionsNumber: 0
   gridPosition: {x: 0, y: 0}
   position: {x: 0, y: 0}
@@ -3889,7 +3889,7 @@ MonoBehaviour:
   - {fileID: 66178246}
   - {fileID: 620461668}
   - {fileID: 193134345}
-  grid: {fileID: 1504830976}
+  grid: {fileID: 0}
   sprites: {fileID: 1671147290}
 --- !u!1 &1942835901
 GameObject:
