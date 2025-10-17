@@ -19,7 +19,7 @@ namespace Core.Logic
         /// </summary>
         public PathNetworkState CalculatePathNetwork(GridState gridState)
         {
-            var network = new PathNetworkState(GridConfiguration.TotalPathPoints);
+            var network = new PathNetworkState();
             
             // Process each occupied grid slot
             foreach (var (slotIndex, tile) in gridState.GetOccupiedSlots())

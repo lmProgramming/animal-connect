@@ -1,29 +1,39 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace AnimalConnect.Views
+namespace Views
 {
     /// <summary>
-    /// Represents a single slot position in the grid.
-    /// This is a pure visual component with no game logic.
+    ///     Represents a single slot position in the grid.
+    ///     This is a pure visual component with no game logic.
     /// </summary>
     public class GridSlotView : MonoBehaviour
     {
+        [FormerlySerializedAs("_slotIndex")]
         [Header("Slot Configuration")]
-        [SerializeField] private int _slotIndex = -1;
-        
+        [SerializeField] private int slotIndex = -1;
+
+        [FormerlySerializedAs("_backgroundRenderer")]
         [Header("Visual Feedback (Optional)")]
-        [SerializeField] private SpriteRenderer _backgroundRenderer;
-        [SerializeField] private Color _normalColor = new Color(1f, 1f, 1f, 0.1f);
-        [SerializeField] private Color _highlightColor = new Color(1f, 1f, 0f, 0.3f);
-        [SerializeField] private Color _occupiedColor = new Color(0.5f, 0.5f, 0.5f, 0.1f);
+        [SerializeField] private SpriteRenderer backgroundRenderer;
+
+        [FormerlySerializedAs("_normalColor")] [SerializeField]
+        private Color normalColor = new(1f, 1f, 1f, 0.1f);
+
+        [FormerlySerializedAs("_highlightColor")] [SerializeField]
+        private Color highlightColor = new(1f, 1f, 0f, 0.3f);
+
+        [FormerlySerializedAs("_occupiedColor")] [SerializeField]
+        private Color occupiedColor = new(0.5f, 0.5f, 0.5f, 0.1f);
 
         private bool _isHighlighted;
         private bool _isOccupied;
 
         public int SlotIndex
         {
-            get => _slotIndex;
-            set => _slotIndex = value;
+            get => slotIndex;
+            set => slotIndex = value;
         }
 
         public Vector2 Position => transform.position;
@@ -31,16 +41,14 @@ namespace AnimalConnect.Views
 
         private void Awake()
         {
-            if (_slotIndex < 0 || _slotIndex > 8)
-            {
-                Debug.LogWarning($"GridSlotView on {gameObject.name} has invalid slot index: {_slotIndex}");
-            }
+            if (slotIndex < 0 || slotIndex > 8)
+                Debug.LogWarning($"GridSlotView on {gameObject.name} has invalid slot index: {slotIndex}");
 
             UpdateVisuals();
         }
 
         /// <summary>
-        /// Sets whether this slot is occupied by a tile.
+        ///     Sets whether this slot is occupied by a tile.
         /// </summary>
         public void SetOccupied(bool occupied)
         {
@@ -49,7 +57,7 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Sets whether this slot is highlighted (e.g., during drag operations).
+        ///     Sets whether this slot is highlighted (e.g., during drag operations).
         /// </summary>
         public void SetHighlight(bool highlighted)
         {
@@ -58,38 +66,29 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Updates the visual appearance based on current state.
+        ///     Updates the visual appearance based on current state.
         /// </summary>
         private void UpdateVisuals()
         {
-            if (_backgroundRenderer == null) return;
+            if (backgroundRenderer == null) return;
 
             if (_isHighlighted)
-            {
-                _backgroundRenderer.color = _highlightColor;
-            }
+                backgroundRenderer.color = highlightColor;
             else if (_isOccupied)
-            {
-                _backgroundRenderer.color = _occupiedColor;
-            }
+                backgroundRenderer.color = occupiedColor;
             else
-            {
-                _backgroundRenderer.color = _normalColor;
-            }
+                backgroundRenderer.color = normalColor;
         }
 
         /// <summary>
-        /// Checks if a world position is within this slot's bounds.
+        ///     Checks if a world position is within this slot's bounds.
         /// </summary>
         public bool ContainsPoint(Vector2 worldPoint)
         {
-            if (_backgroundRenderer != null)
-            {
-                return _backgroundRenderer.bounds.Contains(worldPoint);
-            }
+            if (backgroundRenderer != null) return backgroundRenderer.bounds.Contains(worldPoint);
 
             // Fallback: simple distance check
-            float distance = Vector2.Distance(Position, worldPoint);
+            var distance = Vector2.Distance(Position, worldPoint);
             return distance < 0.5f; // Adjust threshold as needed
         }
 
@@ -97,10 +96,7 @@ namespace AnimalConnect.Views
         private void OnValidate()
         {
             // Auto-name in editor for clarity
-            if (_slotIndex >= 0 && _slotIndex <= 8)
-            {
-                gameObject.name = $"GridSlot_{_slotIndex}";
-            }
+            if (slotIndex >= 0 && slotIndex <= 8) gameObject.name = $"GridSlot_{slotIndex}";
         }
 
         private void OnDrawGizmos()
@@ -108,12 +104,12 @@ namespace AnimalConnect.Views
             // Draw slot bounds in editor
             Gizmos.color = _isHighlighted ? Color.yellow : Color.gray;
             Gizmos.DrawWireCube(transform.position, Vector3.one * 0.9f);
-            
+
             // Draw slot index
-            UnityEditor.Handles.Label(
+            Handles.Label(
                 transform.position + Vector3.up * 0.6f,
-                _slotIndex.ToString(),
-                new GUIStyle() { normal = new GUIStyleState() { textColor = Color.white } }
+                slotIndex.ToString(),
+                new GUIStyle { normal = new GUIStyleState { textColor = Color.white } }
             );
         }
 #endif

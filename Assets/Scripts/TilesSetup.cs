@@ -1,27 +1,40 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using AnimalConnect.Managers;
-using AnimalConnect.Views;
-using Core.Models;
 using Core.Logic;
+using Core.Models;
+using Managers;
+using UnityEngine;
+using UnityEngine.Serialization;
+using Views;
+using Random = UnityEngine.Random;
 
 public class TilesSetup : MonoBehaviour
 {
+    [FormerlySerializedAs("_tileTypes")]
     [Header("Tile Configuration")]
-    [SerializeField] private TileTypeEntry[] _tileTypes;
+    [SerializeField] private TileTypeEntry[] tileTypes;
 
+    [FormerlySerializedAs("_sprites")]
     [Header("Sprites")]
-    [SerializeField] private TileSprites _sprites;
-    
-    [Header("Grid View")]
-    [SerializeField] private GridView _gridView;
+    [SerializeField] private TileSprites sprites;
 
-    [System.Serializable]
-    public class TileTypeEntry
+    [FormerlySerializedAs("_gridView")]
+    [Header("Grid View")]
+    [SerializeField] private GridView gridView;
+
+    private void OnValidate()
     {
-        public TileType type;
-        public int count = 1;
+        // Auto-find GridView if not assigned
+        if (gridView == null) gridView = FindFirstObjectByType<GridView>();
+
+        // Validate tile count
+        if (tileTypes != null)
+        {
+            var totalTiles = tileTypes.Sum(t => t.count);
+            if (totalTiles != 9)
+                Debug.LogWarning($"TilesSetup: Total tile count is {totalTiles}, should be 9 for a 3x3 grid!");
+        }
     }
 
     public void Setup(GameStateManager stateManager, QuestData questData)
@@ -34,21 +47,19 @@ public class TilesSetup : MonoBehaviour
 
         const int maxAttempts = 100;
         var attempts = 0;
-        GridState validGrid = null;
-        
+        GridState validGrid;
+
         Debug.Log("TilesSetup: Generating puzzle configuration...");
 
         do
         {
             attempts++;
             validGrid = GenerateRandomGridState();
-            
+
             // Check if this is a winning configuration
             if (!IsWinningConfiguration(validGrid, questData))
-            {
                 // Found a valid non-winning configuration
                 break;
-            }
 
             if (attempts >= maxAttempts)
             {
@@ -64,41 +75,33 @@ public class TilesSetup : MonoBehaviour
         // Initialize the game state with the generated grid
         stateManager.Initialize(questData, validGrid);
         Debug.Log("TilesSetup: stateManager.Initialize completed!");
-        
+
         // Update the grid view
-        if (_gridView != null)
-        {
-            _gridView.UpdateFromState(stateManager.CurrentState);
-        }
+        if (gridView != null) gridView.UpdateFromState(stateManager.CurrentState);
     }
 
     private GridState GenerateRandomGridState()
     {
         var gridState = new GridState();
-        
+
         // Create list of tiles based on configuration
         var tilesToPlace = new List<TileData>();
-        
-        foreach (var entry in _tileTypes)
-        {
-            for (int i = 0; i < entry.count; i++)
+
+        foreach (var entry in tileTypes)
+            for (var i = 0; i < entry.count; i++)
             {
-                int maxRotations = GetMaxRotations(entry.type);
-                int rotation = Random.Range(0, maxRotations);
-                
+                var maxRotations = GetMaxRotations(entry.type);
+                var rotation = Random.Range(0, maxRotations);
+
                 tilesToPlace.Add(new TileData(entry.type, rotation));
             }
-        }
-        
+
         // Shuffle tiles
-        tilesToPlace = tilesToPlace.OrderBy(x => Random.value).ToList();
-        
+        tilesToPlace = tilesToPlace.OrderBy(_ => Random.value).ToList();
+
         // Assign to grid positions
-        for (int i = 0; i < Mathf.Min(tilesToPlace.Count, 9); i++)
-        {
-            gridState = gridState.WithTile(i, tilesToPlace[i]);
-        }
-        
+        for (var i = 0; i < Mathf.Min(tilesToPlace.Count, 9); i++) gridState = gridState.WithTile(i, tilesToPlace[i]);
+
         return gridState;
     }
 
@@ -107,36 +110,28 @@ public class TilesSetup : MonoBehaviour
         // Calculate path network
         var pathCalculator = new PathCalculator();
         var pathNetwork = pathCalculator.CalculatePathNetwork(gridState);
-        
+
         // Check if all tiles are placed (full grid is a requirement for winning)
-        bool allSlotsOccupied = true;
-        for (int i = 0; i < 9; i++)
-        {
+        var allSlotsOccupied = true;
+        for (var i = 0; i < 9; i++)
             if (gridState.GetTile(i) == null)
             {
                 allSlotsOccupied = false;
                 break;
             }
-        }
-        
-        if (!allSlotsOccupied)
-        {
-            return false; // Can't win with empty slots
-        }
-        
+
+        if (!allSlotsOccupied) return false; // Can't win with empty slots
+
         // Validate connections
         var validator = new ConnectionValidator();
         var validationResult = validator.ValidateConnections(pathNetwork);
-        
-        if (!validationResult.IsValid)
-        {
-            return false; // Invalid paths, so not winning
-        }
-        
+
+        if (!validationResult.IsValid) return false; // Invalid paths, so not winning
+
         // Check quest completion
         var questEvaluator = new QuestEvaluator();
         var questResult = questEvaluator.EvaluateQuest(questData, pathNetwork);
-        
+
         return questResult.IsComplete;
     }
 
@@ -151,22 +146,10 @@ public class TilesSetup : MonoBehaviour
         };
     }
 
-    private void OnValidate()
+    [Serializable]
+    public class TileTypeEntry
     {
-        // Auto-find GridView if not assigned
-        if (_gridView == null)
-        {
-            _gridView = FindFirstObjectByType<GridView>();
-        }
-        
-        // Validate tile count
-        if (_tileTypes != null)
-        {
-            int totalTiles = _tileTypes.Sum(t => t.count);
-            if (totalTiles != 9)
-            {
-                Debug.LogWarning($"TilesSetup: Total tile count is {totalTiles}, should be 9 for a 3x3 grid!");
-            }
-        }
+        public TileType type;
+        public int count = 1;
     }
 }

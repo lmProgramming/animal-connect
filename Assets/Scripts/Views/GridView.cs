@@ -1,29 +1,40 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Core.Models;
+using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
-namespace AnimalConnect.Views
+namespace Views
 {
     /// <summary>
-    /// Manages the visual representation of the entire grid.
-    /// Syncs with GameState but contains no game logic.
-    /// Responsible for creating, updating, and removing tile views.
+    ///     Manages the visual representation of the entire grid.
+    ///     Syncs with GameState but contains no game logic.
+    ///     Responsible for creating, updating, and removing tile views.
     /// </summary>
     public class GridView : MonoBehaviour
     {
+        [FormerlySerializedAs("_slotViews")]
         [Header("Grid Configuration")]
-        [SerializeField] private GridSlotView[] _slotViews = new GridSlotView[9];
-        
+        [SerializeField] private GridSlotView[] slotViews = new GridSlotView[9];
+
+        [FormerlySerializedAs("_tilePrefab")]
         [Header("Tile Configuration")]
-        [SerializeField] private TileView _tilePrefab;
-        [SerializeField] private TileSprites _tileSprites;
-        [SerializeField] private Transform _tileContainer;
+        [SerializeField] private TileView tilePrefab;
 
+        [FormerlySerializedAs("_tileSprites")] [SerializeField]
+        private TileSprites tileSprites;
+
+        [FormerlySerializedAs("_tileContainer")] [SerializeField]
+        private Transform tileContainer;
+
+        [FormerlySerializedAs("_animateTileChanges")]
         [Header("Animation Settings")]
-        [SerializeField] private bool _animateTileChanges = true;
-        [SerializeField] private bool _animateInitialPlacement = false;
+        [SerializeField] private bool animateTileChanges = true;
 
-        private Dictionary<int, TileView> _tileViews = new Dictionary<int, TileView>();
+        [FormerlySerializedAs("_animateInitialPlacement")] [SerializeField]
+        private bool animateInitialPlacement;
+
+        private readonly Dictionary<int, TileView> _tileViews = new();
 
         public IReadOnlyDictionary<int, TileView> TileViews => _tileViews;
 
@@ -33,37 +44,27 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Initializes the grid view.
+        ///     Initializes the grid view.
         /// </summary>
         public void Initialize()
         {
             // Validate slot views
-            if (_slotViews == null || _slotViews.Length != 9)
+            if (slotViews == null || slotViews.Length != 9)
             {
                 Debug.LogError("GridView: Must have exactly 9 slot views!");
                 return;
             }
 
             // Set slot indices if not already set
-            for (int i = 0; i < _slotViews.Length; i++)
-            {
-                if (_slotViews[i] != null && _slotViews[i].SlotIndex != i)
-                {
-                    _slotViews[i].SlotIndex = i;
-                }
-            }
+            for (var i = 0; i < slotViews.Length; i++)
+                if (slotViews[i] != null && slotViews[i].SlotIndex != i)
+                    slotViews[i].SlotIndex = i;
 
             // Use this GameObject as container if not set
-            if (_tileContainer == null)
-            {
-                _tileContainer = transform;
-            }
+            if (tileContainer == null) tileContainer = transform;
 
             // Validate prefab
-            if (_tilePrefab == null)
-            {
-                Debug.LogError("GridView: Tile prefab not assigned!");
-            }
+            if (tilePrefab == null) Debug.LogError("GridView: Tile prefab not assigned!");
 
             // Clear any existing tiles
             ClearAllTiles();
@@ -72,8 +73,8 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Updates the entire grid view from a game state.
-        /// This is the main synchronization method.
+        ///     Updates the entire grid view from a game state.
+        ///     This is the main synchronization method.
         /// </summary>
         public void UpdateFromState(GameState state)
         {
@@ -87,7 +88,7 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Updates the grid view from a grid state.
+        ///     Updates the grid view from a grid state.
         /// </summary>
         public void UpdateFromGrid(GridState gridState)
         {
@@ -97,24 +98,20 @@ namespace AnimalConnect.Views
                 return;
             }
 
-            for (int slot = 0; slot < 9; slot++)
+            for (var slot = 0; slot < 9; slot++)
             {
                 var tileData = gridState.GetTile(slot);
 
                 if (tileData.HasValue)
-                {
                     UpdateTileView(slot, tileData.Value);
-                }
                 else
-                {
                     RemoveTileView(slot);
-                }
             }
         }
 
         /// <summary>
-        /// Updates a single tile view at the specified slot.
-        /// Creates a new tile view if one doesn't exist.
+        ///     Updates a single tile view at the specified slot.
+        ///     Creates a new tile view if one doesn't exist.
         /// </summary>
         private void UpdateTileView(int slot, TileData tileData)
         {
@@ -125,28 +122,35 @@ namespace AnimalConnect.Views
             }
 
             // Get or create tile view
-            if (!_tileViews.TryGetValue(slot, out var tileView))
+            var isNewTile = !_tileViews.TryGetValue(slot, out var tileView);
+            if (isNewTile)
             {
                 tileView = CreateTileView(slot);
                 _tileViews[slot] = tileView;
             }
 
-            // Update tile view
+            // Update tile view only if values have changed
             var position = GetSlotPosition(slot);
-            tileView.SetType(tileData.Type, immediate: !_animateTileChanges);
-            tileView.SetRotation(tileData.Rotation, animate: _animateTileChanges);
-            tileView.SetPosition(position, animate: false); // Position set immediately for newly created tiles
+
+            // Only update type if it changed
+            if (tileView.CurrentType != tileData.Type) tileView.SetType(tileData.Type, !animateTileChanges);
+
+            // Only update rotation if it changed
+            if (tileView.CurrentRotation != tileData.Rotation)
+                tileView.SetRotation(tileData.Rotation, animateTileChanges);
+
+            // Only update position if it changed or this is a new tile
+            if (isNewTile || Vector2.Distance(tileView.transform.position, position) > 0.01f)
+                tileView.SetPosition(position, !isNewTile && animateTileChanges);
+
             tileView.SlotIndex = slot;
 
             // Update slot occupied state
-            if (_slotViews[slot] != null)
-            {
-                _slotViews[slot].SetOccupied(true);
-            }
+            if (slotViews[slot] != null) slotViews[slot].SetOccupied(true);
         }
 
         /// <summary>
-        /// Removes a tile view from the specified slot.
+        ///     Removes a tile view from the specified slot.
         /// </summary>
         private void RemoveTileView(int slot)
         {
@@ -156,31 +160,28 @@ namespace AnimalConnect.Views
                 _tileViews.Remove(slot);
 
                 // Update slot occupied state
-                if (_slotViews[slot] != null)
-                {
-                    _slotViews[slot].SetOccupied(false);
-                }
+                if (slotViews[slot] != null) slotViews[slot].SetOccupied(false);
             }
         }
 
         /// <summary>
-        /// Creates a new tile view at the specified slot.
+        ///     Creates a new tile view at the specified slot.
         /// </summary>
         private TileView CreateTileView(int slot)
         {
-            if (_tilePrefab == null)
+            if (tilePrefab == null)
             {
                 Debug.LogError("GridView: Cannot create tile - prefab not assigned!");
                 return null;
             }
 
             var position = GetSlotPosition(slot);
-            var tileView = Instantiate(_tilePrefab, position, Quaternion.identity, _tileContainer);
+            var tileView = Instantiate(tilePrefab, position, Quaternion.identity, tileContainer);
             tileView.name = $"Tile_{slot}";
             tileView.SlotIndex = slot;
 
             // Assign sprites if available
-            if (_tileSprites != null && tileView.GetComponent<UnityEngine.UI.Image>() != null)
+            if (tileSprites != null && tileView.GetComponent<Image>() != null)
             {
                 // TileSprites will be used by TileView itself
                 // We just need to ensure it's set on the TileView component
@@ -196,46 +197,38 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Removes all tile views from the grid.
+        ///     Removes all tile views from the grid.
         /// </summary>
         public void ClearAllTiles()
         {
             foreach (var kvp in _tileViews)
-            {
                 if (kvp.Value != null)
-                {
                     Destroy(kvp.Value.gameObject);
-                }
-            }
 
             _tileViews.Clear();
 
             // Update all slots as unoccupied
-            for (int i = 0; i < _slotViews.Length; i++)
-            {
-                if (_slotViews[i] != null)
-                {
-                    _slotViews[i].SetOccupied(false);
-                }
-            }
+            for (var i = 0; i < slotViews.Length; i++)
+                if (slotViews[i] != null)
+                    slotViews[i].SetOccupied(false);
         }
 
         /// <summary>
-        /// Gets the world position of a slot.
+        ///     Gets the world position of a slot.
         /// </summary>
         public Vector2 GetSlotPosition(int slot)
         {
-            if (slot < 0 || slot > 8 || _slotViews[slot] == null)
+            if (slot < 0 || slot > 8 || slotViews[slot] == null)
             {
                 Debug.LogWarning($"GridView: Invalid slot {slot}, returning zero position");
                 return Vector2.zero;
             }
 
-            return _slotViews[slot].Position;
+            return slotViews[slot].Position;
         }
 
         /// <summary>
-        /// Gets the tile view at the specified slot, if any.
+        ///     Gets the tile view at the specified slot, if any.
         /// </summary>
         public TileView GetTileAt(int slot)
         {
@@ -244,49 +237,39 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Gets the slot index at a world position.
-        /// Returns -1 if no slot is at that position.
+        ///     Gets the slot index at a world position.
+        ///     Returns -1 if no slot is at that position.
         /// </summary>
         public int GetSlotAtPosition(Vector2 worldPosition)
         {
-            for (int i = 0; i < _slotViews.Length; i++)
-            {
-                if (_slotViews[i] != null && _slotViews[i].ContainsPoint(worldPosition))
-                {
+            for (var i = 0; i < slotViews.Length; i++)
+                if (slotViews[i] != null && slotViews[i].ContainsPoint(worldPosition))
                     return i;
-                }
-            }
 
             return -1;
         }
 
         /// <summary>
-        /// Highlights a specific slot.
+        ///     Highlights a specific slot.
         /// </summary>
         public void HighlightSlot(int slot, bool highlight)
         {
-            if (slot >= 0 && slot < _slotViews.Length && _slotViews[slot] != null)
-            {
-                _slotViews[slot].SetHighlight(highlight);
-            }
+            if (slot >= 0 && slot < slotViews.Length && slotViews[slot] != null)
+                slotViews[slot].SetHighlight(highlight);
         }
 
         /// <summary>
-        /// Clears all slot highlights.
+        ///     Clears all slot highlights.
         /// </summary>
         public void ClearAllHighlights()
         {
-            for (int i = 0; i < _slotViews.Length; i++)
-            {
-                if (_slotViews[i] != null)
-                {
-                    _slotViews[i].SetHighlight(false);
-                }
-            }
+            for (var i = 0; i < slotViews.Length; i++)
+                if (slotViews[i] != null)
+                    slotViews[i].SetHighlight(false);
         }
 
         /// <summary>
-        /// Gets all currently displayed tile views.
+        ///     Gets all currently displayed tile views.
         /// </summary>
         public IEnumerable<TileView> GetAllTileViews()
         {
@@ -294,7 +277,7 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Checks if a slot is currently occupied.
+        ///     Checks if a slot is currently occupied.
         /// </summary>
         public bool IsSlotOccupied(int slot)
         {
@@ -302,26 +285,20 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Gets the GridSlotView at the specified index.
+        ///     Gets the GridSlotView at the specified index.
         /// </summary>
         public GridSlotView GetSlotView(int slot)
         {
-            if (slot >= 0 && slot < _slotViews.Length)
-            {
-                return _slotViews[slot];
-            }
+            if (slot >= 0 && slot < slotViews.Length) return slotViews[slot];
             return null;
         }
 
         /// <summary>
-        /// Gets the TileView at the specified slot, if any.
+        ///     Gets the TileView at the specified slot, if any.
         /// </summary>
         public TileView GetTileViewAtSlot(int slot)
         {
-            if (_tileViews.TryGetValue(slot, out var tileView))
-            {
-                return tileView;
-            }
+            if (_tileViews.TryGetValue(slot, out var tileView)) return tileView;
             return null;
         }
 
@@ -329,44 +306,33 @@ namespace AnimalConnect.Views
         private void OnValidate()
         {
             // Validate in editor
-            if (_slotViews != null && _slotViews.Length != 9)
-            {
+            if (slotViews != null && slotViews.Length != 9)
                 Debug.LogWarning("GridView: Slot views array should have exactly 9 elements!");
-            }
 
             // Auto-assign indices if slots are assigned
-            if (_slotViews != null)
-            {
-                for (int i = 0; i < _slotViews.Length && i < 9; i++)
-                {
-                    if (_slotViews[i] != null && _slotViews[i].SlotIndex != i)
-                    {
-                        _slotViews[i].SlotIndex = i;
-                    }
-                }
-            }
+            if (slotViews != null)
+                for (var i = 0; i < slotViews.Length && i < 9; i++)
+                    if (slotViews[i] != null && slotViews[i].SlotIndex != i)
+                        slotViews[i].SlotIndex = i;
         }
 
         [ContextMenu("Auto-Find Slot Views")]
         private void AutoFindSlotViews()
         {
             var slots = GetComponentsInChildren<GridSlotView>();
-            
+
             if (slots.Length == 0)
             {
                 Debug.LogWarning("No GridSlotView components found in children!");
                 return;
             }
 
-            _slotViews = new GridSlotView[9];
-            
+            slotViews = new GridSlotView[9];
+
             foreach (var slot in slots)
             {
-                int index = slot.SlotIndex;
-                if (index >= 0 && index < 9)
-                {
-                    _slotViews[index] = slot;
-                }
+                var index = slot.SlotIndex;
+                if (index >= 0 && index < 9) slotViews[index] = slot;
             }
 
             Debug.Log($"Auto-assigned {slots.Length} slot views");

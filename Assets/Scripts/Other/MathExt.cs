@@ -48,8 +48,8 @@ namespace Other
         public static Vector2 GetXYDirection(float angle, float magnitude)
         {
             var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            var xyZdirection = rotation * new Vector3(magnitude, 0f, 0f);
-            return xyZdirection;
+            var xyzDirection = rotation * new Vector3(magnitude, 0f, 0f);
+            return xyzDirection;
         }
 
         public static Vector2[] GetTriangleApexes(float sideLength)

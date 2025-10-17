@@ -100,7 +100,7 @@ namespace Tests.Core.Models
             var newGrid = _gridState.WithTile(5, tile);
 
             // Assert
-            Assert.AreEqual(tile, newGrid.GetTile(5).Value);
+            Assert.AreEqual(tile, newGrid.GetTile(5)!.Value);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Tests.Core.Models
             var newGrid = _gridState.WithTile(3, tile2);
 
             // Assert
-            Assert.AreEqual(tile2, newGrid.GetTile(3).Value);
+            Assert.AreEqual(tile2, newGrid.GetTile(3)!.Value);
         }
 
         [Test]
@@ -162,9 +162,9 @@ namespace Tests.Core.Models
             var newGrid = _gridState.WithRotation(4, 2);
 
             // Assert
-            Assert.AreEqual(0, _gridState.GetTile(4).Value.Rotation, "Original unchanged");
-            Assert.AreEqual(2, newGrid.GetTile(4).Value.Rotation);
-            Assert.AreEqual(TileType.Curve, newGrid.GetTile(4).Value.Type);
+            Assert.AreEqual(0, _gridState.GetTile(4)!.Value.Rotation, "Original unchanged");
+            Assert.AreEqual(2, newGrid.GetTile(4)!.Value.Rotation);
+            Assert.AreEqual(TileType.Curve, newGrid.GetTile(4)!.Value.Type);
         }
 
         [Test]
@@ -188,11 +188,11 @@ namespace Tests.Core.Models
             var newGrid = _gridState.WithSwap(0, 8);
 
             // Assert
-            Assert.AreEqual(tile1, _gridState.GetTile(0).Value, "Original unchanged");
-            Assert.AreEqual(tile2, _gridState.GetTile(8).Value, "Original unchanged");
+            Assert.AreEqual(tile1, _gridState.GetTile(0)!.Value, "Original unchanged");
+            Assert.AreEqual(tile2, _gridState.GetTile(8)!.Value, "Original unchanged");
 
-            Assert.AreEqual(tile2, newGrid.GetTile(0).Value, "Swapped");
-            Assert.AreEqual(tile1, newGrid.GetTile(8).Value, "Swapped");
+            Assert.AreEqual(tile2, newGrid.GetTile(0)!.Value, "Swapped");
+            Assert.AreEqual(tile1, newGrid.GetTile(8)!.Value, "Swapped");
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace Tests.Core.Models
 
             // Assert
             Assert.IsNull(newGrid.GetTile(3));
-            Assert.AreEqual(tile, newGrid.GetTile(5).Value);
+            Assert.AreEqual(tile, newGrid.GetTile(5)!.Value);
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace Tests.Core.Models
             var newGrid = _gridState.WithSwap(4, 4);
 
             // Assert
-            Assert.AreEqual(tile, newGrid.GetTile(4).Value);
+            Assert.AreEqual(tile, newGrid.GetTile(4)!.Value);
         }
 
         [Test]
@@ -398,9 +398,9 @@ namespace Tests.Core.Models
                 .WithoutTile(4);
 
             // Assert
-            Assert.AreEqual(tile3, result.GetTile(0).Value);
+            Assert.AreEqual(tile3, result.GetTile(0)!.Value);
             Assert.IsNull(result.GetTile(4));
-            Assert.AreEqual(tile1, result.GetTile(8).Value);
+            Assert.AreEqual(tile1, result.GetTile(8)!.Value);
             Assert.AreEqual(2, result.TileCount);
         }
 

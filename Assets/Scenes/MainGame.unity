@@ -317,11 +317,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 2
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 2
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &371900950
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,11 +370,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 6
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 6
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &482214236
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,11 +423,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 0
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 0
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &513310848
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,50 +653,6 @@ MonoBehaviour:
   - {fileID: 1803628562}
   - {fileID: 1903898769}
   - {fileID: 1364444260}
---- !u!1 &605514607
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 605514608}
-  - component: {fileID: 605514609}
-  m_Layer: 0
-  m_Name: TileDragger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &605514608
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605514607}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 857741511}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &605514609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605514607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc1345f1cc32a149a6ac68918562274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &671375274
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,13 +832,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8a4b9c1d2f3e5a6b7c8d9e1f2a3b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Input.TileInputHandler
-  _stateManager: {fileID: 857741512}
-  _gridView: {fileID: 1504830978}
-  _mainCamera: {fileID: 519420031}
-  _tapTimeThreshold: 0.2
-  _dragDistanceThreshold: 0.5
-  _enableVisualFeedback: 1
-  _logInputEvents: 1
+  stateManager: {fileID: 857741512}
+  gridView: {fileID: 1504830978}
+  mainCamera: {fileID: 519420031}
+  tapTimeThreshold: 0.2
+  dragDistanceThreshold: 0.5
+  enableVisualFeedback: 1
+  logInputEvents: 0
 --- !u!4 &740230999
 Transform:
   m_ObjectHideFlags: 0
@@ -928,10 +884,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b479830c3b1a79447b9dcd72f0c1ca18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateManager: {fileID: 857741512}
-  _gridView: {fileID: 1504830978}
-  _inputHandler: {fileID: 740230998}
-  _tilesSetup: {fileID: 1618323020}
+  stateManager: {fileID: 857741512}
+  gridView: {fileID: 1504830978}
+  inputHandler: {fileID: 740230998}
+  tilesSetup: {fileID: 1618323020}
   <Quest>k__BackingField:
     entitiesToConnectIDs: []
     pathsToDisconnectIndexes: []
@@ -948,7 +904,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 605514608}
   - {fileID: 598930575}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -964,8 +919,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f9e2d1c7b4a5e9f1a2b3c4d5e6f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Managers.GameStateManager
-  _enableLogging: 1
-  _trackMoveHistory: 1
+  enableLogging: 1
+  trackMoveHistory: 1
 --- !u!1 &977870392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,11 +1007,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 4
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 4
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1062313527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,11 +1239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 1
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 1
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1331126862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,11 +1292,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 7
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 7
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1341977969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,11 +1345,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 3
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 3
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1347757690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,7 +1667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3e8d1c2a6f4e5d9c1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridView
-  _slotViews:
+  slotViews:
   - {fileID: 482214240}
   - {fileID: 1242524256}
   - {fileID: 260482286}
@@ -1722,11 +1677,11 @@ MonoBehaviour:
   - {fileID: 371900954}
   - {fileID: 1331126866}
   - {fileID: 1867815047}
-  _tilePrefab: {fileID: 869374158336614287, guid: 13dbb9493ac73137fbfb05bf404a31e8, type: 3}
-  _tileSprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
-  _tileContainer: {fileID: 1618323019}
-  _animateTileChanges: 1
-  _animateInitialPlacement: 1
+  tilePrefab: {fileID: 869374158336614287, guid: 13dbb9493ac73137fbfb05bf404a31e8, type: 3}
+  tileSprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
+  tileContainer: {fileID: 1618323019}
+  animateTileChanges: 1
+  animateInitialPlacement: 1
 --- !u!1 &1538692362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e715cae2e0ac8641bd4835453719e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::TilesSetup
-  _tileTypes:
+  tileTypes:
   - type: 0
     count: 3
   - type: 1
@@ -1833,8 +1788,8 @@ MonoBehaviour:
     count: 1
   - type: 2
     count: 2
-  _sprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
-  _gridView: {fileID: 1504830978}
+  sprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
+  gridView: {fileID: 1504830978}
 --- !u!114 &1618323021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2335,11 +2290,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 8
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 8
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1868421641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,11 +2425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d7e1a3b5f4e6c8d1f2a3b4c5d6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.GridSlotView
-  _slotIndex: 5
-  _backgroundRenderer: {fileID: 0}
-  _normalColor: {r: 1, g: 1, b: 1, a: 0.1}
-  _highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
-  _occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
+  slotIndex: 5
+  backgroundRenderer: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.1}
+  highlightColor: {r: 1, g: 1, b: 0, a: 0.3}
+  occupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.1}
 --- !u!1 &1903898766
 GameObject:
   m_ObjectHideFlags: 0

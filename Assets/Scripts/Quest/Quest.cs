@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Core.Models;
 using Core.Logic;
+using Core.Models;
+using UnityEngine;
 
 namespace Quest
 {
     [Serializable]
     public class Quest
     {
-        public List<EntitiesToConnect> entitiesToConnectIDs = new();
-        public List<Vector2Int> pathsToDisconnectIndexes = new();
+        public List<EntitiesToConnect> entitiesToConnectIDs;
+        public List<Vector2Int> pathsToDisconnectIndexes;
 
         public Quest(List<EntitiesToConnect> entitiesToConnectIDs, List<Vector2Int> pathsToDisconnectIndexes)
         {
@@ -19,7 +19,7 @@ namespace Quest
         }
 
         /// <summary>
-        /// Checks if the quest is completed using the new Core system.
+        ///     Checks if the quest is completed using the new Core system.
         /// </summary>
         public bool CheckIfCompleted(PathNetworkState pathNetwork)
         {
@@ -38,29 +38,23 @@ namespace Quest
         }
 
         /// <summary>
-        /// Converts this Quest to the new QuestData format.
+        ///     Converts this Quest to the new QuestData format.
         /// </summary>
         public QuestData ToQuestData()
         {
             var entityGroups = new List<EntityGroup>();
 
             foreach (var group in entitiesToConnectIDs)
-            {
                 if (group.entitiesIDs.Count > 0)
-                {
                     entityGroups.Add(new EntityGroup(
                         group.entitiesIDs.ToArray(),
                         group.onlyAClump
                     ));
-                }
-            }
 
             // Convert disconnect requirements
             var disconnectRequirements = new List<DisconnectRequirement>();
             foreach (var disconnect in pathsToDisconnectIndexes)
-            {
                 disconnectRequirements.Add(new DisconnectRequirement(disconnect.x, disconnect.y));
-            }
 
             return new QuestData(entityGroups, disconnectRequirements);
         }

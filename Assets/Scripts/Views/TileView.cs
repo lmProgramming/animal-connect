@@ -1,9 +1,11 @@
 using Core.Models;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace AnimalConnect.Views
+namespace Views
 {
     /// <summary>
     ///     Visual representation of a tile.
@@ -13,25 +15,40 @@ namespace AnimalConnect.Views
     [RequireComponent(typeof(Image))]
     public class TileView : MonoBehaviour
     {
+        [FormerlySerializedAs("_image")]
         [Header("Visual Components")]
-        [SerializeField] private Image _image;
+        [SerializeField] private Image image;
 
-        [SerializeField] private TileSprites _sprites;
+        [FormerlySerializedAs("_sprites")] [SerializeField]
+        private TileSprites sprites;
 
+        [FormerlySerializedAs("_rotationDuration")]
         [Header("Animation Settings")]
-        [SerializeField] private float _rotationDuration = 0.3f;
+        [SerializeField] private float rotationDuration = 0.3f;
 
-        [SerializeField] private float _moveDuration = 0.3f;
-        [SerializeField] private Ease _rotationEase = Ease.OutCubic;
-        [SerializeField] private Ease _moveEase = Ease.OutCubic;
+        [FormerlySerializedAs("_moveDuration")] [SerializeField]
+        private float moveDuration = 0.3f;
 
+        [FormerlySerializedAs("_rotationEase")] [SerializeField]
+        private Ease rotationEase = Ease.OutCubic;
+
+        [FormerlySerializedAs("_moveEase")] [SerializeField]
+        private Ease moveEase = Ease.OutCubic;
+
+        [FormerlySerializedAs("_scaleOnInteraction")]
         [Header("Scale Effects")]
-        [SerializeField] private bool _scaleOnInteraction = true;
+        [SerializeField] private bool scaleOnInteraction = true;
 
-        [SerializeField] private float _hoverScale = 1.1f;
-        [SerializeField] private float _pressScale = 0.95f;
-        [SerializeField] private float _scaleDuration = 0.1f;
-        private Tween _currentTween;
+        [FormerlySerializedAs("_hoverScale")] [SerializeField]
+        private float hoverScale = 1.1f;
+
+        [FormerlySerializedAs("_pressScale")] [SerializeField]
+        private float pressScale = 0.95f;
+
+        [FormerlySerializedAs("_scaleDuration")] [SerializeField]
+        private float scaleDuration = 0.1f;
+
+        [CanBeNull] private Tween _currentTween;
 
         private Vector3 _normalScale = Vector3.one;
 
@@ -43,7 +60,7 @@ namespace AnimalConnect.Views
 
         private void Awake()
         {
-            if (_image == null) _image = GetComponent<Image>();
+            if (image == null) image = GetComponent<Image>();
 
             _normalScale = transform.localScale;
         }
@@ -57,7 +74,7 @@ namespace AnimalConnect.Views
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (_image == null) _image = GetComponent<Image>();
+            if (image == null) image = GetComponent<Image>();
         }
 #endif
 
@@ -68,12 +85,12 @@ namespace AnimalConnect.Views
         {
             CurrentType = type;
 
-            if (_sprites != null)
-                _image.sprite = _sprites.GetSprite(type);
+            if (sprites != null)
+                image.sprite = sprites.GetSprite(type);
             else
                 Debug.LogWarning($"TileView: No TileSprites assigned! Cannot display type {type}");
 
-            if (immediate) _image.SetNativeSize();
+            if (immediate) image.SetNativeSize();
         }
 
         /// <summary>
@@ -133,20 +150,20 @@ namespace AnimalConnect.Views
 
         private void AnimateRotation(float targetAngle)
         {
-            _currentTween?.Kill();
+            _currentTween?.Complete();
 
             _currentTween = transform
-                .DORotate(new Vector3(0, 0, targetAngle), _rotationDuration)
-                .SetEase(_rotationEase);
+                .DORotate(new Vector3(0, 0, targetAngle), rotationDuration)
+                .SetEase(rotationEase);
         }
 
         private void AnimateMove(Vector2 targetPosition)
         {
-            _currentTween?.Kill();
+            _currentTween?.Complete();
 
             _currentTween = transform
-                .DOMove(targetPosition, _moveDuration)
-                .SetEase(_moveEase);
+                .DOMove(targetPosition, moveDuration)
+                .SetEase(moveEase);
         }
 
         /// <summary>
@@ -154,11 +171,11 @@ namespace AnimalConnect.Views
         /// </summary>
         public void PlayHoverEffect()
         {
-            if (_currentTween.active) return;
+            if (_currentTween?.active ?? false) return;
 
-            _currentTween?.Kill();
+            _currentTween?.Complete();
             _currentTween = transform
-                .DOScale(_normalScale * _hoverScale, _scaleDuration)
+                .DOScale(_normalScale * hoverScale, scaleDuration)
                 .SetEase(Ease.OutCubic);
         }
 
@@ -167,11 +184,11 @@ namespace AnimalConnect.Views
         /// </summary>
         public void PlayPressEffect()
         {
-            if (!_scaleOnInteraction) return;
+            if (!scaleOnInteraction) return;
 
-            _currentTween?.Kill();
+            _currentTween?.Complete();
             _currentTween = transform
-                .DOScale(_normalScale * _pressScale, _scaleDuration)
+                .DOScale(_normalScale * pressScale, scaleDuration)
                 .SetEase(Ease.OutCubic);
         }
 
@@ -180,11 +197,11 @@ namespace AnimalConnect.Views
         /// </summary>
         public void ResetEffect()
         {
-            if (!_scaleOnInteraction) return;
+            if (!scaleOnInteraction) return;
 
-            _currentTween?.Kill();
+            _currentTween?.Complete();
             _currentTween = transform
-                .DOScale(_normalScale, _scaleDuration)
+                .DOScale(_normalScale, scaleDuration)
                 .SetEase(Ease.OutCubic);
         }
 
@@ -193,7 +210,7 @@ namespace AnimalConnect.Views
         /// </summary>
         public void PlayPopEffect()
         {
-            _currentTween?.Kill();
+            _currentTween?.Complete();
 
             var sequence = DOTween.Sequence();
             sequence.Append(transform.DOScale(_normalScale * 1.2f, 0.1f));
@@ -211,7 +228,7 @@ namespace AnimalConnect.Views
         /// </summary>
         public void SetHighlighted(bool highlighted)
         {
-            if (_image != null) _image.color = highlighted ? new Color(1f, 1f, 0.8f) : Color.white;
+            if (image != null) image.color = highlighted ? new Color(1f, 1f, 0.8f) : Color.white;
         }
 
         /// <summary>
@@ -219,11 +236,11 @@ namespace AnimalConnect.Views
         /// </summary>
         public void SetAlpha(float alpha)
         {
-            if (_image != null)
+            if (image != null)
             {
-                var color = _image.color;
+                var color = image.color;
                 color.a = Mathf.Clamp01(alpha);
-                _image.color = color;
+                image.color = color;
             }
         }
 

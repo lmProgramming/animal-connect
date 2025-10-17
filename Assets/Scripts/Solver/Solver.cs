@@ -1,34 +1,36 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Core.Models;
+using Core.Configuration;
 using Core.Logic;
+using Core.Models;
+using UnityEngine;
 
 namespace Solver
 {
     /// <summary>
-    /// Brute-force solver for Animal Connect puzzles.
-    /// Uses the new Core architecture.
+    ///     Brute-force solver for Animal Connect puzzles.
+    ///     Uses the new Core architecture.
     /// </summary>
     public class Solver : MonoBehaviour
     {
-        private DateTime _startTime;
-        private int _iterations;
-        private const int MAX_ITERATIONS = 100000;
-        private const int TIME_LIMIT_SECONDS = 10;
+        private const int MaxIterations = 100000;
+        private const int TimeLimitSeconds = 10;
 
-        private readonly TileData[] _tilesToUse = new TileData[]
+        private readonly TileData[] _tilesToUse =
         {
-            new TileData(TileType.Curve, 0),
-            new TileData(TileType.Curve, 0),
-            new TileData(TileType.Curve, 0),
-            new TileData(TileType.TwoCurves, 0),
-            new TileData(TileType.TwoCurves, 0),
-            new TileData(TileType.XIntersection, 0),
-            new TileData(TileType.Bridge, 0),
-            new TileData(TileType.Intersection, 0),
-            new TileData(TileType.Intersection, 0)
+            new(TileType.Curve),
+            new(TileType.Curve),
+            new(TileType.Curve),
+            new(TileType.TwoCurves),
+            new(TileType.TwoCurves),
+            new(TileType.XIntersection),
+            new(TileType.Bridge),
+            new(TileType.Intersection),
+            new(TileType.Intersection)
         };
+
+        private int _iterations;
+        private DateTime _startTime;
 
         public void SolveCurrentQuest()
         {
@@ -37,6 +39,7 @@ namespace Solver
                 Debug.LogError("Solver: No active quest!");
                 return;
             }
+
             SolveQuest(GameManager.Instance.Quest);
         }
 
@@ -69,26 +72,20 @@ namespace Solver
 
         private GridState ExploreFurther(int tileIndex, GridState currentGrid, List<int> freeSlots, QuestData questData)
         {
-            if ((DateTime.Now - _startTime).TotalSeconds > TIME_LIMIT_SECONDS || _iterations > MAX_ITERATIONS)
-            {
-                return null;
-            }
+            if ((DateTime.Now - _startTime).TotalSeconds > TimeLimitSeconds || _iterations > MaxIterations) return null;
 
             _iterations++;
 
-            if (tileIndex >= _tilesToUse.Length)
-            {
-                return IsWinning(currentGrid, questData) ? currentGrid : null;
-            }
+            if (tileIndex >= _tilesToUse.Length) return IsWinning(currentGrid, questData) ? currentGrid : null;
 
             var tile = _tilesToUse[tileIndex];
-            int maxRotations = GetMaxRotations(tile.Type);
+            var maxRotations = GetMaxRotations(tile.Type);
 
-            for (int i = 0; i < freeSlots.Count; i++)
+            for (var i = 0; i < freeSlots.Count; i++)
             {
-                int slot = freeSlots[i];
+                var slot = freeSlots[i];
 
-                for (int rotation = 0; rotation < maxRotations; rotation++)
+                for (var rotation = 0; rotation < maxRotations; rotation++)
                 {
                     var rotatedTile = new TileData(tile.Type, rotation);
                     var newGrid = currentGrid.WithTile(slot, rotatedTile);
@@ -104,6 +101,7 @@ namespace Solver
                         return solution;
                 }
             }
+
             return null;
         }
 
@@ -111,27 +109,28 @@ namespace Solver
         {
             var pathCalculator = new PathCalculator();
             var pathNetwork = pathCalculator.CalculatePathNetwork(grid);
-            
+
             // Get the 4 path points for this slot
-            var slotPathPoints = Core.Configuration.GridConfiguration.SlotToPathPoints[placedSlot];
+            var slotPathPoints = GridConfiguration.SlotToPathPoints[placedSlot];
 
             foreach (var pathPoint in slotPathPoints)
             {
-                int connectionCount = pathNetwork.GetConnectionCount(pathPoint);
+                var connectionCount = pathNetwork.GetConnectionCount(pathPoint);
                 if (connectionCount > 2)
                     return false;
-                if (Core.Configuration.GridConfiguration.IsEntityPoint(pathPoint) && connectionCount > 1)
+                if (GridConfiguration.IsEntityPoint(pathPoint) && connectionCount > 1)
                     return false;
             }
+
             return true;
         }
 
-        private bool IsWinning(GridState gridState, QuestData questData)
+        private static bool IsWinning(GridState gridState, QuestData questData)
         {
             var pathCalculator = new PathCalculator();
             var pathNetwork = pathCalculator.CalculatePathNetwork(gridState);
             var validator = new ConnectionValidator();
-            
+
             if (!validator.IsValid(pathNetwork))
                 return false;
 
@@ -151,10 +150,10 @@ namespace Solver
             };
         }
 
-        private void PrintSolution(GridState solution)
+        private static void PrintSolution(GridState solution)
         {
             Debug.Log("=== SOLUTION ===");
-            for (int i = 0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
             {
                 var tile = solution.GetTile(i);
                 if (tile.HasValue)
@@ -162,6 +161,7 @@ namespace Solver
                 else
                     Debug.Log($"Slot {i}: Empty");
             }
+
             Debug.Log("================");
         }
     }

@@ -19,7 +19,7 @@ namespace Quest
         [SerializeField] private GameObject entityPrefab;
 
         [SerializeField] private Transform questVisualizationHolder;
-        private readonly int[] _entityIndexesPriority = new int[12] { 4, 7, 1, 11, 8, 10, 3, 9, 5, 6, 2, 0 };
+        private readonly int[] _entityIndexesPriority = { 4, 7, 1, 11, 8, 10, 3, 9, 5, 6, 2, 0 };
 
         private readonly PathSorter _pathSorter = new();
 
@@ -87,7 +87,7 @@ namespace Quest
                 }
             }
 
-            var startingPosition = new Vector2(-(paths.Count - 1) * distanceBetweenPaths / 2, 0);
+            var startingPosition = new Vector2(-(paths.Count - 1) * distanceBetweenPaths / 2f, 0);
 
             foreach (var path in paths)
             {
@@ -267,7 +267,7 @@ namespace Quest
             arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, angleRadians);
         }
 
-        private void PointDisconnectArrow(Vector2 representantPosition, int distanceBetweenPaths,
+        private void PointDisconnectArrow(Vector2 representantPosition, int curDistanceBetweenPaths,
             Vector2 submissivePathRepresentant)
         {
             var arrow = Instantiate(arrowDisconnectPrefab, questVisualizationHolder);
@@ -446,11 +446,7 @@ namespace Quest
                         for (var i = 0; i < neighbouringSlots.Length; i++)
                             if (sortedPaths[neighbouringSlots[i]] == null)
                                 return neighbouringSlots[i];
-
-                        return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
                     }
-
-                    return FindEmptySpotNotOnEdgesPreferably(sortedPaths);
                 }
 
                 return FindEmptySpotNotOnEdgesPreferably(sortedPaths);

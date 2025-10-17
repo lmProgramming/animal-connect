@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Core.Logic;
 using Core.Models;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace AnimalConnect.Managers
+namespace Managers
 {
     /// <summary>
     ///     Manages the authoritative game state.
@@ -13,10 +14,15 @@ namespace AnimalConnect.Managers
     /// </summary>
     public class GameStateManager : MonoBehaviour
     {
+        [FormerlySerializedAs("_enableLogging")]
         [Header("Debug Options")]
-        [SerializeField] private bool _enableLogging = true;
+        [SerializeField] private bool enableLogging = true;
 
-        [SerializeField] private bool _trackMoveHistory = true;
+        [FormerlySerializedAs("_trackMoveHistory")] [SerializeField]
+        private bool trackMoveHistory = true;
+
+        // Prevent re-entrant initialization
+        private bool _isInitializing;
 
         // Current state
         private List<MoveResult> _moveHistory;
@@ -25,9 +31,6 @@ namespace AnimalConnect.Managers
         private MoveProcessor _moveProcessor;
         private PathCalculator _pathCalculator;
         private Stack<GameState> _stateStack; // For undo functionality
-
-        // Prevent re-entrant initialization
-        private bool _isInitializing = false;
 
         // Properties
         public GameState CurrentState { get; private set; }
@@ -40,7 +43,7 @@ namespace AnimalConnect.Managers
         {
             InitializeLogicComponents();
 
-            if (_trackMoveHistory)
+            if (trackMoveHistory)
             {
                 _moveHistory = new List<MoveResult>();
                 _stateStack = new Stack<GameState>();
@@ -60,12 +63,14 @@ namespace AnimalConnect.Managers
         private void InitializeLogicComponents()
         {
             _pathCalculator = new PathCalculator();
-            
+
             // MoveProcessor creates its own instances
             _moveProcessor = new MoveProcessor();
-            
+
             LogMessage("Game logic components initialized");
-        }        /// <summary>
+        }
+
+        /// <summary>
         ///     Initializes the game with a quest and starting grid configuration.
         /// </summary>
         /// <param name="quest">The quest to complete</param>
@@ -73,16 +78,16 @@ namespace AnimalConnect.Managers
         public void Initialize(QuestData quest, GridState initialGrid = null)
         {
             Debug.Log("GameStateManager.Initialize: START");
-            
+
             // Prevent re-entrant calls
             if (_isInitializing)
             {
                 Debug.LogError("GameStateManager.Initialize: Re-entrant call detected! Already initializing.");
                 return;
             }
-            
+
             _isInitializing = true;
-            
+
             try
             {
                 if (quest == null)
@@ -93,7 +98,7 @@ namespace AnimalConnect.Managers
 
                 // Create initial grid if not provided
                 if (initialGrid == null) initialGrid = new GridState();
-                Debug.Log($"GameStateManager.Initialize: Grid created");
+                Debug.Log("GameStateManager.Initialize: Grid created");
 
                 // Calculate initial path network
                 Debug.Log("GameStateManager.Initialize: About to calculate path network...");
@@ -106,7 +111,7 @@ namespace AnimalConnect.Managers
                 Debug.Log("GameStateManager.Initialize: Game state created");
 
                 // Initialize history tracking
-                if (_trackMoveHistory)
+                if (trackMoveHistory)
                 {
                     _moveHistory.Clear();
                     _stateStack.Clear();
@@ -148,7 +153,7 @@ namespace AnimalConnect.Managers
             CurrentState = result.NewState;
 
             // Track history
-            if (_trackMoveHistory)
+            if (trackMoveHistory)
             {
                 _moveHistory.Add(result);
                 _stateStack.Push(CurrentState);
@@ -167,7 +172,8 @@ namespace AnimalConnect.Managers
             }
             else
             {
-                LogMessage($"Move result - Valid: {result.Validation.IsValid}, Quest Complete: {result.QuestResult.IsComplete}");
+                LogMessage(
+                    $"Move result - Valid: {result.Validation.IsValid}, Quest Complete: {result.QuestResult.IsComplete}");
             }
 
             return result;
@@ -278,10 +284,7 @@ namespace AnimalConnect.Managers
         /// </summary>
         public ValidationResult GetCurrentValidation()
         {
-            if (CurrentState == null)
-            {
-                return new ValidationResult(new List<ValidationError>());
-            }
+            if (CurrentState == null) return new ValidationResult(new List<ValidationError>());
 
             var validator = new ConnectionValidator();
             return validator.ValidateConnections(CurrentState.Paths);
@@ -292,10 +295,7 @@ namespace AnimalConnect.Managers
         /// </summary>
         public QuestResult GetCurrentQuestResult()
         {
-            if (CurrentState == null)
-            {
-                return QuestResult.Incomplete("Game not initialized");
-            }
+            if (CurrentState == null) return QuestResult.Incomplete("Game not initialized");
 
             var evaluator = new QuestEvaluator();
             return evaluator.EvaluateQuest(CurrentState.Quest, CurrentState.Paths);
@@ -314,7 +314,7 @@ namespace AnimalConnect.Managers
 
         private void LogMessage(string message)
         {
-            if (_enableLogging) Debug.Log($"[GameStateManager] {message}");
+            if (enableLogging) Debug.Log($"[GameStateManager] {message}");
         }
 
         #region Serialization Support (Future: Save/Load)
@@ -353,7 +353,7 @@ namespace AnimalConnect.Managers
                 CurrentState = state;
 
                 // Reset history
-                if (_trackMoveHistory)
+                if (trackMoveHistory)
                 {
                     _moveHistory.Clear();
                     _stateStack.Clear();
