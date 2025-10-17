@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace Grid
 {
-    public class GridSlot : MonoBehaviour
+    public class GridSlot : MonoBehaviour, IGridSlot
     {
         [SerializeField] private Tile tile;
-        public PathPoint[] pathPoints = new PathPoint[4];
 
         [SerializeField] private Vector2Int gridPosition;
         [SerializeField] private Vector2 position;
@@ -18,15 +17,20 @@ namespace Grid
             position = transform.position;
         }
 
-        public Tile GetTile()
+        public IPathPoint[] PathPoints { get; set; }
+
+        public ITile GetTile()
         {
             return tile;
         }
 
-        public void UpdateTile(Tile newTile)
+        public void UpdateTile(ITile newTile)
         {
-            newTile.slot = this;
-            tile = newTile;
+            if (newTile is Tile concreteTile)
+            {
+                concreteTile.slot = this;
+                tile = concreteTile;
+            }
         }
 
         public void RemovedTile()
@@ -45,7 +49,20 @@ namespace Grid
             return position;
         }
 
-        public void UpdateConnections(MyGrid grid)
+        // Legacy method for backward compatibility
+        public Tile GetTileConcrete()
+        {
+            return tile;
+        }
+
+        // Legacy method for backward compatibility
+        public void UpdateTileConcrete(Tile newTile)
+        {
+            newTile.slot = this;
+            tile = newTile;
+        }
+
+        public void UpdateConnections(MyGrid myGrid)
         {
             if (tile != null)
             {
@@ -59,28 +76,28 @@ namespace Grid
 
                 foreach (var connection in connectionsCopy)
                 {
-                    var pathNum = pathPoints[connection[0]].pathNum;
+                    var pathNum = PathPoints[connection[0]].PathNum;
 
                     // Debug.Log(connection[0]);
 
                     if (pathNum == -1)
                     {
-                        pathNum = grid.GetNewPathNumber();
-                        pathPoints[connection[0]].UpdatePathNum(pathNum);
+                        pathNum = myGrid.GetNewPathNumber();
+                        PathPoints[connection[0]].UpdatePathNum(pathNum);
                     }
 
-                    pathPoints[connection[0]].RaiseConnectionsNumber();
+                    PathPoints[connection[0]].RaiseConnectionsNumber();
 
                     for (var i = 1; i < connection.Count; i++)
                     {
                         // Debug.Log(connection[i]);
 
-                        pathPoints[connection[i]].RaiseConnectionsNumber();
+                        PathPoints[connection[i]].RaiseConnectionsNumber();
 
-                        if (pathPoints[connection[i]].pathNum >= 0 && pathPoints[connection[i]].pathNum != pathNum)
-                            grid.MergePaths(pathNum, pathPoints[connection[i]].pathNum);
+                        if (PathPoints[connection[i]].PathNum >= 0 && PathPoints[connection[i]].PathNum != pathNum)
+                            myGrid.MergePaths(pathNum, PathPoints[connection[i]].PathNum);
                         else
-                            pathPoints[connection[i]].UpdatePathNum(pathNum);
+                            PathPoints[connection[i]].UpdatePathNum(pathNum);
                     }
                 }
             }

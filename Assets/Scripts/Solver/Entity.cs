@@ -3,10 +3,13 @@ using System;
 namespace Solver
 {
     [Serializable]
-    public class Entity
+    public class Entity : IEntity
     {
         public int entityIndex;
         public PathPoint pathPoint;
+
+        public int EntityIndex => entityIndex;
+        public IPathPoint PathPoint => pathPoint;
 
         public Entity(int entityIndex, PathPoint pathPoint)
         {

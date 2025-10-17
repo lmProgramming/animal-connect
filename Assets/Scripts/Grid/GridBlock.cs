@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Grid
 {
     [Serializable]
-    public class GridBlock
+    public class GridBlock : IGridBlock
     {
-        public List<List<int>> Connections;
+        public List<List<int>> Connections { get; set; }
 
         public GridBlock()
         {

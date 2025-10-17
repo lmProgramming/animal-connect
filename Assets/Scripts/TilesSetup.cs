@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using Grid;
 using Other;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TilesSetup : MonoBehaviour
 {
     [SerializeField] private Tile[] tiles;
 
-    [SerializeField] private MyGrid grid;
+    [FormerlySerializedAs("grid")] [SerializeField]
+    private MyGrid myGrid;
 
     [SerializeField] private TileSprites sprites;
 
@@ -47,7 +49,7 @@ public class TilesSetup : MonoBehaviour
 
             availableIndexes.Remove(index);
 
-            grid.gridSlots[index].UpdateTile(tile);
+            myGrid.gridSlots[index].UpdateTile(tile);
             tile.ResetPosition();
 
             var rotations = Random.Range(0, 3);

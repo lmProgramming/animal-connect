@@ -3,6 +3,7 @@ using Solver;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public sealed class GameManager : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public sealed class GameManager : MonoBehaviour
 
     [SerializeField] private Entity[] entities;
 
-    [SerializeField] private MyGrid grid;
+    [FormerlySerializedAs("grid")] [SerializeField]
+    private MyGrid myGrid;
 
     [SerializeField] private TilesSetup tilesSetup;
 
@@ -20,12 +22,9 @@ public sealed class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        
+
         // Ensure grid is initialized before anything else
-        if (grid != null)
-        {
-            grid.Initialize();
-        }
+        if (myGrid != null) myGrid.Initialize();
     }
 
     private void Start()
@@ -35,14 +34,11 @@ public sealed class GameManager : MonoBehaviour
 
     private void SetupEntities()
     {
-        var pathPoints = grid.pathPoints;
-        
+        var pathPoints = myGrid.PathPoints;
+
         // Ensure entities array is properly sized
-        if (entities == null || entities.Length != 12)
-        {
-            entities = new Entity[12];
-        }
-        
+        if (entities == null || entities.Length != 12) entities = new Entity[12];
+
         // Initialize entities at their starting path points
         // Using proper entity IDs (not all 0 like the initial solver version)
         entities[0] = new Entity(0, pathPoints[0]);
@@ -57,7 +53,7 @@ public sealed class GameManager : MonoBehaviour
         entities[9] = new Entity(9, pathPoints[20]);
         entities[10] = new Entity(10, pathPoints[16]);
         entities[11] = new Entity(11, pathPoints[12]);
-        
+
         // Mark entity path points with their entity indices
         pathPoints[0].entityIndex = 0;
         pathPoints[1].entityIndex = 1;
@@ -89,12 +85,12 @@ public sealed class GameManager : MonoBehaviour
 
     public bool CheckIfWon()
     {
-        return grid.CheckIfValidPaths() && Quest.CheckIfCompleted(entities);
+        return myGrid.CheckIfValidPaths() && Quest.CheckIfCompleted(entities);
     }
 
     public void MoveMade()
     {
-        grid.RecalculatePathConnections();
+        myGrid.RecalculatePathConnections();
 
         if (CheckIfWon()) Won();
     }

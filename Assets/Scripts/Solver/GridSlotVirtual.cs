@@ -1,64 +1,48 @@
+using Grid;
+using UnityEngine;
+
 namespace Solver
 {
-    public class GridSlotVirtual
+    /// <summary>
+    ///     Virtual grid slot implementation for testing without Unity dependencies
+    /// </summary>
+    public class GridSlotVirtual : IGridSlot
     {
-        public readonly PathPoint[] PathPoints = new PathPoint[4];
+        private readonly Vector2Int _gridPosition;
+        private readonly Vector2 _position;
         public TileVirtual Tile;
 
-        public void UpdateTile(TileVirtual newTile)
+        public GridSlotVirtual(int x, int y)
         {
-            Tile = newTile;
-
-            // UpdateConnections();
+            _gridPosition = new Vector2Int(x, y);
+            _position = new Vector2(x, y);
         }
 
-        //public void UpdateConnections()
-        //{
-        //    if (tile != null)
-        //    {
-        //        GridBlock gridBlock = tile.gridBlock;
+        public IPathPoint[] PathPoints { get; set; } = new IPathPoint[4];
 
-        //        List<List<int>> connectionsCopy = new List<List<int>>();
-        //        for (int i = 0; i < tile.gridBlock.connections.Count; i++)
-        //        {
-        //            connectionsCopy.Add(new List<int>());
-        //            for (int j = 0; j < tile.gridBlock.connections[i].Count; j++)
-        //            {
-        //                connectionsCopy[i].Add((tile.gridBlock.connections[i][j] + tile.rotations) % 4);
-        //            }
-        //        }
+        public ITile GetTile()
+        {
+            return Tile;
+        }
 
-        //        foreach (var connection in connectionsCopy)
-        //        {
-        //            int pathNum = pathPoints[connection[0]].pathNum;
+        public void UpdateTile(ITile newTile)
+        {
+            if (newTile is TileVirtual virtualTile) Tile = virtualTile;
+        }
 
-        //            // Debug.Log(connection[0]);
+        public void RemovedTile()
+        {
+            Tile = null;
+        }
 
-        //            if (pathNum == -1)
-        //            {
-        //                pathNum = GameManager.Instance.GetNewPathNumber();
-        //                pathPoints[connection[0]].UpdatePathNum(pathNum);
-        //            }
+        public Vector2Int GetGridPosition()
+        {
+            return _gridPosition;
+        }
 
-        //            pathPoints[connection[0]].RaiseConnectionsNumber();
-
-        //            for (int i = 1; i < connection.Count; i++)
-        //            {
-        //                // Debug.Log(connection[i]);
-
-        //                pathPoints[connection[i]].RaiseConnectionsNumber();
-
-        //                if (pathPoints[connection[i]].pathNum >= 0 && pathPoints[connection[i]].pathNum != pathNum)
-        //                {
-        //                    GameManager.Instance.MergePaths(pathNum, pathPoints[connection[i]].pathNum);
-        //                }
-        //                else
-        //                {
-        //                    pathPoints[connection[i]].UpdatePathNum(pathNum);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+        public Vector2 GetPosition()
+        {
+            return _position;
+        }
     }
 }
