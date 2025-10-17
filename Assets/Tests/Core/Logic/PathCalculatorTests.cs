@@ -277,22 +277,22 @@ namespace Tests.Core.Logic
         #region ValidateTilePlacement
         
         [Test]
-        public void ValidateTilePlacement_ValidPlacement_ReturnsTrue()
+        public void ValidateTilePlacement_SingleTile_ReturnsFalse()
         {
-            // Arrange - Place a curve that doesn't create invalid connections
+            // Arrange - Place a single curve that creates dead-ends
             var tile = new TileData(TileType.Curve, 0);
             
             // Act
             bool isValid = _calculator.ValidateTilePlacement(_emptyGrid, 0, tile);
             
             // Assert
-            Assert.IsTrue(isValid);
+            Assert.IsFalse(isValid, "Single tile creates dead-ends, violating 'road in, road out' rule");
         }
         
         [Test]
-        public void ValidateTilePlacement_WouldCreateValidConnections_ReturnsTrue()
+        public void ValidateTilePlacement_TwoConnectedCurves_ReturnsFalse()
         {
-            // Arrange - Create a scenario where tiles connect properly
+            // Arrange - Two curves that connect but still have dead-ends at endpoints
             var grid = _emptyGrid.WithTile(0, new TileData(TileType.Curve, 0));
             var newTile = new TileData(TileType.Curve, 1);
             
@@ -300,7 +300,26 @@ namespace Tests.Core.Logic
             bool isValid = _calculator.ValidateTilePlacement(grid, 3, newTile);
             
             // Assert
-            Assert.IsTrue(isValid);
+            Assert.IsFalse(isValid, "Endpoints still have dead-ends");
+        }
+        
+        [Test]
+        public void ValidateTilePlacement_ClosedLoop_ReturnsTrue()
+        {
+            // Arrange - Create a closed loop where all internal points have 2 connections
+            // This requires 4 curves forming a square around the edges
+            var grid = _emptyGrid
+                .WithTile(0, new TileData(TileType.Curve, 0))  // Top-left: connects top to right
+                .WithTile(1, new TileData(TileType.Curve, 1))  // Top-right: connects right to bottom
+                .WithTile(4, new TileData(TileType.Curve, 2)); // Middle: connects bottom to left
+            
+            var newTile = new TileData(TileType.Curve, 3);    // Connects left to top, completing loop
+            
+            // Act
+            bool isValid = _calculator.ValidateTilePlacement(grid, 3, newTile);
+            
+            // Assert
+            Assert.IsTrue(isValid, "Closed loop with all points having 2 connections is valid");
         }
         
         #endregion
