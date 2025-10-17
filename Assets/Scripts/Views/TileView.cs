@@ -228,5 +228,36 @@ namespace AnimalConnect.Views
         }
 
         #endregion
+
+        #region Drag Interaction Support
+
+        /// <summary>
+        /// Called when drag starts on this tile.
+        /// </summary>
+        public void OnDragStart()
+        {
+            PlayPressEffect();
+            SetAlpha(0.8f);
+        }
+
+        /// <summary>
+        /// Called when drag ends on this tile.
+        /// </summary>
+        public void OnDragEnd()
+        {
+            ResetEffect();
+            SetAlpha(1f);
+        }
+
+        /// <summary>
+        /// Resets tile position to its assigned slot.
+        /// </summary>
+        public void ResetPosition()
+        {
+            // This will be called by GridView to snap back to slot position
+            // The actual position is managed by GridView's UpdateFromState
+        }
+
+        #endregion
     }
 }

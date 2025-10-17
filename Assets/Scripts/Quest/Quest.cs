@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Solver;
 using UnityEngine;
+using Core.Models;
+using Core.Logic;
 
 namespace Quest
 {
@@ -17,39 +18,51 @@ namespace Quest
             this.pathsToDisconnectIndexes = pathsToDisconnectIndexes;
         }
 
-        public bool CheckIfCompleted(Entity[] entities)
+        /// <summary>
+        /// Checks if the quest is completed using the new Core system.
+        /// </summary>
+        public bool CheckIfCompleted(PathNetworkState pathNetwork)
         {
-            var entitiesToConnectIDsPathNums = new int[entitiesToConnectIDs.Count];
-
-            if (entitiesToConnectIDs.Count == 0) Debug.LogError("Empty quest");
-
-            for (var i = 0; i < entitiesToConnectIDs.Count; i++)
+            if (pathNetwork == null)
             {
-                if (entitiesToConnectIDs[i].onlyAClump) continue;
-
-                var pathNum = entities[entitiesToConnectIDs[i].entitiesIDs[0]].pathPoint.pathNum;
-                entitiesToConnectIDsPathNums[i] = pathNum;
-
-                if (pathNum == -1)
-                    if (entitiesToConnectIDs[i].entitiesIDs.Count > 1)
-                        return false;
-
-                for (var j = 1; j < entitiesToConnectIDs[i].entitiesIDs.Count; j++)
-                    if (entities[entitiesToConnectIDs[i].entitiesIDs[j]].pathPoint.pathNum != pathNum)
-                        return false;
+                Debug.LogError("Quest: PathNetworkState is null!");
+                return false;
             }
 
-            for (var i = 0; i < pathsToDisconnectIndexes.Count; i++)
+            // Convert this Quest to QuestData and use QuestEvaluator
+            var questData = ToQuestData();
+            var evaluator = new QuestEvaluator();
+            var result = evaluator.EvaluateQuest(questData, pathNetwork);
+
+            return result.IsComplete;
+        }
+
+        /// <summary>
+        /// Converts this Quest to the new QuestData format.
+        /// </summary>
+        public QuestData ToQuestData()
+        {
+            var entityGroups = new List<EntityGroup>();
+
+            foreach (var group in entitiesToConnectIDs)
             {
-                var entitiesPathInd1PathNum = entitiesToConnectIDsPathNums[pathsToDisconnectIndexes[i].x];
-                var entitiesPathInd2PathNum = entitiesToConnectIDsPathNums[pathsToDisconnectIndexes[i].y];
-                if (entitiesPathInd1PathNum == entitiesPathInd2PathNum && entitiesPathInd1PathNum != -1 &&
-                    entitiesPathInd2PathNum != -1) return false;
+                if (group.entitiesIDs.Count > 0)
+                {
+                    entityGroups.Add(new EntityGroup(
+                        group.entitiesIDs.ToArray(),
+                        group.onlyAClump
+                    ));
+                }
             }
 
-            // Debug.Log("YAY");
+            // Convert disconnect requirements
+            var disconnectRequirements = new List<DisconnectRequirement>();
+            foreach (var disconnect in pathsToDisconnectIndexes)
+            {
+                disconnectRequirements.Add(new DisconnectRequirement(disconnect.x, disconnect.y));
+            }
 
-            return true;
+            return new QuestData(entityGroups, disconnectRequirements);
         }
     }
 }

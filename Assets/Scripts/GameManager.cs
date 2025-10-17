@@ -1,19 +1,23 @@
-using Grid;
-using Solver;
+using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using AnimalConnect.Managers;
+using AnimalConnect.Views;
+using Core.Models;
 
 public sealed class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] private Entity[] entities;
-
-    [SerializeField] private MyGrid grid;
-
-    [SerializeField] private TilesSetup tilesSetup;
-
+    [Header("Core Systems")]
+    [SerializeField] private GameStateManager _stateManager;
+    [SerializeField] private GridView _gridView;
+    
+    [Header("Setup")]
+    [SerializeField] private TilesSetup _tilesSetup;
+    
+    [Header("Quest")]
     [field: SerializeField]
     public Quest.Quest Quest { get; private set; }
 
@@ -21,88 +25,85 @@ public sealed class GameManager : MonoBehaviour
     {
         Instance = this;
         
-        // Ensure grid is initialized before anything else
-        if (grid != null)
+        // Subscribe to state manager events
+        if (_stateManager != null)
         {
-            grid.Initialize();
+            _stateManager.OnStateChanged += OnGameStateChanged;
+            _stateManager.OnGameWon += OnGameWon;
+        }
+        else
+        {
+            Debug.LogError("GameManager: GameStateManager not assigned!");
         }
     }
-
-    private void Start()
+    
+    private void OnDestroy()
     {
-        SetupEntities();
-    }
-
-    private void SetupEntities()
-    {
-        var pathPoints = grid.pathPoints;
-        
-        // Ensure entities array is properly sized
-        if (entities == null || entities.Length != 12)
+        // Unsubscribe from events
+        if (_stateManager != null)
         {
-            entities = new Entity[12];
+            _stateManager.OnStateChanged -= OnGameStateChanged;
+            _stateManager.OnGameWon -= OnGameWon;
         }
-        
-        // Initialize entities at their starting path points
-        // Using proper entity IDs (not all 0 like the initial solver version)
-        entities[0] = new Entity(0, pathPoints[0]);
-        entities[1] = new Entity(1, pathPoints[1]);
-        entities[2] = new Entity(2, pathPoints[2]);
-        entities[3] = new Entity(3, pathPoints[15]);
-        entities[4] = new Entity(4, pathPoints[19]);
-        entities[5] = new Entity(5, pathPoints[23]);
-        entities[6] = new Entity(6, pathPoints[11]);
-        entities[7] = new Entity(7, pathPoints[10]);
-        entities[8] = new Entity(8, pathPoints[9]);
-        entities[9] = new Entity(9, pathPoints[20]);
-        entities[10] = new Entity(10, pathPoints[16]);
-        entities[11] = new Entity(11, pathPoints[12]);
-        
-        // Mark entity path points with their entity indices
-        pathPoints[0].entityIndex = 0;
-        pathPoints[1].entityIndex = 1;
-        pathPoints[2].entityIndex = 2;
-        pathPoints[15].entityIndex = 3;
-        pathPoints[19].entityIndex = 4;
-        pathPoints[23].entityIndex = 5;
-        pathPoints[11].entityIndex = 6;
-        pathPoints[10].entityIndex = 7;
-        pathPoints[9].entityIndex = 8;
-        pathPoints[20].entityIndex = 9;
-        pathPoints[16].entityIndex = 10;
-        pathPoints[12].entityIndex = 11;
     }
 
     public void SetupQuest(Quest.Quest quest)
     {
         Quest = quest;
-
         StartPuzzle();
     }
 
     private void StartPuzzle()
     {
-        UIManager.Instance.questVisualizer.GenerateVisualization(Quest);
-
-        tilesSetup.Setup();
+        // Convert Quest to QuestData
+        var questData = ConvertQuestToQuestData(Quest);
+        
+        // Setup tiles and initialize game state
+        if (_tilesSetup != null)
+        {
+            _tilesSetup.Setup(_stateManager, questData);
+        }
+        else
+        {
+            Debug.LogError("GameManager: TilesSetup not assigned!");
+        }
+        
+        // Update UI
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.questVisualizer.GenerateVisualization(Quest);
+        }
     }
-
-    public bool CheckIfWon()
+    
+    private QuestData ConvertQuestToQuestData(Quest.Quest quest)
     {
-        return grid.CheckIfValidPaths() && Quest.CheckIfCompleted(entities);
+        // Convert Quest to QuestData using entity groups
+        var entityGroups = new List<EntityGroup>();
+        
+        // TODO: This needs to be implemented based on your Quest structure
+        // For now, create a simple example quest
+        // You'll need to extract the actual entity requirements from your Quest object
+        
+        // Example: Connect entities 0, 1, 2 together
+        entityGroups.Add(new EntityGroup(new[] { 0, 1, 2 }, false));
+        
+        return new QuestData(entityGroups);
     }
-
-    public void MoveMade()
+    
+    private void OnGameStateChanged(GameState newState)
     {
-        grid.RecalculatePathConnections();
-
-        if (CheckIfWon()) Won();
+        // Update grid view
+        if (_gridView != null)
+        {
+            _gridView.UpdateFromState(newState);
+        }
+        
+        Debug.Log($"State updated - Move {newState.MoveCount}");
     }
-
-    public void Won()
+    
+    private void OnGameWon(GameState winningState)
     {
-        Debug.Log("WON");
-
+        Debug.Log("🎉 GAME WON!");
         ReloadScene();
     }
 

@@ -9,6 +9,7 @@
 ## Executive Summary
 
 We have successfully created a clean, testable Core architecture (Phases 1-5). Now we need to:
+
 1. **Replace** old MonoBehaviour-based game logic with new Core logic
 2. **Migrate** Unity scene references from old to new systems
 3. **Remove** deprecated `Scripts/Grid/` classes
@@ -24,18 +25,21 @@ We have successfully created a clean, testable Core architecture (Phases 1-5). N
 ### ✅ What We Have (Already Complete)
 
 **Core System (No Unity Dependencies):**
+
 - ✅ `Core/Models/` - TileData, GridState, GameState, PathNetworkState, QuestData
 - ✅ `Core/Logic/` - PathCalculator, ConnectionValidator, MoveProcessor, QuestEvaluator
 - ✅ `Core/Configuration/` - GridConfiguration
 - ✅ `Core/DataStructures/` - UnionFind (optimized path merging)
 
 **Unity Adapters (Created but not fully integrated):**
+
 - ✅ `Managers/GameStateManager.cs` - State management bridge
 - ✅ `Views/GridView.cs` - Visual grid representation
 - ✅ `Views/TileView.cs` - Visual tile representation
 - ✅ `Views/GridSlotView.cs` - Visual slot representation
 
 **Migration Tools:**
+
 - ✅ `Migration/ConversionUtilities.cs` - Convert between old/new systems
 - ✅ `Migration/SystemAdapter.cs` - Bridge for backward compatibility
 - ✅ `Migration/MigrationValidator.cs` - Validate equivalence
@@ -43,6 +47,7 @@ We have successfully created a clean, testable Core architecture (Phases 1-5). N
 ### 🗑️ What Needs to Be Removed
 
 **Old Grid System (`Scripts/Grid/`):**
+
 - ❌ `MyGrid.cs` - Old grid management (190 lines)
 - ❌ `GridSlot.cs` - Old slot with game logic (93 lines)
 - ❌ `Tile.cs` - Old tile with game logic (130 lines)
@@ -53,12 +58,14 @@ We have successfully created a clean, testable Core architecture (Phases 1-5). N
 - ❌ `TileVirtual.cs` - Solver-specific (not needed)
 
 **Old Game Manager Logic:**
+
 - ❌ Direct references to MyGrid singleton
 - ❌ Manual path recalculation calls
 - ❌ Entity array management
 - ❌ Win condition checking logic
 
 **Old Input System:**
+
 - ❌ `TileDragger.cs` - Singleton-based (112 lines, needs refactor)
 
 ---
@@ -282,6 +289,7 @@ public void ResetPosition()
 ```
 
 **Acceptance Criteria:**
+
 - [ ] Click = rotate (< 0.2s interaction)
 - [ ] Drag = swap (> 0.2s interaction)
 - [ ] Visual feedback during drag
@@ -407,6 +415,7 @@ public class GameManager : MonoBehaviour
 ```
 
 **Key Changes:**
+
 - ✅ Removed direct MyGrid reference
 - ✅ Uses GameStateManager for state
 - ✅ Uses events instead of polling
@@ -414,6 +423,7 @@ public class GameManager : MonoBehaviour
 - ✅ Cleaner separation of concerns
 
 **Acceptance Criteria:**
+
 - [ ] No references to old Grid classes
 - [ ] Uses event-driven architecture
 - [ ] Game loop works identically
@@ -474,6 +484,7 @@ public class TilesSetup : MonoBehaviour
 ```
 
 **Acceptance Criteria:**
+
 - [ ] Creates initial grid state
 - [ ] Works with new TileData
 - [ ] No references to old Tile MonoBehaviour
@@ -511,6 +522,7 @@ public class TilesSetup : MonoBehaviour
    - Remove TileDragger singleton
 
 **Scene Hierarchy (Before):**
+
 ```
 MainGame
 ├── GameManager (GameManager, MyGrid, TileDragger, TilesSetup)
@@ -523,6 +535,7 @@ MainGame
 ```
 
 **Scene Hierarchy (After):**
+
 ```
 MainGame
 ├── GameManager (GameManager, TilesSetup)
@@ -539,6 +552,7 @@ MainGame
 #### Step 6.4.2: Update Prefabs
 
 **TileView Prefab:**
+
 ```
 Create: Assets/Prefabs/TileView.prefab
 - Image component
@@ -548,6 +562,7 @@ Create: Assets/Prefabs/TileView.prefab
 ```
 
 **Acceptance Criteria:**
+
 - [ ] Scene loads without errors
 - [ ] All references wired correctly
 - [ ] Prefabs updated
@@ -600,6 +615,7 @@ private void ValidateCurrentState()
 ```
 
 **Acceptance Criteria:**
+
 - [ ] All game states match between systems
 - [ ] Path calculations identical
 - [ ] Win conditions identical
@@ -633,6 +649,7 @@ private void ValidateCurrentState()
    - `TileDragger.cs`
 
 **Commands:**
+
 ```bash
 # Backup first!
 git checkout -b backup-before-cleanup
@@ -650,6 +667,7 @@ git commit -m "Remove deprecated Grid classes - replaced by Core architecture"
 ```
 
 **Acceptance Criteria:**
+
 - [ ] All old classes removed
 - [ ] Game still works
 - [ ] No compilation errors
@@ -704,6 +722,7 @@ namespace Quest
 ```
 
 **Acceptance Criteria:**
+
 - [ ] Old Quest objects converted to QuestData
 - [ ] Quest completion checked via QuestEvaluator
 - [ ] Works with existing quest definitions
@@ -819,16 +838,19 @@ git checkout -b main
 ## Timeline
 
 ### Day 1 (3 hours)
+
 - ✅ Morning: Phase 6.1 - Input Handler
 - ✅ Afternoon: Phase 6.2 - GameManager integration
 - ✅ Evening: Phase 6.3 - TilesSetup
 
 ### Day 2 (3 hours)
+
 - ✅ Morning: Phase 6.4 - Unity scene updates
 - ✅ Afternoon: Phase 6.5 - Validation testing
 - ✅ Evening: Phase 6.6 - Remove old code
 
 ### Buffer (1 hour)
+
 - Phase 6.7 - Quest integration polish
 - Documentation updates
 - Final testing
@@ -840,12 +862,14 @@ git checkout -b main
 ### Step-by-Step Checklist
 
 #### Preparation
+
 - [ ] Backup current project
 - [ ] Create migration branch: `git checkout -b unity-migration`
 - [ ] Run all existing tests
 - [ ] Document current behavior (video recording)
 
 #### Implementation
+
 - [ ] 6.1 Create TileInputHandler
 - [ ] 6.2 Update GameManager
 - [ ] 6.3 Update TilesSetup
@@ -855,6 +879,7 @@ git checkout -b main
 - [ ] 6.7 Update Quest integration
 
 #### Validation
+
 - [ ] All tests pass
 - [ ] No console errors
 - [ ] Game plays identically
@@ -862,6 +887,7 @@ git checkout -b main
 - [ ] Code review complete
 
 #### Deployment
+
 - [ ] Merge to main: `git merge unity-migration`
 - [ ] Tag release: `git tag v2.0-refactored`
 - [ ] Update documentation
@@ -965,6 +991,7 @@ This migration will transform Animal Connect from a prototype to a production-re
 **Estimated ROI:** 4-6 hours investment → 20+ hours saved in future development
 
 **Risk Assessment:** Medium (requires Unity scene work) but mitigated by:
+
 - Comprehensive testing
 - Parallel systems validation
 - Clear rollback plan

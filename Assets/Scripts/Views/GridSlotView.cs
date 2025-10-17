@@ -51,7 +51,7 @@ namespace AnimalConnect.Views
         /// <summary>
         /// Sets whether this slot is highlighted (e.g., during drag operations).
         /// </summary>
-        public void SetHighlighted(bool highlighted)
+        public void SetHighlight(bool highlighted)
         {
             _isHighlighted = highlighted;
             UpdateVisuals();

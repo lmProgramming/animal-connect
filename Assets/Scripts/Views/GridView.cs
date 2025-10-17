@@ -267,7 +267,7 @@ namespace AnimalConnect.Views
         {
             if (slot >= 0 && slot < _slotViews.Length && _slotViews[slot] != null)
             {
-                _slotViews[slot].SetHighlighted(highlight);
+                _slotViews[slot].SetHighlight(highlight);
             }
         }
 
@@ -280,7 +280,7 @@ namespace AnimalConnect.Views
             {
                 if (_slotViews[i] != null)
                 {
-                    _slotViews[i].SetHighlighted(false);
+                    _slotViews[i].SetHighlight(false);
                 }
             }
         }
@@ -299,6 +299,30 @@ namespace AnimalConnect.Views
         public bool IsSlotOccupied(int slot)
         {
             return _tileViews.ContainsKey(slot);
+        }
+
+        /// <summary>
+        /// Gets the GridSlotView at the specified index.
+        /// </summary>
+        public GridSlotView GetSlotView(int slot)
+        {
+            if (slot >= 0 && slot < _slotViews.Length)
+            {
+                return _slotViews[slot];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the TileView at the specified slot, if any.
+        /// </summary>
+        public TileView GetTileViewAtSlot(int slot)
+        {
+            if (_tileViews.TryGetValue(slot, out var tileView))
+            {
+                return tileView;
+            }
+            return null;
         }
 
 #if UNITY_EDITOR

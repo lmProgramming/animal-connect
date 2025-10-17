@@ -1,14 +1,21 @@
-using Solver;
 using UnityEngine;
 
+/// <summary>
+/// Visual representation of an entity (animal).
+/// TODO: Update to work with new Core system.
+/// Currently disabled - entities are managed in QuestData.
+/// </summary>
 public class EntityVisual : MonoBehaviour
 {
-    public string entityName;
+    [SerializeField] private string entityName;
+    [SerializeField] private int entityId;
 
-    public Entity entity;
-
+    // TODO: Integrate with new PathNetworkState
+    // Old Entity/PathPoint system has been removed
+    
     private void Awake()
     {
-        entity.pathPoint = GetComponent<PathPoint>();
+        // Disabled until integrated with new system
+        Debug.LogWarning("EntityVisual: Old system disabled. Needs integration with Core.Models.QuestData");
     }
-}
+}//

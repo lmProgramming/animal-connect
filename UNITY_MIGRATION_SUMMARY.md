@@ -59,6 +59,7 @@ Views/
 **Purpose:** Replace TileDragger singleton
 
 **Key Features:**
+
 - Click (< 0.2s) = Rotate tile
 - Drag (> 0.2s) = Swap tiles
 - Visual feedback during interaction
@@ -67,6 +68,7 @@ Views/
 ### 2. Update GameManager (1 hour)
 
 **Changes:**
+
 - Remove `MyGrid` reference → Add `GameStateManager`
 - Remove manual `RecalculatePathConnections()` → Automatic via events
 - Remove entity array management → Part of GameState
@@ -75,6 +77,7 @@ Views/
 ### 3. Update TilesSetup (30 min)
 
 **Changes:**
+
 - Create `TileData` objects instead of `Tile` MonoBehaviours
 - Build `GridState` instead of manipulating scene objects
 - Initialize via `GameStateManager.Initialize()`
@@ -99,6 +102,7 @@ InputHandler (new, handles input)
 ```
 
 **Steps:**
+
 1. Add GameStateManager component to scene
 2. Add TileInputHandler component to scene
 3. Convert GridSlots → GridSlotViews
@@ -109,6 +113,7 @@ InputHandler (new, handles input)
 ### 5. Validate (30 min)
 
 **Use MigrationValidator:**
+
 - Temporarily keep both systems
 - Compare outputs after each move
 - Verify identical behavior
@@ -117,12 +122,14 @@ InputHandler (new, handles input)
 ### 6. Remove Old Code (30 min)
 
 **Delete:**
+
 ```bash
 rm -rf Assets/Scripts/Grid/
 rm Assets/Scripts/TileDragger.cs
 ```
 
 **Verify:**
+
 - Game still works
 - No compilation errors
 - All tests pass
@@ -132,17 +139,20 @@ rm Assets/Scripts/TileDragger.cs
 ## ✅ Benefits After Migration
 
 ### Performance
+
 - **222x faster** path merging (O(1) vs O(n²))
 - No garbage collection spikes
 - Smooth 60 FPS gameplay
 
 ### Code Quality
+
 - **90%+ test coverage** of core logic
 - **Zero Unity dependencies** in game logic
 - **Zero singletons** in new code
 - Clear separation of concerns
 
 ### Future Features Unlocked
+
 - **Undo/Redo:** Already supported (GameStateManager tracks history)
 - **Save/Load:** State is serializable
 - **Hints:** Preview moves without executing
