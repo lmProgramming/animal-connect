@@ -26,6 +26,9 @@ namespace AnimalConnect.Managers
         private PathCalculator _pathCalculator;
         private Stack<GameState> _stateStack; // For undo functionality
 
+        // Prevent re-entrant initialization
+        private bool _isInitializing = false;
+
         // Properties
         public GameState CurrentState { get; private set; }
 
@@ -69,33 +72,58 @@ namespace AnimalConnect.Managers
         /// <param name="initialGrid">Optional initial grid state. If null, starts with empty grid.</param>
         public void Initialize(QuestData quest, GridState initialGrid = null)
         {
-            if (quest == null)
+            Debug.Log("GameStateManager.Initialize: START");
+            
+            // Prevent re-entrant calls
+            if (_isInitializing)
             {
-                Debug.LogError("Cannot initialize GameStateManager with null quest!");
+                Debug.LogError("GameStateManager.Initialize: Re-entrant call detected! Already initializing.");
                 return;
             }
-
-            // Create initial grid if not provided
-            if (initialGrid == null) initialGrid = new GridState();
-
-            // Calculate initial path network
-            var initialPaths = _pathCalculator.CalculatePathNetwork(initialGrid);
-
-            // Create initial game state
-            CurrentState = new GameState(initialGrid, initialPaths, quest);
-
-            // Initialize history tracking
-            if (_trackMoveHistory)
+            
+            _isInitializing = true;
+            
+            try
             {
-                _moveHistory.Clear();
-                _stateStack.Clear();
-                _stateStack.Push(CurrentState);
+                if (quest == null)
+                {
+                    Debug.LogError("Cannot initialize GameStateManager with null quest!");
+                    return;
+                }
+
+                // Create initial grid if not provided
+                if (initialGrid == null) initialGrid = new GridState();
+                Debug.Log($"GameStateManager.Initialize: Grid created");
+
+                // Calculate initial path network
+                Debug.Log("GameStateManager.Initialize: About to calculate path network...");
+                var initialPaths = _pathCalculator.CalculatePathNetwork(initialGrid);
+                Debug.Log("GameStateManager.Initialize: Path network calculated");
+
+                // Create initial game state
+                Debug.Log("GameStateManager.Initialize: Creating game state...");
+                CurrentState = new GameState(initialGrid, initialPaths, quest);
+                Debug.Log("GameStateManager.Initialize: Game state created");
+
+                // Initialize history tracking
+                if (_trackMoveHistory)
+                {
+                    _moveHistory.Clear();
+                    _stateStack.Clear();
+                    _stateStack.Push(CurrentState);
+                }
+
+                LogMessage("Game initialized with quest");
+
+                // Notify listeners
+                Debug.Log("GameStateManager.Initialize: About to invoke OnStateChanged...");
+                OnStateChanged?.Invoke(CurrentState);
+                Debug.Log("GameStateManager.Initialize: COMPLETE");
             }
-
-            LogMessage("Game initialized with quest");
-
-            // Notify listeners
-            OnStateChanged?.Invoke(CurrentState);
+            finally
+            {
+                _isInitializing = false;
+            }
         }
 
         /// <summary>

@@ -60,8 +60,10 @@ public class TilesSetup : MonoBehaviour
 
         Debug.Log($"TilesSetup: Generated puzzle in {attempts} attempt(s)");
 
+        Debug.Log("TilesSetup: About to call stateManager.Initialize...");
         // Initialize the game state with the generated grid
         stateManager.Initialize(questData, validGrid);
+        Debug.Log("TilesSetup: stateManager.Initialize completed!");
         
         // Update the grid view
         if (_gridView != null)

@@ -79,9 +79,9 @@ namespace AnimalConnect.Views
         /// <summary>
         ///     Sets the tile rotation (0-3 for 90-degree increments).
         /// </summary>
-        public void SetRotation(int rotation, bool animate = true)
+        public void SetRotation(int rotation, bool animate = false)
         {
-            rotation = rotation % 4; // Ensure 0-3 range
+            rotation %= 4; // Ensure 0-3 range
             CurrentRotation = rotation;
 
             var targetAngle = -rotation * 90f; // Negative for clockwise
@@ -125,7 +125,7 @@ namespace AnimalConnect.Views
         public void Initialize(TileType type, int rotation, Vector2 position)
         {
             SetType(type, true);
-            SetRotation(rotation, false);
+            SetRotation(rotation);
             SetPosition(position, false);
         }
 
@@ -232,7 +232,7 @@ namespace AnimalConnect.Views
         #region Drag Interaction Support
 
         /// <summary>
-        /// Called when drag starts on this tile.
+        ///     Called when drag starts on this tile.
         /// </summary>
         public void OnDragStart()
         {
@@ -241,7 +241,7 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Called when drag ends on this tile.
+        ///     Called when drag ends on this tile.
         /// </summary>
         public void OnDragEnd()
         {
@@ -250,7 +250,7 @@ namespace AnimalConnect.Views
         }
 
         /// <summary>
-        /// Resets tile position to its assigned slot.
+        ///     Resets tile position to its assigned slot.
         /// </summary>
         public void ResetPosition()
         {

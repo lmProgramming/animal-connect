@@ -103,6 +103,12 @@ namespace Quest
 
             while (entitiesToAdd > 0)
             {
+                if (availableEntitiesIDs.Count == 0)
+                {
+                    Debug.LogError($"QuestGenerator: Ran out of available entities! Needed {entitiesToAdd} more entities.");
+                    break;
+                }
+                
                 var entityToAdd = MathExt.RandomPullFrom(availableEntitiesIDs);
 
                 entitiesToConnect.entitiesIDs.Add(entityToAdd);

@@ -3,7 +3,6 @@ using AnimalConnect.Managers;
 using AnimalConnect.Views;
 using Core.Models;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace AnimalConnect.Input
 {
@@ -54,7 +53,7 @@ namespace AnimalConnect.Input
             if (_mainCamera == null || _gridView == null) return;
 
             // Skip if pointer is over UI
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+            // if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
             HandleInput();
         }

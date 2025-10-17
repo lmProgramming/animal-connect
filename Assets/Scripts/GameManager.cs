@@ -90,12 +90,25 @@ public sealed class GameManager : MonoBehaviour
         return new QuestData(entityGroups);
     }
     
+    private static int _stateChangeCallCount = 0;
+    
     private void OnGameStateChanged(GameState newState)
     {
+        _stateChangeCallCount++;
+        Debug.Log($"OnGameStateChanged called (count: {_stateChangeCallCount})");
+        
+        if (_stateChangeCallCount > 100)
+        {
+            Debug.LogError("INFINITE LOOP DETECTED: OnGameStateChanged called more than 100 times!");
+            return;
+        }
+        
         // Update grid view
         if (_gridView != null)
         {
+            Debug.Log($"Updating GridView from state...");
             _gridView.UpdateFromState(newState);
+            Debug.Log($"GridView update complete");
         }
         
         Debug.Log($"State updated - Move {newState.MoveCount}");
