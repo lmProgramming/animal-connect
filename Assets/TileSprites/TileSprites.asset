@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9b5c1d2e3f4a6e7c8d9f1a2b3c4d5e, type: 3}
   m_Name: TileSprites
   m_EditorClassIdentifier: Main::AnimalConnect.Views.TileSprites
-  _curveSprite: {fileID: 21300000, guid: 9a80a32e571e98a47af8eea3f9774bdb, type: 3}
-  _twoCurvesSprite: {fileID: 21300000, guid: 48bc7b86af6bc5b49bc99af20f57f76e, type: 3}
-  _intersectionSprite: {fileID: 21300000, guid: 98e63912e6aa1e64c813014d183101c6, type: 3}
-  _xIntersectionSprite: {fileID: 21300000, guid: 08eb4565ff5178145822ef2a5fc84968, type: 3}
-  _bridgeSprite: {fileID: 21300000, guid: 03f58241190a42f469832284d4404833, type: 3}
-  _defaultSprite: {fileID: 0}
+  curveSprite: {fileID: 21300000, guid: 9a80a32e571e98a47af8eea3f9774bdb, type: 3}
+  twoCurvesSprite: {fileID: 21300000, guid: 48bc7b86af6bc5b49bc99af20f57f76e, type: 3}
+  intersectionSprite: {fileID: 21300000, guid: 98e63912e6aa1e64c813014d183101c6, type: 3}
+  xIntersectionSprite: {fileID: 21300000, guid: 08eb4565ff5178145822ef2a5fc84968, type: 3}
+  bridgeSprite: {fileID: 21300000, guid: 03f58241190a42f469832284d4404833, type: 3}
+  defaultSprite: {fileID: 0}

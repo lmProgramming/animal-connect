@@ -135,13 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1c6d2e3a4f5e7d8c9f1a2b3c4d5e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Views.TileView
-  _image: {fileID: 6917148710961647907}
-  _sprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
-  _rotationDuration: 0.3
-  _moveDuration: 0.3
-  _rotationEase: 9
-  _moveEase: 9
-  _scaleOnInteraction: 1
-  _hoverScale: 1.1
-  _pressScale: 0.95
-  _scaleDuration: 0.1
+  image: {fileID: 6917148710961647907}
+  sprites: {fileID: 11400000, guid: 5593d4ee90247d6c79a705578ab1911c, type: 2}
+  rotationDuration: 0.3
+  moveDuration: 0.3
+  rotationEase: 9
+  moveEase: 9
+  scaleOnInteraction: 1
+  hoverScale: 1.1
+  pressScale: 0.95
+  scaleDuration: 0.1
+  <CurrentRotation>k__BackingField: 0
