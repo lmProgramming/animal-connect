@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Views
 {
@@ -10,21 +9,19 @@ namespace Views
     /// </summary>
     public class GridSlotView : MonoBehaviour
     {
-        [FormerlySerializedAs("_slotIndex")]
         [Header("Slot Configuration")]
         [SerializeField] private int slotIndex = -1;
 
-        [FormerlySerializedAs("_backgroundRenderer")]
         [Header("Visual Feedback (Optional)")]
         [SerializeField] private SpriteRenderer backgroundRenderer;
 
-        [FormerlySerializedAs("_normalColor")] [SerializeField]
+        [SerializeField]
         private Color normalColor = new(1f, 1f, 1f, 0.1f);
 
-        [FormerlySerializedAs("_highlightColor")] [SerializeField]
+        [SerializeField]
         private Color highlightColor = new(1f, 1f, 0f, 0.3f);
 
-        [FormerlySerializedAs("_occupiedColor")] [SerializeField]
+        [SerializeField]
         private Color occupiedColor = new(0.5f, 0.5f, 0.5f, 0.1f);
 
         private bool _isHighlighted;

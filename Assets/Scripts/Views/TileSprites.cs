@@ -1,6 +1,5 @@
 using Core.Models;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Views
 {
@@ -11,23 +10,21 @@ namespace Views
     [CreateAssetMenu(fileName = "TileSprites", menuName = "Animal Connect/Tile Sprites", order = 1)]
     public class TileSprites : ScriptableObject
     {
-        [FormerlySerializedAs("_curveSprite")]
         [Header("Tile Sprites")]
         [SerializeField] private Sprite curveSprite;
 
-        [FormerlySerializedAs("_twoCurvesSprite")] [SerializeField]
+        [SerializeField]
         private Sprite twoCurvesSprite;
 
-        [FormerlySerializedAs("_intersectionSprite")] [SerializeField]
+        [SerializeField]
         private Sprite intersectionSprite;
 
-        [FormerlySerializedAs("_xIntersectionSprite")] [SerializeField]
+        [SerializeField]
         private Sprite xIntersectionSprite;
 
-        [FormerlySerializedAs("_bridgeSprite")] [SerializeField]
+        [SerializeField]
         private Sprite bridgeSprite;
 
-        [FormerlySerializedAs("_defaultSprite")]
         [Header("Optional: Default Sprite")]
         [SerializeField] private Sprite defaultSprite;
 

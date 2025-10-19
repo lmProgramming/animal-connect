@@ -1,19 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI
 {
     public class UICurvedArrow : MonoBehaviour
     {
-        [FormerlySerializedAs("Point1")] public GameObject point1;
-        [FormerlySerializedAs("Point2")] public Transform point2;
-        [FormerlySerializedAs("Point3")] public GameObject point3;
-        public LineRenderer linerenderer;
+        public GameObject point1;
+        public Transform point2;
+        public GameObject point3;
+        public LineRenderer lineRenderer;
         public int vertexCount = 12;
         public float point2YPositionBias = 2;
 
-        // Update is called once per frame
         private void Update()
         {
             point2.transform.position = new Vector3((point1.transform.position.x + point3.transform.position.x) / 2,
@@ -30,8 +28,8 @@ namespace UI
                 pointList.Add(curve);
             }
 
-            linerenderer.positionCount = pointList.Count;
-            linerenderer.SetPositions(pointList.ToArray());
+            lineRenderer.positionCount = pointList.Count;
+            lineRenderer.SetPositions(pointList.ToArray());
         }
     }
 }

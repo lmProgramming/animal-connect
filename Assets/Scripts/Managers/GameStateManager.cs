@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.Logic;
 using Core.Models;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Managers
 {
@@ -14,11 +13,10 @@ namespace Managers
     /// </summary>
     public class GameStateManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_enableLogging")]
         [Header("Debug Options")]
         [SerializeField] private bool enableLogging = true;
 
-        [FormerlySerializedAs("_trackMoveHistory")] [SerializeField]
+        [SerializeField]
         private bool trackMoveHistory = true;
 
         // Prevent re-entrant initialization

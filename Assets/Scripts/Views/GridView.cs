@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Core.Models;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Views
@@ -13,25 +12,22 @@ namespace Views
     /// </summary>
     public class GridView : MonoBehaviour
     {
-        [FormerlySerializedAs("_slotViews")]
         [Header("Grid Configuration")]
         [SerializeField] private GridSlotView[] slotViews = new GridSlotView[9];
 
-        [FormerlySerializedAs("_tilePrefab")]
         [Header("Tile Configuration")]
         [SerializeField] private TileView tilePrefab;
 
-        [FormerlySerializedAs("_tileSprites")] [SerializeField]
+        [SerializeField]
         private TileSprites tileSprites;
 
-        [FormerlySerializedAs("_tileContainer")] [SerializeField]
+        [SerializeField]
         private Transform tileContainer;
 
-        [FormerlySerializedAs("_animateTileChanges")]
         [Header("Animation Settings")]
         [SerializeField] private bool animateTileChanges = true;
 
-        [FormerlySerializedAs("_animateInitialPlacement")] [SerializeField]
+        [SerializeField]
         private bool animateInitialPlacement;
 
         private readonly Dictionary<int, TileView> _tileViews = new();

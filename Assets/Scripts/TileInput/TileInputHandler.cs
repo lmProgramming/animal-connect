@@ -2,7 +2,6 @@ using System;
 using Core.Models;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Views;
 
 namespace TileInput
@@ -14,27 +13,24 @@ namespace TileInput
     /// </summary>
     public class TileInputHandler : MonoBehaviour
     {
-        [FormerlySerializedAs("_stateManager")]
         [Header("Dependencies")]
         [SerializeField] private GameStateManager stateManager;
 
-        [FormerlySerializedAs("_gridView")] [SerializeField]
+        [SerializeField]
         private GridView gridView;
 
-        [FormerlySerializedAs("_mainCamera")] [SerializeField]
+        [SerializeField]
         private Camera mainCamera;
 
-        [FormerlySerializedAs("_tapTimeThreshold")]
         [Header("Input Settings")]
         [SerializeField] private float tapTimeThreshold = 0.2f; // Max time for tap vs drag
 
-        [FormerlySerializedAs("_dragDistanceThreshold")] [SerializeField]
+        [SerializeField]
         private float dragDistanceThreshold = 0.5f; // Min distance to be considered a drag
 
-        [FormerlySerializedAs("_enableVisualFeedback")] [SerializeField]
+        [SerializeField]
         private bool enableVisualFeedback = true;
 
-        [FormerlySerializedAs("_logInputEvents")]
         [Header("Debug")]
         [SerializeField] private bool logInputEvents;
 

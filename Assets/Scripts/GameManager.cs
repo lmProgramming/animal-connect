@@ -5,7 +5,6 @@ using TileInput;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Views;
 
 public sealed class GameManager : MonoBehaviour
@@ -14,17 +13,15 @@ public sealed class GameManager : MonoBehaviour
 
     private static int _stateChangeCallCount;
 
-    [FormerlySerializedAs("_stateManager")]
     [Header("Core Systems")]
     [SerializeField] private GameStateManager stateManager;
 
-    [FormerlySerializedAs("_gridView")] [SerializeField]
+    [SerializeField]
     private GridView gridView;
 
-    [FormerlySerializedAs("_inputHandler")] [SerializeField]
+    [SerializeField]
     private TileInputHandler inputHandler;
 
-    [FormerlySerializedAs("_tilesSetup")]
     [Header("Setup")]
     [SerializeField] private TilesSetup tilesSetup;
 

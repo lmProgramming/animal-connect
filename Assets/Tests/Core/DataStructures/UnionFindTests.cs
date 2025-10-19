@@ -16,7 +16,7 @@ namespace Tests.Core.DataStructures
         private UnionFind _unionFind;
 
         [Test]
-        public void Constructor_InitializesAllElementsAsSeperateSets()
+        public void Constructor_InitializesAllElementsAsSeparateSets()
         {
             // Arrange & Act
             var uf = new UnionFind(5);

@@ -2,7 +2,6 @@ using Core.Models;
 using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Views
@@ -15,37 +14,32 @@ namespace Views
     [RequireComponent(typeof(Image))]
     public class TileView : MonoBehaviour
     {
-        [FormerlySerializedAs("_image")]
+        private const float MoveDuration = 0.3f;
+
+        private const Ease RotationEase = Ease.OutCubic;
+
         [Header("Visual Components")]
         [SerializeField] private Image image;
 
-        [FormerlySerializedAs("_sprites")] [SerializeField]
+        [SerializeField]
         private TileSprites sprites;
 
-        [FormerlySerializedAs("_rotationDuration")]
         [Header("Animation Settings")]
         [SerializeField] private float rotationDuration = 0.3f;
 
-        [FormerlySerializedAs("_moveDuration")] [SerializeField]
-        private float moveDuration = 0.3f;
-
-        [FormerlySerializedAs("_rotationEase")] [SerializeField]
-        private Ease rotationEase = Ease.OutCubic;
-
-        [FormerlySerializedAs("_moveEase")] [SerializeField]
+        [SerializeField]
         private Ease moveEase = Ease.OutCubic;
 
-        [FormerlySerializedAs("_scaleOnInteraction")]
         [Header("Scale Effects")]
         [SerializeField] private bool scaleOnInteraction = true;
 
-        [FormerlySerializedAs("_hoverScale")] [SerializeField]
+        [SerializeField]
         private float hoverScale = 1.1f;
 
-        [FormerlySerializedAs("_pressScale")] [SerializeField]
+        [SerializeField]
         private float pressScale = 0.95f;
 
-        [FormerlySerializedAs("_scaleDuration")] [SerializeField]
+        [SerializeField]
         private float scaleDuration = 0.1f;
 
         [Header("Logic Debug")]
@@ -158,7 +152,7 @@ namespace Views
 
             _currentTween = transform
                 .DORotate(new Vector3(0, 0, targetAngle), rotationDuration)
-                .SetEase(rotationEase);
+                .SetEase(RotationEase);
         }
 
         private void AnimateMove(Vector2 targetPosition)
@@ -166,7 +160,7 @@ namespace Views
             _currentTween?.Complete();
 
             _currentTween = transform
-                .DOMove(targetPosition, moveDuration)
+                .DOMove(targetPosition, MoveDuration)
                 .SetEase(moveEase);
         }
 

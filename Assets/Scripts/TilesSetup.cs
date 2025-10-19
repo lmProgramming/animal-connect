@@ -5,21 +5,17 @@ using Core.Logic;
 using Core.Models;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Views;
 using Random = UnityEngine.Random;
 
 public class TilesSetup : MonoBehaviour
 {
-    [FormerlySerializedAs("_tileTypes")]
     [Header("Tile Configuration")]
     [SerializeField] private TileTypeEntry[] tileTypes;
 
-    [FormerlySerializedAs("_sprites")]
     [Header("Sprites")]
     [SerializeField] private TileSprites sprites;
 
-    [FormerlySerializedAs("_gridView")]
     [Header("Grid View")]
     [SerializeField] private GridView gridView;
 
