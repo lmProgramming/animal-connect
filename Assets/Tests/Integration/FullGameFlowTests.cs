@@ -112,7 +112,7 @@ namespace Tests.Integration
                 .WithTile(7, new TileData(TileType.TwoCurves))
                 .WithTile(8, new TileData(TileType.TwoCurves, 1));
 
-            var quest = new QuestData(new[] { new EntityGroup(new[] { 8, 0 }), new EntityGroup(new[] { 4, 10 }) },
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 8, 0 }), new EntityGroup(new[] { 3, 9 }) },
                 new[] { new DisconnectRequirement(0, 1) });
             var paths = _calculator.CalculatePathNetwork(grid);
             var gameState = new GameState(grid, paths, quest);
@@ -133,7 +133,7 @@ namespace Tests.Integration
             Assert.IsTrue(questResult.IsSuccessful, "Quest should be successfully completed");
 
             // Should be valid but not win
-            var move2 = Move.Rotate(8, 1);
+            var move2 = Move.Swap(0, 7);
             var result2 = _processor.ProcessMove(gameState, move2);
 
             gameState = result2.NewState;
