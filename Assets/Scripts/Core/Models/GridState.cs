@@ -259,7 +259,7 @@ namespace Core.Models
             return (rotation % 2) switch
             {
                 0 => ("  ║  ", "══╝╔═", "  ╱  "), // Top-Left and Right-Bottom curves ╔═ ╚═
-                1 => ("  ╲  ", "═╗╚══", "  ║  "), // Left-Top and Right-Bottom curves (rotated 90)
+                1 => ("  ║  ", "═╗╚══", "  ╲  "), // Left-Top and Right-Bottom curves (rotated 90)
                 _ => throw new InvalidProgramException()
             };
         }

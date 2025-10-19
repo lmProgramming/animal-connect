@@ -22,15 +22,12 @@ namespace Tests.Integration
         [Test]
         public void CompleteGame_FromStartToWin_WorksCorrectly()
         {
-            // todo: fix this test and pretty print wrong rotations
             // Arrange - Set up a simple winnable game
             var grid = new GridState()
                 .WithTile(0, new TileData(TileType.Curve, 3)) // Top-left
                 .WithTile(1, new TileData(TileType.Intersection, 2)) // Top-center
                 .WithTile(2, new TileData(TileType.Curve, 2)) // Top-right
                 .FillEmptyWith(new TileData(TileType.Empty));
-
-            // var x = grid.ToPrettyString();
 
             var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
             var paths = _calculator.CalculatePathNetwork(grid);
@@ -98,6 +95,54 @@ namespace Tests.Integration
 
             // Verify grid state is consistent
             Assert.AreEqual(3, result3.NewState.Grid.TileCount, "Should still have 3 tiles");
+        }
+
+        [Test]
+        public void ComplexQuest_FullGame()
+        {
+            // Arrange - Set up a simple winnable game
+            var grid = new GridState()
+                .WithTile(0, new TileData(TileType.XIntersection))
+                .WithTile(1, new TileData(TileType.Curve, 2))
+                .WithTile(2, new TileData(TileType.Curve))
+                .WithTile(3, new TileData(TileType.Intersection, 2))
+                .WithTile(4, new TileData(TileType.Curve))
+                .WithTile(5, new TileData(TileType.Intersection, 2))
+                .WithTile(6, new TileData(TileType.Bridge))
+                .WithTile(7, new TileData(TileType.TwoCurves))
+                .WithTile(8, new TileData(TileType.TwoCurves, 1));
+
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 8, 0 }), new EntityGroup(new[] { 4, 10 }) },
+                new[] { new DisconnectRequirement(0, 1) });
+            var paths = _calculator.CalculatePathNetwork(grid);
+            var gameState = new GameState(grid, paths, quest);
+
+            // Act - Perform moves to win
+            var move1 = Move.Rotate(8, 0);
+            var result1 = _processor.ProcessMove(gameState, move1);
+
+            gameState = result1.NewState;
+
+            // Assert - Game progresses correctly
+            Assert.IsTrue(result1.IsValid, "Move should be valid");
+            Assert.AreEqual(1, gameState.MoveCount, "Move count should increment");
+
+            Assert.IsTrue(result1.IsLegalMove, "Move should create legal connections");
+
+            var questResult = _evaluator.EvaluateQuest(gameState.Quest, gameState.Paths);
+            Assert.IsTrue(questResult.IsSuccessful, "Quest should be successfully completed");
+
+            // Should be valid but not win
+            var move2 = Move.Rotate(8, 1);
+            var result2 = _processor.ProcessMove(gameState, move2);
+
+            gameState = result2.NewState;
+
+            Assert.IsTrue(result2.IsValid, "Second move should be valid");
+            Assert.AreEqual(2, gameState.MoveCount, "Move count should be 2 after second move");
+
+            questResult = _evaluator.EvaluateQuest(gameState.Quest, gameState.Paths);
+            Assert.IsFalse(questResult.IsSuccessful, "Quest should be now not completed");
         }
 
         [Test]

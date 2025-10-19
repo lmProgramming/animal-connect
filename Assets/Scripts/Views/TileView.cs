@@ -99,7 +99,9 @@ namespace Views
             newRotation %= 4; // Ensure 0-3 range
             CurrentRotation = newRotation;
 
-            var targetAngle = -newRotation * 90f; // Negative for clockwise
+            var targetAngle = 360f - newRotation * 90f; // Negative for clockwise
+            Debug.Log(transform.rotation.eulerAngles.z);
+            Debug.Log(targetAngle);
 
             if (animate && Application.isPlaying)
                 AnimateRotation(targetAngle);
