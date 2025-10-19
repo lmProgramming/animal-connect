@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Core.DataStructures;
 using Core.Logic;
 using Core.Models;
 using NUnit.Framework;
@@ -11,15 +12,56 @@ namespace Tests.Performance
         [Test]
         public void PathCalculation_Performance_IsFasterThanTarget()
         {
-            // TODO: Benchmark against old system when available
-            Assert.Pass("Performance benchmarks - to be implemented");
+            // Arrange
+            var calculator = new PathCalculator();
+            var grid = new GridState();
+
+            // Create a moderately complex grid
+            grid = grid.WithTile(0, new TileData(TileType.Curve));
+            grid = grid.WithTile(1, new TileData(TileType.Bridge));
+            grid = grid.WithTile(2, new TileData(TileType.Intersection, 1));
+            grid = grid.WithTile(3, new TileData(TileType.Curve, 2));
+            grid = grid.WithTile(4, new TileData(TileType.XIntersection));
+            grid = grid.WithTile(5, new TileData(TileType.Bridge, 1));
+
+            // Act & Measure - Run multiple times to get average
+            var stopwatch = Stopwatch.StartNew();
+            for (var i = 0; i < 1000; i++) calculator.CalculatePathNetwork(grid);
+            stopwatch.Stop();
+
+            var averageMs = stopwatch.ElapsedMilliseconds / 1000.0;
+
+            // Assert - Each calculation should take less than 1ms on average
+            Assert.Less(averageMs, 1.0,
+                $"Path calculation took {averageMs:F3}ms on average, should be under 1ms");
         }
 
         [Test]
         public void UnionFind_Performance_IsNearConstantTime()
         {
-            // TODO: Benchmark UnionFind operations
-            Assert.Pass("Performance benchmarks - to be implemented");
+            // Arrange
+            var unionFind = new UnionFind(1000);
+
+            // Act & Measure - Time union operations
+            var stopwatch = Stopwatch.StartNew();
+
+            // Perform many union operations
+            for (var i = 0; i < 999; i++) unionFind.Union(i, i + 1);
+
+            // Perform many find operations
+            for (var i = 0; i < 1000; i++) unionFind.Find(i);
+
+            stopwatch.Stop();
+
+            // Assert - Should complete in under 10ms due to path compression
+            Assert.Less(stopwatch.ElapsedMilliseconds, 10,
+                $"UnionFind operations took {stopwatch.ElapsedMilliseconds}ms, should be under 10ms");
+
+            // Verify path compression worked - all should point to same root
+            var root = unionFind.Find(0);
+            for (var i = 1; i < 1000; i++)
+                Assert.AreEqual(root, unionFind.Find(i),
+                    "All elements should be in the same set after chaining unions");
         }
 
         [Test]

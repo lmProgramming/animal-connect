@@ -48,6 +48,7 @@ namespace Core.Models
                 TileType.Intersection => new[] { new Connection(0, 1, 2) }, // Top, Right, Bottom (T-junction)
                 TileType.XIntersection => new[] { new Connection(0, 1, 2, 3) }, // All 4 sides
                 TileType.Bridge => new[] { new Connection(0, 2), new Connection(1, 3) }, // Two separate straight paths
+                TileType.Empty => Array.Empty<Connection>(),
                 _ => Array.Empty<Connection>()
             };
         }
@@ -61,6 +62,7 @@ namespace Core.Models
                 TileType.Intersection => 4,
                 TileType.XIntersection => 1,
                 TileType.Bridge => 2,
+                TileType.Empty => 0,
                 _ => 4
             };
         }
@@ -94,49 +96,5 @@ namespace Core.Models
         {
             return $"{Type}(R{Rotation})";
         }
-    }
-
-    /// <summary>
-    ///     Represents a connection between tile sides.
-    ///     Sides are numbered: 0=top, 1=right, 2=bottom, 3=left
-    /// </summary>
-    [Serializable]
-    public struct Connection
-    {
-        public IReadOnlyList<int> ConnectedSides { get; }
-
-        public Connection(params int[] sides)
-        {
-            ConnectedSides = sides.ToList();
-        }
-
-        /// <summary>
-        ///     Applies rotation to this connection.
-        ///     Each side index is rotated clockwise by rotation * 90 degrees.
-        /// </summary>
-        public Connection WithRotation(int rotation)
-        {
-            var rotatedSides = ConnectedSides
-                .Select(side => (side + rotation) % 4)
-                .ToArray();
-            return new Connection(rotatedSides);
-        }
-
-        public override string ToString()
-        {
-            return $"[{string.Join(",", ConnectedSides)}]";
-        }
-    }
-
-    /// <summary>
-    ///     Tile types matching the original game.
-    /// </summary>
-    public enum TileType
-    {
-        Curve, // 90-degree turn
-        TwoCurves, // S-shape (two separate curves)
-        Intersection, // T-junction (connects 3 sides)
-        XIntersection, // Cross (connects all 4 sides)
-        Bridge // Two straight paths crossing (two separate connections)
     }
 }

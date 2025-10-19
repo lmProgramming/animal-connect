@@ -177,7 +177,7 @@ namespace Core.Logic
     /// <summary>
     ///     Result of quest evaluation.
     /// </summary>
-    public struct QuestResult
+    public readonly struct QuestResult
     {
         public bool IsComplete { get; }
         public bool IsSuccessful { get; }
@@ -214,7 +214,7 @@ namespace Core.Logic
     /// <summary>
     ///     Detailed status information for UI display.
     /// </summary>
-    public struct QuestStatus
+    public readonly struct QuestStatus
     {
         public IReadOnlyList<GroupStatus> GroupStatuses { get; }
         public IReadOnlyList<DisconnectStatus> DisconnectStatuses { get; }

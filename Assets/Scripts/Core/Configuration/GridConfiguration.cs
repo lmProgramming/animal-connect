@@ -9,12 +9,29 @@ namespace Core.Configuration
     ///     3 | 4 | 5
     ///     ---------
     ///     6 | 7 | 8
+    /// 
     ///     Path Points (numbered 0-23, arranged around grid perimeter):
     ///     Top edge: 0, 1, 2
     ///     Right edge: 15, 19, 23
     ///     Bottom edge: 11, 10, 9
     ///     Left edge: 12, 16, 20
     ///     Interior connections: 13, 14, 17, 18, 21, 22, 3, 4, 5, 6, 7, 8
+    /// 
+    ///     Path Points Grid Layout:
+    ///     ...0    1    2
+    ///     12   13   14   15
+    ///     ...3    4    5
+    ///     16   17   18   19
+    ///     ...6    7    8
+    ///     20   21   22   23
+    ///     ...9   10   11
+    /// 
+    ///     Entities Grid Layout:
+    ///     .....E0   E1    E2
+    ///     E11 ...   ...   ... E3
+    ///     E10 ...   ...   ... E4
+    ///     E9  ...   ...   ... E5
+    ///     .....E8   E7    E6
     /// </summary>
     public static class GridConfiguration
     {

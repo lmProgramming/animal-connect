@@ -48,13 +48,14 @@ namespace Views
         [FormerlySerializedAs("_scaleDuration")] [SerializeField]
         private float scaleDuration = 0.1f;
 
+        [field: SerializeField]
+        public int CurrentRotation { get; private set; }
+
         [CanBeNull] private Tween _currentTween;
 
         private Vector3 _normalScale = Vector3.one;
 
         public TileType CurrentType { get; private set; }
-
-        public int CurrentRotation { get; private set; }
 
         public int SlotIndex { get; set; } = -1;
 
@@ -96,12 +97,12 @@ namespace Views
         /// <summary>
         ///     Sets the tile rotation (0-3 for 90-degree increments).
         /// </summary>
-        public void SetRotation(int rotation, bool animate = false)
+        public void SetRotation(int newRotation, bool animate = false)
         {
-            rotation %= 4; // Ensure 0-3 range
-            CurrentRotation = rotation;
+            newRotation %= 4; // Ensure 0-3 range
+            CurrentRotation = newRotation;
 
-            var targetAngle = -rotation * 90f; // Negative for clockwise
+            var targetAngle = -newRotation * 90f; // Negative for clockwise
 
             if (animate && Application.isPlaying)
                 AnimateRotation(targetAngle);

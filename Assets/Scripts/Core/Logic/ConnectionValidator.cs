@@ -85,13 +85,10 @@ namespace Core.Logic
                 // All invalid connection counts on non-entity points are errors
                 // Dead-ends (1 connection) violate the "road goes in, road goes out" rule
                 if (connectionCount == 1)
-                {
-                    message = $"Non-entity path point {pathPoint} has dead-end (1 connection), must have 0 or 2 (road in, road out)";
-                }
+                    message =
+                        $"Non-entity path point {pathPoint} has dead-end (1 connection), must have 0 or 2 (road in, road out)";
                 else
-                {
                     message = $"Non-entity path point {pathPoint} has {connectionCount} connections, must have 0 or 2";
-                }
             }
 
             return new ValidationError(pathPoint, message, severity);
@@ -101,7 +98,7 @@ namespace Core.Logic
     /// <summary>
     ///     Result of connection validation.
     /// </summary>
-    public struct ValidationResult
+    public readonly struct ValidationResult
     {
         public IReadOnlyList<ValidationError> Errors { get; }
 
@@ -131,7 +128,7 @@ namespace Core.Logic
     /// <summary>
     ///     Represents a validation error.
     /// </summary>
-    public struct ValidationError
+    public readonly struct ValidationError
     {
         public int PathPoint { get; }
         public string Message { get; }

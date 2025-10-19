@@ -172,7 +172,7 @@ namespace Core.Logic
     ///     Complete result of processing a move.
     ///     Contains all information about what happened.
     /// </summary>
-    public struct MoveResult
+    public readonly struct MoveResult
     {
         public GameState NewState { get; }
         public Move Move { get; }

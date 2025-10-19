@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Core.Models
 {
@@ -170,6 +171,122 @@ namespace Core.Models
             }
 
             return string.Join("\n", rows);
+        }
+
+        public GridState FillEmptyWith(TileData tileData)
+        {
+            var newTiles = (TileData?[])_tiles.Clone();
+            for (var i = 0; i < TotalSlots; i++) newTiles[i] ??= tileData;
+
+            return new GridState(newTiles);
+        }
+
+        /// <summary>
+        ///     Returns a pretty-printed graphical representation of the grid.
+        ///     Each tile is displayed as a 3x3 character block showing its connections and rotation.
+        /// </summary>
+        public string ToPrettyString()
+        {
+            var result = new StringBuilder();
+            var horizontalSeparator = "+" + string.Join("+", Enumerable.Repeat("-----", GridSize)) + "+\n";
+
+            result.Append(horizontalSeparator);
+
+            for (var row = 0; row < GridSize; row++)
+            {
+                // Each tile is represented in 3 lines
+                var line1 = new string[GridSize];
+                var line2 = new string[GridSize];
+                var line3 = new string[GridSize];
+
+                for (var col = 0; col < GridSize; col++)
+                {
+                    var tile = GetTile(col, row);
+                    var (l1, l2, l3) = GetTileGraphic(tile);
+                    line1[col] = l1;
+                    line2[col] = l2;
+                    line3[col] = l3;
+                }
+
+                result.Append("│" + string.Join("│", line1) + "│\n");
+                result.Append("│" + string.Join("│", line2) + "│\n");
+                result.Append("│" + string.Join("│", line3) + "│\n");
+                result.Append(horizontalSeparator);
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
+        ///     Returns a 3-line graphical representation of a tile showing its connections.
+        /// </summary>
+        private static (string line1, string line2, string line3) GetTileGraphic(TileData? tile)
+        {
+            if (!tile.HasValue)
+                return ("     ", "     ", "     ");
+
+            var t = tile.Value;
+            var rotation = t.Rotation;
+
+            return t.Type switch
+            {
+                TileType.Curve => GetCurveGraphic(rotation),
+                TileType.TwoCurves => GetTwoCurvesGraphic(rotation),
+                TileType.Intersection => GetIntersectionGraphic(rotation),
+                TileType.XIntersection => GetXIntersectionGraphic(),
+                TileType.Bridge => GetBridgeGraphic(rotation),
+                TileType.Empty => ("     ", "     ", "     "),
+                _ => ("  ?  ", " ??? ", "  ?  ")
+            };
+        }
+
+        private static (string, string, string) GetCurveGraphic(int rotation)
+        {
+            return (rotation % 4) switch
+            {
+                0 => ("     ", "  ╔══", "  ║  "), // Right to Bottom
+                1 => ("     ", "══╗  ", "  ║  "),
+                2 => ("  ║  ", "══╝  ", "     "),
+                3 => ("  ║  ", "  ╚══", "     "),
+                _ => throw new InvalidProgramException()
+            };
+        }
+
+        private static (string, string, string) GetTwoCurvesGraphic(int rotation)
+        {
+            return (rotation % 2) switch
+            {
+                0 => ("  ║  ", "══╝╚═", "     "), // Top-Left and Right-Bottom curves
+                1 => ("     ", "══╗╔═", "  ║  "), // Left-Top and Right-Bottom curves (rotated 90)
+                _ => throw new InvalidProgramException()
+            };
+        }
+
+        private static (string, string, string) GetIntersectionGraphic(int rotation)
+        {
+            return (rotation % 4) switch
+            {
+                0 => ("  ║  ", "  ╠══", "  ║  "), // T-junction: Top, Right, Bottom
+                1 => ("     ", "══╬══", "  ║  "), // T-junction: Left, Right, Bottom
+                2 => ("  ║  ", "══╣  ", "  ║  "), // T-junction: Top, Left, Bottom
+                3 => ("  ║  ", "══╬══", "     "), // T-junction: Top, Left, Right
+                _ => throw new InvalidProgramException()
+            };
+        }
+
+        private static (string, string, string) GetXIntersectionGraphic()
+        {
+            return ("  ║  ", "══╬══", "  ║  "); // Cross: all 4 sides connected
+        }
+
+        private static (string, string, string) GetBridgeGraphic(int rotation)
+        {
+            return (rotation % 2) switch
+            {
+                0 => ("  ║  ", "══)══", "  ║  "), // Vertical and horizontal crossing
+                1 => ("  ║  ", "══)══", "  ║  "), // Same visual (bridge is symmetric in both orientations)
+                _ => ("  ║  ", "══)══", "  ║  ")
+            };
         }
     }
 }

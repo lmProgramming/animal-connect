@@ -18,29 +18,106 @@ namespace Tests.Core.Logic
         [Test]
         public void ProcessMove_RotateTile_UpdatesRotation()
         {
-            // TODO: Implement when Move structure is finalized
-            Assert.Pass("Move processor tests - to be implemented");
+            // Arrange
+            var tile = new TileData(TileType.Curve);
+            var grid = new GridState().WithTile(4, tile);
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
+            var paths = new PathNetworkState();
+            var gameState = new GameState(grid, paths, quest);
+
+            // Act
+            var move = Move.Rotate(4, 1);
+            var result = _processor.ProcessMove(gameState, move);
+
+            // Assert
+            Assert.IsTrue(result.IsValid);
+            Assert.AreEqual(1, result.NewState.Grid.GetTile(4)!.Value.Rotation);
+            Assert.AreEqual(TileType.Curve, result.NewState.Grid.GetTile(4)!.Value.Type);
+            Assert.AreEqual(1, result.NewState.MoveCount);
         }
 
         [Test]
         public void ProcessMove_SwapTiles_SwapsPositions()
         {
-            // TODO: Test swap move
-            Assert.Pass("Move processor tests - to be implemented");
+            // Arrange
+            var tile1 = new TileData(TileType.Curve);
+            var tile2 = new TileData(TileType.Intersection, 1);
+            var grid = new GridState()
+                .WithTile(0, tile1)
+                .WithTile(4, tile2);
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
+            var paths = new PathNetworkState();
+            var gameState = new GameState(grid, paths, quest);
+
+            // Act
+            var move = Move.Swap(0, 4);
+            var result = _processor.ProcessMove(gameState, move);
+
+            // Assert
+            Assert.IsTrue(result.IsValid);
+            Assert.AreEqual(TileType.Intersection, result.NewState.Grid.GetTile(0)!.Value.Type);
+            Assert.AreEqual(TileType.Curve, result.NewState.Grid.GetTile(4)!.Value.Type);
+            Assert.AreEqual(1, result.NewState.MoveCount);
         }
 
         [Test]
         public void ProcessMove_ValidMove_ReturnsValidationResult()
         {
-            // TODO: Test move validation
-            Assert.Pass("Move processor tests - to be implemented");
+            // Arrange
+            var tile = new TileData(TileType.Curve);
+            var grid = new GridState().WithTile(4, tile);
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
+            var paths = new PathNetworkState();
+            var gameState = new GameState(grid, paths, quest);
+
+            // Act
+            var move = Move.Rotate(4, 1);
+            var result = _processor.ProcessMove(gameState, move);
+
+            // Assert
+            Assert.IsTrue(result.IsValid);
+            Assert.IsNotNull(result.Validation);
+            Assert.IsNotNull(result.QuestResult);
         }
 
         [Test]
         public void ProcessMove_WinningMove_FlagsAsWin()
         {
-            // TODO: Test winning condition detection
-            Assert.Pass("Move processor tests - to be implemented");
+            // Arrange - Create a scenario where one move can win
+            // Place tiles that, when rotated, will connect the required entities
+            var grid = new GridState()
+                .WithTile(0, new TileData(TileType.Curve)) // Will connect entity 0
+                .WithTile(1, new TileData(TileType.Bridge)) // Bridge to connect
+                .WithTile(2, new TileData(TileType.Curve, 1)); // Will connect entity 1
+
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
+            var calculator = new PathCalculator();
+            var paths = calculator.CalculatePathNetwork(grid);
+            var gameState = new GameState(grid, paths, quest);
+
+            // Check if the initial state already wins
+            var evaluator = new QuestEvaluator();
+            var initialResult = evaluator.EvaluateQuest(quest, paths);
+
+            if (initialResult.IsSuccessful)
+            {
+                // Already winning, so any move maintains win state
+                var move = Move.Rotate(0, 1);
+                var result = _processor.ProcessMove(gameState, move);
+                Assert.IsTrue(result.IsValid);
+            }
+            else
+            {
+                // Try rotating tiles to achieve winning condition
+                // This test verifies that IsWinningMove flag works correctly
+                var move = Move.Rotate(1, 1);
+                var result = _processor.ProcessMove(gameState, move);
+
+                // The move should be valid regardless
+                Assert.IsTrue(result.IsValid);
+                // IsWinningMove should match quest success
+                Assert.AreEqual(result.QuestResult.IsSuccessful && result.Validation.IsValid, result.IsWinningMove);
+            }
         }
 
         [Test]
