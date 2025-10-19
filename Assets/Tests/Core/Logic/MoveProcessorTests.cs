@@ -90,7 +90,7 @@ namespace Tests.Core.Logic
                 .WithTile(1, new TileData(TileType.Bridge)) // Bridge to connect
                 .WithTile(2, new TileData(TileType.Curve, 1)); // Will connect entity 1
 
-            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 2 }) });
             var calculator = new PathCalculator();
             var paths = calculator.CalculatePathNetwork(grid);
             var gameState = new GameState(grid, paths, quest);
@@ -98,41 +98,34 @@ namespace Tests.Core.Logic
             // Check if the initial state already wins
             var evaluator = new QuestEvaluator();
             var initialResult = evaluator.EvaluateQuest(quest, paths);
+            Assert.IsFalse(initialResult.IsSuccessful);
 
-            if (initialResult.IsSuccessful)
-            {
-                // Already winning, so any move maintains win state
-                var move = Move.Rotate(0, 1);
-                var result = _processor.ProcessMove(gameState, move);
-                Assert.IsTrue(result.IsValid);
-            }
-            else
-            {
-                // Try rotating tiles to achieve winning condition
-                // This test verifies that IsWinningMove flag works correctly
-                var move = Move.Rotate(1, 1);
-                var result = _processor.ProcessMove(gameState, move);
+            var move = Move.Rotate(0, 3);
+            var result = _processor.ProcessMove(gameState, move);
+            Assert.IsTrue(result.IsValid);
+            Assert.IsFalse(result.QuestResult.IsSuccessful);
 
-                // The move should be valid regardless
-                Assert.IsTrue(result.IsValid);
-                // IsWinningMove should match quest success
-                Assert.AreEqual(result.QuestResult.IsSuccessful && result.Validation.IsValid, result.IsWinningMove);
-            }
+            gameState = result.NewState;
+
+            move = Move.Rotate(2, 2);
+            result = _processor.ProcessMove(gameState, move);
+            Assert.IsTrue(result.IsValid);
+            Assert.IsTrue(result.QuestResult.IsSuccessful);
         }
 
         [Test]
-        public void ProcessMove_BridgeContinuousRotation_HandlesMaxRotationsCorrectly()
+        public void ProcessMove_TwoCurvesContinuousRotation_HandlesMaxRotationsCorrectly()
         {
-            // Arrange - Create a grid with a bridge tile at rotation 0
-            var bridgeTile = new TileData(TileType.Bridge);
-            var grid = new GridState().WithTile(4, bridgeTile); // Center position
+            // Arrange - Create a grid with a two curves tile at rotation 0
+
+            var twoCurvesTile = new TileData(TileType.TwoCurves);
+            var grid = new GridState().WithTile(4, twoCurvesTile); // Center position
             var entityGroup = new EntityGroup(new[] { 0, 8 }); // Connect entities 0 and 8
             var quest = new QuestData(new[] { entityGroup });
             var paths = new PathNetworkState();
             var gameState = new GameState(grid, paths, quest);
 
-            // Act & Assert - Rotate bridge continuously
-            // Bridge has max 2 rotations (0 and 1)
+            // Act & Assert
 
             // First rotation: 0 -> 1 (valid)
             var move1 = Move.Rotate(4, 1);

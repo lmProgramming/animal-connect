@@ -1782,7 +1782,7 @@ MonoBehaviour:
     count: 3
   - type: 1
     count: 2
-  - type: 2
+  - type: 3
     count: 1
   - type: 4
     count: 1

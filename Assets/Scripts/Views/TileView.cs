@@ -48,16 +48,19 @@ namespace Views
         [FormerlySerializedAs("_scaleDuration")] [SerializeField]
         private float scaleDuration = 0.1f;
 
+        [Header("Logic Debug")]
+        [field: SerializeField]
+        public int SlotIndex { get; set; } = -1;
+
         [field: SerializeField]
         public int CurrentRotation { get; private set; }
+
+        [field: SerializeField]
+        public TileType CurrentType { get; private set; }
 
         [CanBeNull] private Tween _currentTween;
 
         private Vector3 _normalScale = Vector3.one;
-
-        public TileType CurrentType { get; private set; }
-
-        public int SlotIndex { get; set; } = -1;
 
         private void Awake()
         {

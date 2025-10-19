@@ -30,7 +30,7 @@ namespace Tests.Integration
                 .WithTile(2, new TileData(TileType.Curve, 2)) // Top-right
                 .FillEmptyWith(new TileData(TileType.Empty));
 
-            var x = grid.ToPrettyString();
+            // var x = grid.ToPrettyString();
 
             var quest = new QuestData(new[] { new EntityGroup(new[] { 0, 1 }) });
             var paths = _calculator.CalculatePathNetwork(grid);

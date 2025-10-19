@@ -63,8 +63,6 @@ namespace Quest
 
             var paths = pathsInfo.Item1;
 
-            var actualPathsCount = pathsInfo.Item2;
-
             foreach (var enemyPathsIndexes in pathsToDisconnectIndexes)
             {
                 var pathOne = paths[enemyPathsIndexes.x];
@@ -154,11 +152,9 @@ namespace Quest
             return entity;
         }
 
-        private GameObject[] CreateEntitiesClump(List<int> entitiesClump, Vector2 clumpCentrePosition)
+        private void CreateEntitiesClump(List<int> entitiesClump, Vector2 clumpCentrePosition)
         {
             var count = entitiesClump.Count;
-
-            var entities = new GameObject[count];
 
             var positionBiases = ClumpPositionShifts(count);
 
@@ -166,12 +162,8 @@ namespace Quest
             {
                 var position = clumpCentrePosition + positionBiases[i];
 
-                var newEntity = CreateEntityVisualization(entitiesClump[i], position);
-
-                entities[i] = newEntity;
+                CreateEntityVisualization(entitiesClump[i], position);
             }
-
-            return entities;
         }
 
         private Vector2[] ClumpPositionShifts(int count)
@@ -397,23 +389,20 @@ namespace Quest
 
             private bool CheckIfSortedPathsDecent(List<Path> paths)
             {
-                List<int> adversariesLeft = new();
-
                 var sortedPaths = paths.ToArray();
 
-                for (var i = 0; i < sortedPaths.Length; i++)
-                    adversariesLeft.Add(Mathf.Max(FindIndexesOfEnemies(sortedPaths[i], sortedPaths).Length, 2));
+                var adversariesLeft = sortedPaths.Select(t => Mathf.Max(FindIndexesOfEnemies(t, sortedPaths).Length, 2))
+                    .ToList();
 
                 for (var i = 1; i < sortedPaths.Length - 1; i++)
                 {
                     if (sortedPaths[i - 1].IsPathEnemy(sortedPaths[i])) adversariesLeft[i]--;
                     if (sortedPaths[i + 1].IsPathEnemy(sortedPaths[i])) adversariesLeft[i]--;
 
-                    if (adversariesLeft[i] != 0)
-                    {
-                        Debug.Log(adversariesLeft[i]);
-                        return false;
-                    }
+                    if (adversariesLeft[i] == 0) continue;
+
+                    Debug.Log(adversariesLeft[i]);
+                    return false;
                 }
 
                 return true;

@@ -42,6 +42,8 @@ namespace Core.Models
         /// </summary>
         public int TileCount => _tiles.Count(t => t.HasValue);
 
+        public string PrettyString => ToPrettyString();
+
         /// <summary>
         ///     Gets the tile at the specified position (0-8).
         ///     Returns null if the slot is empty.
@@ -234,7 +236,7 @@ namespace Core.Models
                 TileType.TwoCurves => GetTwoCurvesGraphic(rotation),
                 TileType.Intersection => GetIntersectionGraphic(rotation),
                 TileType.XIntersection => GetXIntersectionGraphic(),
-                TileType.Bridge => GetBridgeGraphic(rotation),
+                TileType.Bridge => GetBridgeGraphic(),
                 TileType.Empty => ("     ", "     ", "     "),
                 _ => ("  ?  ", " ??? ", "  ?  ")
             };
@@ -256,8 +258,8 @@ namespace Core.Models
         {
             return (rotation % 2) switch
             {
-                0 => ("  ║  ", "══╝╚═", "     "), // Top-Left and Right-Bottom curves
-                1 => ("     ", "══╗╔═", "  ║  "), // Left-Top and Right-Bottom curves (rotated 90)
+                0 => ("  ║  ", "══╝╔═", "  ╱  "), // Top-Left and Right-Bottom curves ╔═ ╚═
+                1 => ("  ╲  ", "═╗╚══", "  ║  "), // Left-Top and Right-Bottom curves (rotated 90)
                 _ => throw new InvalidProgramException()
             };
         }
@@ -276,17 +278,12 @@ namespace Core.Models
 
         private static (string, string, string) GetXIntersectionGraphic()
         {
-            return ("  ║  ", "══╬══", "  ║  "); // Cross: all 4 sides connected
+            return ("  ║  ", "══╬══", "  ║  ");
         }
 
-        private static (string, string, string) GetBridgeGraphic(int rotation)
+        private static (string, string, string) GetBridgeGraphic()
         {
-            return (rotation % 2) switch
-            {
-                0 => ("  ║  ", "══)══", "  ║  "), // Vertical and horizontal crossing
-                1 => ("  ║  ", "══)══", "  ║  "), // Same visual (bridge is symmetric in both orientations)
-                _ => ("  ║  ", "══)══", "  ║  ")
-            };
+            return ("  ║  ", "══)══", "  ║  ");
         }
     }
 }

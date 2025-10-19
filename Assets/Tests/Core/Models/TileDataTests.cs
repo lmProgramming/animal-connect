@@ -49,7 +49,7 @@ namespace Tests.Core.Models
             Assert.AreEqual(2, new TileData(TileType.TwoCurves).GetMaxRotations());
             Assert.AreEqual(4, new TileData(TileType.Intersection).GetMaxRotations());
             Assert.AreEqual(1, new TileData(TileType.XIntersection).GetMaxRotations());
-            Assert.AreEqual(2, new TileData(TileType.Bridge).GetMaxRotations());
+            Assert.AreEqual(1, new TileData(TileType.Bridge).GetMaxRotations());
         }
 
         [Test]

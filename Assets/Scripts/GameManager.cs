@@ -78,16 +78,16 @@ public sealed class GameManager : MonoBehaviour
         var questData = ConvertQuestToQuestData(Quest);
 
         // Setup tiles and initialize game state
-        if (tilesSetup != null)
+        if (tilesSetup)
             tilesSetup.Setup(stateManager, questData);
         else
             Debug.LogError("GameManager: TilesSetup not assigned!");
 
         // Update UI
-        if (UIManager.Instance != null) UIManager.Instance.questVisualizer.GenerateVisualization(Quest);
+        if (UIManager.Instance) UIManager.Instance.questVisualizer.GenerateVisualization(Quest);
     }
 
-    private QuestData ConvertQuestToQuestData(Quest.Quest quest)
+    private static QuestData ConvertQuestToQuestData(Quest.Quest quest)
     {
         // Convert Quest to QuestData using entity groups
         var entityGroups = new List<EntityGroup>
@@ -104,7 +104,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnMoveRequested(Move move)
     {
-        if (stateManager != null) stateManager.ProcessMove(move);
+        _stateChangeCallCount = 0;
+        if (stateManager) stateManager.ProcessMove(move);
     }
 
     private void OnGameStateChanged(GameState newState)
@@ -113,15 +114,16 @@ public sealed class GameManager : MonoBehaviour
 
         if (_stateChangeCallCount > 100)
         {
-            Debug.LogError("INFINITE LOOP DETECTED: OnGameStateChanged called more than 100 times!");
+            Debug.LogError(
+                $"INFINITE LOOP DETECTED: {_stateChangeCallCount} calls - OnGameStateChanged called more than 100 times!");
             return;
         }
 
         // Update grid view
-        if (gridView != null) gridView.UpdateFromState(newState);
+        if (gridView) gridView.UpdateFromState(newState);
     }
 
-    private void OnGameWon(GameState winningState)
+    private static void OnGameWon(GameState winningState)
     {
         ReloadScene();
     }

@@ -61,7 +61,7 @@ namespace Core.Models
                 TileType.TwoCurves => 2,
                 TileType.Intersection => 4,
                 TileType.XIntersection => 1,
-                TileType.Bridge => 2,
+                TileType.Bridge => 1,
                 TileType.Empty => 0,
                 _ => 4
             };
