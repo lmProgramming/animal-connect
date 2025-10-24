@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Core.Models;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,7 @@ namespace Views
         private bool animateInitialPlacement;
 
         private readonly Dictionary<int, TileView> _tileViews = new();
+        private GridState _lastGridState; // Track previous state to detect swaps
 
         public IReadOnlyDictionary<int, TileView> TileViews => _tileViews;
 
@@ -45,7 +47,7 @@ namespace Views
         public void Initialize()
         {
             // Validate slot views
-            if (slotViews == null || slotViews.Length != 9)
+            if (slotViews is not { Length: 9 })
             {
                 Debug.LogError("GridView: Must have exactly 9 slot views!");
                 return;
@@ -86,7 +88,7 @@ namespace Views
         /// <summary>
         ///     Updates the grid view from a grid state.
         /// </summary>
-        public void UpdateFromGrid(GridState gridState)
+        private void UpdateFromGrid(GridState gridState)
         {
             if (gridState == null)
             {
@@ -94,55 +96,149 @@ namespace Views
                 return;
             }
 
+            // Detect swaps by comparing old and new states
+            if (_lastGridState != null) DetectAndApplySwaps(_lastGridState, gridState);
+
+            // Now update each slot
             for (var slot = 0; slot < 9; slot++)
             {
                 var tileData = gridState.GetTile(slot);
 
                 if (tileData.HasValue)
-                    UpdateTileView(slot, tileData.Value);
+                {
+                    if (_tileViews.TryGetValue(slot, out var existingTile))
+                        // Tile exists at this slot - update its properties
+                        UpdateTileProperties(existingTile, tileData.Value);
+                    else
+                        // No tile at this slot - create one
+                        CreateTileAtSlot(slot, tileData.Value);
+                }
                 else
+                {
+                    // Slot should be empty
                     RemoveTileView(slot);
+                }
+            }
+
+            _lastGridState = gridState;
+        }
+
+        /// <summary>
+        ///     Detects swaps between two grid states and physically moves the GameObjects.
+        /// </summary>
+        private void DetectAndApplySwaps(GridState oldState, GridState newState)
+        {
+            // Find pairs of slots that swapped
+            for (var i = 0; i < 9; i++)
+            for (var j = i + 1; j < 9; j++)
+            {
+                var oldI = oldState.GetTile(i);
+                var oldJ = oldState.GetTile(j);
+                var newI = newState.GetTile(i);
+                var newJ = newState.GetTile(j);
+
+                // Check if slots i and j swapped their contents
+                // They must have changed AND swapped
+                if (TileDataEquals(oldI, newI) ||
+                    TileDataEquals(oldJ, newJ) ||
+                    !TileDataEquals(oldI, newJ) ||
+                    !TileDataEquals(oldJ, newI)) continue;
+                // Swap detected! Physically swap the GameObjects
+                SwapTileViews(i, j);
+                return; // Only one swap per update
             }
         }
 
         /// <summary>
-        ///     Updates a single tile view at the specified slot.
-        ///     Creates a new tile view if one doesn't exist.
+        ///     Checks if two nullable TileData are equal.
         /// </summary>
-        private void UpdateTileView(int slot, TileData tileData)
+        private static bool TileDataEquals(TileData? a, TileData? b)
         {
-            if (slot < 0 || slot > 8)
+            if (!a.HasValue && !b.HasValue) return true;
+            if (!a.HasValue || !b.HasValue) return false;
+            return a.Value.Type == b.Value.Type && a.Value.Rotation == b.Value.Rotation;
+        }
+
+        /// <summary>
+        ///     Physically swaps two tile GameObjects between slots.
+        /// </summary>
+        private void SwapTileViews(int slot1, int slot2)
+        {
+            var tile1 = _tileViews.ContainsKey(slot1) ? _tileViews[slot1] : null;
+            var tile2 = _tileViews.ContainsKey(slot2) ? _tileViews[slot2] : null;
+
+            if (tile1 && tile2)
             {
-                Debug.LogError($"GridView: Invalid slot index {slot}");
-                return;
-            }
+                // Both slots have tiles - swap them
+                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
+                tile1.SlotIndex = slot2;
 
-            // Get or create tile view
-            var isNewTile = !_tileViews.TryGetValue(slot, out var tileView);
-            if (isNewTile)
+                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
+                tile2.SlotIndex = slot1;
+
+                _tileViews[slot1] = tile2;
+                _tileViews[slot2] = tile1;
+            }
+            else if (tile1)
             {
-                tileView = CreateTileView(slot);
-                _tileViews[slot] = tileView;
+                // Only slot1 has a tile - move it to slot2
+                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
+                tile1.SlotIndex = slot2;
+
+                _tileViews.Remove(slot1);
+                _tileViews[slot2] = tile1;
+
+                if (slotViews[slot1])
+                    slotViews[slot1].SetOccupied(false);
+                if (slotViews[slot2])
+                    slotViews[slot2].SetOccupied(true);
             }
+            else if (tile2)
+            {
+                // Only slot2 has a tile - move it to slot1
+                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
+                tile2.SlotIndex = slot1;
 
-            // Update tile view only if values have changed
-            var position = GetSlotPosition(slot);
+                _tileViews.Remove(slot2);
+                _tileViews[slot1] = tile2;
 
-            // Only update type if it changed
-            if (tileView.CurrentType != tileData.Type) tileView.SetType(tileData.Type, !animateTileChanges);
+                if (slotViews[slot2])
+                    slotViews[slot2].SetOccupied(false);
+                if (slotViews[slot1])
+                    slotViews[slot1].SetOccupied(true);
+            }
+        }
 
-            // Only update rotation if it changed
-            if (tileView.CurrentRotation != tileData.Rotation)
-                tileView.SetRotation(tileData.Rotation, animateTileChanges);
+        /// <summary>
+        ///     Updates a tile's visual properties (type and rotation).
+        /// </summary>
+        private void UpdateTileProperties(TileView tile, TileData tileData)
+        {
+            // Update type if changed
+            if (tile.CurrentType != tileData.Type)
+                tile.SetType(tileData.Type, animateTileChanges);
 
-            // Only update position if it changed or this is a new tile
-            if (isNewTile || Vector2.Distance(tileView.transform.position, position) > 0.01f)
-                tileView.SetPosition(position, !isNewTile && animateTileChanges);
+            // Update rotation if changed
+            if (tile.CurrentRotation != tileData.Rotation)
+                tile.SetRotation(tileData.Rotation, animateTileChanges);
+        }
 
-            tileView.SlotIndex = slot;
+        /// <summary>
+        ///     Creates a new tile at the specified slot.
+        /// </summary>
+        private void CreateTileAtSlot(int slot, TileData tileData)
+        {
+            var tile = CreateTileView(slot);
+            if (!tile) return;
 
-            // Update slot occupied state
-            if (slotViews[slot] != null) slotViews[slot].SetOccupied(true);
+            tile.SetType(tileData.Type);
+            tile.SetRotation(tileData.Rotation);
+            tile.SetPosition(GetSlotPosition(slot), animateInitialPlacement);
+
+            _tileViews[slot] = tile;
+
+            if (slotViews[slot])
+                slotViews[slot].SetOccupied(true);
         }
 
         /// <summary>
@@ -156,7 +252,7 @@ namespace Views
                 _tileViews.Remove(slot);
 
                 // Update slot occupied state
-                if (slotViews[slot] != null) slotViews[slot].SetOccupied(false);
+                if (slotViews[slot]) slotViews[slot].SetOccupied(false);
             }
         }
 
@@ -165,7 +261,7 @@ namespace Views
         /// </summary>
         private TileView CreateTileView(int slot)
         {
-            if (tilePrefab == null)
+            if (!tilePrefab)
             {
                 Debug.LogError("GridView: Cannot create tile - prefab not assigned!");
                 return null;
@@ -176,17 +272,16 @@ namespace Views
             tileView.name = $"Tile_{slot}";
             tileView.SlotIndex = slot;
 
+            if (!tileSprites || !tileView.GetComponent<Image>()) return tileView;
+
             // Assign sprites if available
-            if (tileSprites != null && tileView.GetComponent<Image>() != null)
+            // TileSprites will be used by TileView itself
+            // We just need to ensure it's set on the TileView component
+            var tileViewComponent = tileView.GetComponent<TileView>();
+            if (tileViewComponent)
             {
-                // TileSprites will be used by TileView itself
-                // We just need to ensure it's set on the TileView component
-                var tileViewComponent = tileView.GetComponent<TileView>();
-                if (tileViewComponent != null)
-                {
-                    // The TileView will use the sprites from its own serialized field
-                    // or we can pass it through initialization
-                }
+                // The TileView will use the sprites from its own serialized field
+                // or we can pass it through initialization
             }
 
             return tileView;
@@ -197,16 +292,15 @@ namespace Views
         /// </summary>
         public void ClearAllTiles()
         {
-            foreach (var kvp in _tileViews)
-                if (kvp.Value != null)
-                    Destroy(kvp.Value.gameObject);
+            foreach (var kvp in _tileViews.Where(kvp => kvp.Value != null))
+                Destroy(kvp.Value.gameObject);
 
             _tileViews.Clear();
 
             // Update all slots as unoccupied
-            for (var i = 0; i < slotViews.Length; i++)
-                if (slotViews[i] != null)
-                    slotViews[i].SetOccupied(false);
+            foreach (var slotView in slotViews)
+                if (slotView != null)
+                    slotView.SetOccupied(false);
         }
 
         /// <summary>
@@ -214,13 +308,10 @@ namespace Views
         /// </summary>
         public Vector2 GetSlotPosition(int slot)
         {
-            if (slot < 0 || slot > 8 || slotViews[slot] == null)
-            {
-                Debug.LogWarning($"GridView: Invalid slot {slot}, returning zero position");
-                return Vector2.zero;
-            }
+            if (slot is >= 0 and <= 8 && slotViews[slot]) return slotViews[slot].Position;
 
-            return slotViews[slot].Position;
+            Debug.LogWarning($"GridView: Invalid slot {slot}, returning zero position");
+            return Vector2.zero;
         }
 
         /// <summary>
@@ -239,7 +330,7 @@ namespace Views
         public int GetSlotAtPosition(Vector2 worldPosition)
         {
             for (var i = 0; i < slotViews.Length; i++)
-                if (slotViews[i] != null && slotViews[i].ContainsPoint(worldPosition))
+                if (slotViews[i] && slotViews[i].ContainsPoint(worldPosition))
                     return i;
 
             return -1;
@@ -250,7 +341,7 @@ namespace Views
         /// </summary>
         public void HighlightSlot(int slot, bool highlight)
         {
-            if (slot >= 0 && slot < slotViews.Length && slotViews[slot] != null)
+            if (slot >= 0 && slot < slotViews.Length && slotViews[slot])
                 slotViews[slot].SetHighlight(highlight);
         }
 
@@ -259,9 +350,9 @@ namespace Views
         /// </summary>
         public void ClearAllHighlights()
         {
-            for (var i = 0; i < slotViews.Length; i++)
-                if (slotViews[i] != null)
-                    slotViews[i].SetHighlight(false);
+            foreach (var slotView in slotViews)
+                if (slotView)
+                    slotView.SetHighlight(false);
         }
 
         /// <summary>
@@ -294,8 +385,7 @@ namespace Views
         /// </summary>
         public TileView GetTileViewAtSlot(int slot)
         {
-            if (_tileViews.TryGetValue(slot, out var tileView)) return tileView;
-            return null;
+            return _tileViews.TryGetValue(slot, out var tileView) ? tileView : null;
         }
 
 #if UNITY_EDITOR
@@ -328,7 +418,7 @@ namespace Views
             foreach (var slot in slots)
             {
                 var index = slot.SlotIndex;
-                if (index >= 0 && index < 9) slotViews[index] = slot;
+                if (index is >= 0 and < 9) slotViews[index] = slot;
             }
 
             Debug.Log($"Auto-assigned {slots.Length} slot views");

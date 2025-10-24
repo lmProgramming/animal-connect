@@ -93,7 +93,7 @@ namespace Views
         private void OnValidate()
         {
             // Auto-name in editor for clarity
-            if (slotIndex >= 0 && slotIndex <= 8) gameObject.name = $"GridSlot_{slotIndex}";
+            if (slotIndex is >= 0 and <= 8) gameObject.name = $"GridSlot_{slotIndex}";
         }
 
         private void OnDrawGizmos()

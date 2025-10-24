@@ -123,7 +123,7 @@ namespace Core.Configuration
         /// </summary>
         public static bool IsEntityPoint(int pathPoint)
         {
-            return pathPoint >= 0 && pathPoint < TotalPathPoints &&
+            return pathPoint is >= 0 and < TotalPathPoints &&
                    PathPointToEntity[pathPoint] != -1;
         }
 

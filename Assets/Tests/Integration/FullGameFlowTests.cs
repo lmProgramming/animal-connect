@@ -146,6 +146,53 @@ namespace Tests.Integration
         }
 
         [Test]
+        public void ComplexQuest_FullGame2()
+        {
+            // Arrange - Set up a simple winnable game
+            var grid = new GridState()
+                .WithTile(0, new TileData(TileType.TwoCurves, 1))
+                .WithTile(1, new TileData(TileType.TwoCurves))
+                .WithTile(2, new TileData(TileType.Curve))
+                .WithTile(3, new TileData(TileType.Intersection))
+                .WithTile(4, new TileData(TileType.Bridge))
+                .WithTile(5, new TileData(TileType.Curve, 2))
+                .WithTile(6, new TileData(TileType.XIntersection))
+                .WithTile(7, new TileData(TileType.Intersection, 3))
+                .WithTile(8, new TileData(TileType.Curve, 1));
+
+            var quest = new QuestData(new[] { new EntityGroup(new[] { 11, 9, 6 }) });
+            var paths = _calculator.CalculatePathNetwork(grid);
+            var gameState = new GameState(grid, paths, quest);
+
+            // Act - Perform moves to win
+            var move1 = Move.Rotate(2, 1);
+            var result1 = _processor.ProcessMove(gameState, move1);
+
+            gameState = result1.NewState;
+
+            // Assert - Game progresses correctly
+            Assert.IsTrue(result1.IsValid, "Move should be valid");
+            Assert.AreEqual(1, gameState.MoveCount, "Move count should increment");
+
+            Assert.IsTrue(result1.IsLegalMove, "Move should create legal connections");
+
+            var questResult = _evaluator.EvaluateQuest(gameState.Quest, gameState.Paths);
+            Assert.IsTrue(questResult.IsSuccessful, "Quest should be successfully completed");
+
+            // Should be valid but not win
+            var move2 = Move.Swap(0, 7);
+            var result2 = _processor.ProcessMove(gameState, move2);
+
+            gameState = result2.NewState;
+
+            Assert.IsTrue(result2.IsValid, "Second move should be valid");
+            Assert.AreEqual(2, gameState.MoveCount, "Move count should be 2 after second move");
+
+            questResult = _evaluator.EvaluateQuest(gameState.Quest, gameState.Paths);
+            Assert.IsFalse(questResult.IsSuccessful, "Quest should be now not completed");
+        }
+
+        [Test]
         public void UndoRedo_RestoredState_MatchesOriginal()
         {
             // Arrange

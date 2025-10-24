@@ -33,7 +33,7 @@ namespace Managers
         // Properties
         public GameState CurrentState { get; private set; }
 
-        public bool CanUndo => _stateStack != null && _stateStack.Count > 1; // Keep initial state
+        public bool CanUndo => _stateStack is { Count: > 1 }; // Keep initial state
         public int MoveCount => _moveHistory?.Count ?? 0;
         public IReadOnlyList<MoveResult> MoveHistory => _moveHistory?.AsReadOnly();
 

@@ -42,7 +42,7 @@ namespace Other
 
         public static bool FacingRight(float angle)
         {
-            return !(angle > 90 && angle < 270);
+            return !(angle is > 90 and < 270);
         }
 
         public static Vector2 GetXYDirection(float angle, float magnitude)

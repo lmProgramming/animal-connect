@@ -23,10 +23,6 @@ namespace DebugTools
         [SerializeField] private float lineWidth = 0.05f;
         [SerializeField] private float numberOffset = 0.5f;
 
-        [Header("Colors")]
-        [SerializeField] private Color entityPointColor = Color.yellow;
-
-        [SerializeField] private Color nonEntityPointColor = Color.cyan;
         [SerializeField] private Color connectedLineColor = Color.green;
         [SerializeField] private Color textColor = Color.white;
         private GUIStyle _labelStyle;
@@ -47,7 +43,7 @@ namespace DebugTools
         private void Start()
         {
             // Try to find GameStateManager
-            _stateManager = FindObjectOfType<GameStateManager>();
+            _stateManager = FindFirstObjectByType<GameStateManager>();
             if (_stateManager == null) Debug.LogWarning("PathPointDebugVisualizer: GameStateManager not found!");
         }
 
@@ -206,15 +202,15 @@ namespace DebugTools
         /// <summary>
         ///     Set debug visualization state
         /// </summary>
-        public void SetDebug(bool enabled)
+        public void SetDebug(bool debugEnabled)
         {
-            showDebug = enabled;
+            showDebug = debugEnabled;
         }
 
         /// <summary>
         ///     Get information about a specific path point
         /// </summary>
-        public string GetPathPointInfo(int pathPointIndex)
+        private string GetPathPointInfo(int pathPointIndex)
         {
             if (pathPointIndex < 0 || pathPointIndex >= GridConfiguration.TotalPathPoints)
                 return "Invalid path point index";
