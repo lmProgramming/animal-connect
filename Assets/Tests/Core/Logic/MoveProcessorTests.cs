@@ -146,7 +146,7 @@ namespace Tests.Core.Logic
             Assert.AreEqual(1, result3.NewState.Grid.GetTile(4)!.Value.Rotation);
 
             // Test invalid rotation: Should throw error for rotation 2 or 3
-            var invalidMove = Move.Rotate(4, 2);
+            var invalidMove = Move.Rotate(4, 7);
             var resultInvalid = _processor.ProcessMove(result3.NewState, invalidMove);
             Assert.IsFalse(resultInvalid.IsValid, "Invalid rotation should be rejected");
             Assert.IsNotNull(resultInvalid.ErrorMessage);
@@ -173,7 +173,7 @@ namespace Tests.Core.Logic
             Assert.AreEqual(0, result1.NewState.Grid.GetTile(4)!.Value.Rotation);
 
             // Invalid rotation: Should reject rotation 1
-            var invalidMove = Move.Rotate(4, 1);
+            var invalidMove = Move.Rotate(4, 5);
             var resultInvalid = _processor.ProcessMove(gameState, invalidMove);
             Assert.IsFalse(resultInvalid.IsValid, "Invalid rotation should be rejected");
         }

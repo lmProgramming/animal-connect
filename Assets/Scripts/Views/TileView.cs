@@ -100,8 +100,6 @@ namespace Views
             CurrentRotation = newRotation;
 
             var targetAngle = 360f - newRotation * 90f; // Negative for clockwise
-            Debug.Log(transform.rotation.eulerAngles.z);
-            Debug.Log(targetAngle);
 
             if (animate && Application.isPlaying)
                 AnimateRotation(targetAngle);
@@ -139,11 +137,11 @@ namespace Views
         /// <summary>
         ///     Initializes the tile with type, rotation, and position.
         /// </summary>
-        public void Initialize(TileType type, int rotation, Vector2 position)
+        public void Initialize(TileType type, int rotation, Vector2 position, bool animatePosition = false)
         {
-            SetType(type, true);
+            SetType(type);
             SetRotation(rotation);
-            SetPosition(position, false);
+            SetPosition(position, animatePosition);
         }
 
         #region Animation Methods

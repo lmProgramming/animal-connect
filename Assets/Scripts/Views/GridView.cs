@@ -231,9 +231,7 @@ namespace Views
             var tile = CreateTileView(slot);
             if (!tile) return;
 
-            tile.SetType(tileData.Type);
-            tile.SetRotation(tileData.Rotation);
-            tile.SetPosition(GetSlotPosition(slot), animateInitialPlacement);
+            tile.Initialize(tileData.Type, tileData.Rotation, GetSlotPosition(slot), animateInitialPlacement);
 
             _tileViews[slot] = tile;
 

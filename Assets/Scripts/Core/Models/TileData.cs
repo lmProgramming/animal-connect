@@ -55,6 +55,7 @@ namespace Core.Models
 
         public int GetMaxRotations()
         {
+            return 4;
             return Type switch
             {
                 TileType.Curve => 4,

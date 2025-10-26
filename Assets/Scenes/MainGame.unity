@@ -746,8 +746,6 @@ MonoBehaviour:
   sphereRadius: 0.2
   lineWidth: 0.05
   numberOffset: 0.5
-  entityPointColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  nonEntityPointColor: {r: 0, g: 1, b: 1, a: 1}
   connectedLineColor: {r: 0, g: 1, b: 0, a: 1}
   textColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &538615586
@@ -1245,7 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f9e2d1c7b4a5e9f1a2b3c4d5e6f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::AnimalConnect.Managers.GameStateManager
-  enableLogging: 1
+  enableLogging: 0
   trackMoveHistory: 1
 --- !u!1 &965187603
 GameObject:

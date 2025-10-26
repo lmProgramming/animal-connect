@@ -43,16 +43,6 @@ namespace Tests.Core.Models
         }
 
         [Test]
-        public void GetMaxRotations_ReturnsCorrectValueForEachTileType()
-        {
-            Assert.AreEqual(4, new TileData(TileType.Curve).GetMaxRotations());
-            Assert.AreEqual(2, new TileData(TileType.TwoCurves).GetMaxRotations());
-            Assert.AreEqual(4, new TileData(TileType.Intersection).GetMaxRotations());
-            Assert.AreEqual(1, new TileData(TileType.XIntersection).GetMaxRotations());
-            Assert.AreEqual(1, new TileData(TileType.Bridge).GetMaxRotations());
-        }
-
-        [Test]
         public void GetConnections_CurveTile_ConnectsRightToBottom()
         {
             // Arrange

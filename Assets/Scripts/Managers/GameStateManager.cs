@@ -75,12 +75,12 @@ namespace Managers
         /// <param name="initialGrid">Optional initial grid state. If null, starts with empty grid.</param>
         public void Initialize(QuestData quest, GridState initialGrid = null)
         {
-            Debug.Log("GameStateManager.Initialize: START");
+            LogMessage("GameStateManager.Initialize: START");
 
             // Prevent re-entrant calls
             if (_isInitializing)
             {
-                Debug.LogError("GameStateManager.Initialize: Re-entrant call detected! Already initializing.");
+                LogMessage("GameStateManager.Initialize: Re-entrant call detected! Already initializing.");
                 return;
             }
 
@@ -96,17 +96,17 @@ namespace Managers
 
                 // Create initial grid if not provided
                 if (initialGrid == null) initialGrid = new GridState();
-                Debug.Log("GameStateManager.Initialize: Grid created");
+                LogMessage("GameStateManager.Initialize: Grid created");
 
                 // Calculate initial path network
-                Debug.Log("GameStateManager.Initialize: About to calculate path network...");
+                LogMessage("GameStateManager.Initialize: About to calculate path network...");
                 var initialPaths = _pathCalculator.CalculatePathNetwork(initialGrid);
-                Debug.Log("GameStateManager.Initialize: Path network calculated");
+                LogMessage("GameStateManager.Initialize: Path network calculated");
 
                 // Create initial game state
-                Debug.Log("GameStateManager.Initialize: Creating game state...");
+                LogMessage("GameStateManager.Initialize: Creating game state...");
                 CurrentState = new GameState(initialGrid, initialPaths, quest);
-                Debug.Log("GameStateManager.Initialize: Game state created");
+                LogMessage("GameStateManager.Initialize: Game state created");
 
                 // Initialize history tracking
                 if (trackMoveHistory)
@@ -119,9 +119,9 @@ namespace Managers
                 LogMessage("Game initialized with quest");
 
                 // Notify listeners
-                Debug.Log("GameStateManager.Initialize: About to invoke OnStateChanged...");
+                LogMessage("GameStateManager.Initialize: About to invoke OnStateChanged...");
                 OnStateChanged?.Invoke(CurrentState);
-                Debug.Log("GameStateManager.Initialize: COMPLETE");
+                LogMessage("GameStateManager.Initialize: COMPLETE");
             }
             finally
             {
