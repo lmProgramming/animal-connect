@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Core.Models;
 using Managers;
 using TileInput;
@@ -86,17 +85,7 @@ public sealed class GameManager : MonoBehaviour
 
     private static QuestData ConvertQuestToQuestData(Quest.Quest quest)
     {
-        // Convert Quest to QuestData using entity groups
-        var entityGroups = new List<EntityGroup>
-        {
-            // TODO: This needs to be implemented based on your Quest structure
-            // For now, create a simple example quest
-            // You'll need to extract the actual entity requirements from your Quest object
-            // Example: Connect entities 0, 1, 2 together
-            new(new[] { 0, 1, 2 })
-        };
-
-        return new QuestData(entityGroups);
+        return quest.ToQuestData();
     }
 
     private void OnMoveRequested(Move move)
