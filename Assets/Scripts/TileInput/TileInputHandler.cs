@@ -195,9 +195,8 @@ namespace TileInput
             }
             else
             {
-                // Held but not moved enough - treat as rotate
-                move = CreateRotateMove(_draggedSlot);
-                LogInput($"Hold detected: Rotating tile at slot {_draggedSlot}");
+                ResetDraggedTile();
+                return;
             }
 
             // Reset tile visuals before applying move
