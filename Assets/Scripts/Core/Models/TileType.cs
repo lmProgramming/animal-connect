@@ -12,4 +12,18 @@ namespace Core.Models
         Bridge, // Two straight paths crossing (two separate connections)
         Empty // no connections
     }
+
+    public static class TileTypeExtensions
+    {
+        public static int GetMaxRotations(this TileType tileType)
+        {
+            return tileType switch
+            {
+                TileType.TwoCurves => 2,
+                TileType.XIntersection => 1,
+                TileType.Bridge => 1,
+                _ => 4
+            };
+        }
+    }
 }

@@ -152,7 +152,7 @@ namespace Core.Models
 
         private static void ValidatePosition(int position)
         {
-            if (position < 0 || position >= TotalSlots)
+            if (position is < 0 or >= TotalSlots)
                 throw new ArgumentOutOfRangeException(nameof(position),
                     $"Position must be between 0 and {TotalSlots - 1}");
         }

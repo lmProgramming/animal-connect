@@ -762,66 +762,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1146433770}
+  - {fileID: 1636002308}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &598930574
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 598930575}
-  - component: {fileID: 598930576}
-  m_Layer: 0
-  m_Name: EntitySetup
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &598930575
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598930574}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 857741511}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &598930576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598930574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d96cf9125b6e8d48af9eda5d0ca0264, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites: {fileID: 0}
-  entitiesSpriteRenderers:
-  - {fileID: 1185316555}
-  - {fileID: 671375277}
-  - {fileID: 513310851}
-  - {fileID: 1347757693}
-  - {fileID: 185378845}
-  - {fileID: 1650101778}
-  - {fileID: 3786578}
-  - {fileID: 686718367}
-  - {fileID: 1741802958}
-  - {fileID: 1803628562}
-  - {fileID: 1903898769}
-  - {fileID: 1364444260}
 --- !u!1 &646725826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,8 +1170,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 598930575}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &857741512
@@ -1478,7 +1420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609bfa54b4727f94b9b707b38189a1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: {fileID: 11400000, guid: dc1a9f54ebb14854a8af58ae84157a2d, type: 2}
+  spriteSetter: {fileID: 1069147794}
   arrowPrefab: {fileID: 7694998839086655907, guid: 44892c59289297c4d9ce880fa58b39c5, type: 3}
   arrowDisconnectPrefab: {fileID: 7694998839086655907, guid: 92a0b523ae710364a9378e0ed61d7236, type: 3}
   distanceBetweenPaths: 400
@@ -1546,7 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64b042f3c16140e784d72f412756c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Main::EntitySpriteSetter
-  entitySprites: {fileID: 11400000, guid: dc1a9f54ebb14854a8af58ae84157a2d, type: 2}
+  <EntitySprites>k__BackingField: {fileID: 11400000, guid: 860a897f6d041fda9b4899138649802a, type: 2}
   entityImages:
   - {fileID: 1185316555}
   - {fileID: 671375277}
@@ -2451,6 +2393,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618323018}
   m_CullTransparentMesh: 1
+--- !u!1 &1636002307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636002308}
+  - component: {fileID: 1636002309}
+  m_Layer: 0
+  m_Name: CombinationGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1636002308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636002307}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 538615586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1636002309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636002307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4e8b3c9d2f4e1a8b6c5d4e3f2a1b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Main::Solver.CombinationGenerator
+  tileSets: []
+  outputFileName: valid_combinations.csv
+  includeGridVisualization: 0
+  checkMaxIterations: 0
+  maxIterations: 0
 --- !u!1 &1649387151
 GameObject:
   m_ObjectHideFlags: 0
