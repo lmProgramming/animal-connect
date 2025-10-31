@@ -148,7 +148,7 @@ namespace Views
 
         private void AnimateRotation(float targetAngle)
         {
-            _currentTween?.Complete();
+            _currentTween?.Kill();
 
             _currentTween = transform
                 .DORotate(new Vector3(0, 0, targetAngle), rotationDuration)
@@ -157,7 +157,7 @@ namespace Views
 
         private void AnimateMove(Vector2 targetPosition)
         {
-            _currentTween?.Complete();
+            _currentTween?.Kill();
 
             _currentTween = transform
                 .DOMove(targetPosition, MoveDuration)

@@ -13,6 +13,8 @@ namespace TileInput
     /// </summary>
     public class TileInputHandler : MonoBehaviour
     {
+        private const float PointerUpCooldown = 0.1f; // Prevent immediate re-grab after release
+
         [Header("Dependencies")]
         [SerializeField] private GameStateManager stateManager;
 
@@ -38,10 +40,13 @@ namespace TileInput
 
         // Input state
         private TileView _draggedTile;
-        private int _hoveredSlot = -1;
+        private int? _hoveredSlot;
         private bool _isDragging;
+        private float _lastPointerUpTime;
         private Vector2 _pointerDownPosition;
         private float _pointerDownTime;
+        private int? _previouslyHoveredSlot;
+        private TileView _previouslyHoveredTile;
 
         private void Awake()
         {
@@ -56,10 +61,7 @@ namespace TileInput
 
         private void Update()
         {
-            if (mainCamera == null || gridView == null) return;
-
-            // Skip if pointer is over UI
-            // if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+            if (!mainCamera || !gridView) return;
 
             HandleInput();
         }
@@ -100,17 +102,23 @@ namespace TileInput
 
         private void HandlePointerDown()
         {
+            if (Time.time - _lastPointerUpTime < PointerUpCooldown)
+            {
+                LogInput("Pointer down: Too soon after pointer up, ignoring");
+                return;
+            }
+
             var worldPos = GetMouseWorldPosition();
             var slot = gridView.GetSlotAtPosition(worldPos);
 
-            if (slot == -1)
+            if (!slot.HasValue)
             {
                 LogInput("Pointer down: No slot at position");
                 return;
             }
 
-            var tile = gridView.GetTileAt(slot);
-            if (tile == null)
+            var tile = gridView.GetTileAt(slot.Value);
+            if (!tile)
             {
                 LogInput($"Pointer down: No tile at slot {slot}");
                 return;
@@ -118,7 +126,7 @@ namespace TileInput
 
             // Start interaction
             _draggedTile = tile;
-            _draggedSlot = slot;
+            _draggedSlot = slot.Value;
             _pointerDownTime = Time.time;
             _pointerDownPosition = worldPos;
             _isDragging = false;
@@ -128,7 +136,7 @@ namespace TileInput
             // Visual feedback
             if (enableVisualFeedback) _draggedTile.PlayPressEffect();
 
-            OnTileSelected?.Invoke(slot);
+            OnTileSelected?.Invoke(slot.Value);
         }
 
         private void HandleDrag()
@@ -145,20 +153,45 @@ namespace TileInput
                 if (enableVisualFeedback) _draggedTile.SetAlpha(0.7f);
             }
 
-            if (_isDragging)
-            {
-                // Update tile position to follow pointer
-                _draggedTile.SetPosition(currentPos, false);
+            if (!_isDragging) return;
 
-                // Highlight target slot
-                var targetSlot = gridView.GetSlotAtPosition(currentPos);
-                if (targetSlot != _hoveredSlot)
+            // Update tile position to follow pointer
+            _draggedTile.SetPosition(currentPos, false);
+
+            // Check for visual swap with hovered tile
+            var targetSlot = gridView.GetSlotAtPosition(currentPos);
+
+            if (targetSlot == _hoveredSlot) return;
+
+            // Reset previous hovered tile to its original position
+            if (_previouslyHoveredTile && _previouslyHoveredSlot.HasValue)
+            {
+                var originalPos = gridView.GetSlotPosition(_previouslyHoveredSlot.Value);
+                _previouslyHoveredTile.SetPosition(originalPos); // Animate back with DOTween
+                _previouslyHoveredTile = null;
+                _previouslyHoveredSlot = null;
+            }
+
+            gridView.ClearAllHighlights();
+
+            if (targetSlot.HasValue && targetSlot != _draggedSlot)
+            {
+                gridView.HighlightSlot(targetSlot.Value, true);
+
+                // Visually swap: move the hovered tile to dragged tile's original position
+                var hoveredTile = gridView.GetTileAt(targetSlot.Value);
+                if (hoveredTile)
                 {
-                    gridView.ClearAllHighlights();
-                    if (targetSlot != -1 && targetSlot != _draggedSlot) gridView.HighlightSlot(targetSlot, true);
-                    _hoveredSlot = targetSlot;
+                    var draggedOriginalPos = gridView.GetSlotPosition(_draggedSlot);
+                    hoveredTile.SetPosition(draggedOriginalPos);
+
+                    // Track this tile so we can reset it later
+                    _previouslyHoveredTile = hoveredTile;
+                    _previouslyHoveredSlot = targetSlot;
                 }
             }
+
+            _hoveredSlot = targetSlot;
         }
 
         private void HandlePointerUp()
@@ -167,46 +200,72 @@ namespace TileInput
             var releasePos = GetMouseWorldPosition();
 
             Move move;
+            var shouldCleanupHoveredTile = true;
 
-            if (!_isDragging && interactionTime < tapTimeThreshold)
+            switch (_isDragging)
             {
-                // Quick tap = rotate
-                move = CreateRotateMove(_draggedSlot);
-                LogInput($"Tap detected: Rotating tile at slot {_draggedSlot}");
-            }
-            else if (_isDragging)
-            {
-                // Drag = swap
-                var targetSlot = gridView.GetSlotAtPosition(releasePos);
-
-                if (targetSlot != -1 && targetSlot != _draggedSlot)
+                case false when interactionTime < tapTimeThreshold:
+                    // Quick tap = rotate
+                    move = CreateRotateMove(_draggedSlot);
+                    LogInput($"Tap detected: Rotating tile at slot {_draggedSlot}");
+                    break;
+                case true:
                 {
-                    move = CreateSwapMove(_draggedSlot, targetSlot);
-                    LogInput($"Drag detected: Swapping slots {_draggedSlot} and {targetSlot}");
+                    // Drag = swap
+                    var targetSlot = gridView.GetSlotAtPosition(releasePos);
+
+                    if (targetSlot.HasValue && targetSlot != _draggedSlot)
+                    {
+                        move = CreateSwapMove(_draggedSlot, targetSlot.Value);
+                        LogInput($"Drag detected: Swapping slots {_draggedSlot} and {targetSlot}");
+
+                        // For a valid swap, DON'T reset the hovered tile - it's already in the right visual position!
+                        // The grid update will handle final positioning
+                        shouldCleanupHoveredTile = false;
+                    }
+                    else
+                    {
+                        // Dragged but released on invalid target - cancel
+                        LogInput("Drag cancelled: Invalid target");
+                        ResetDraggedTile();
+                        CleanupDragState(); // This will reset the hovered tile
+                        return;
+                    }
+
+                    break;
                 }
-                else
-                {
-                    // Dragged but released on invalid target - cancel
-                    LogInput("Drag cancelled: Invalid target");
+                default:
                     ResetDraggedTile();
                     CleanupDragState();
                     return;
-                }
+            }
+
+            // Reset tile visuals (alpha, scale effects)
+            ResetDraggedTile(false);
+
+            // Request the move (this may trigger immediate grid updates)
+            OnMoveRequested?.Invoke(move);
+
+            // Record the pointer up time for cooldown
+            _lastPointerUpTime = Time.time;
+
+            // Final cleanup - conditionally clean hovered tile state
+            if (shouldCleanupHoveredTile)
+            {
+                CleanupDragState();
             }
             else
             {
-                ResetDraggedTile();
-                return;
+                // For valid swaps, just clear references without resetting positions
+                _previouslyHoveredTile = null;
+                _previouslyHoveredSlot = null;
+                _draggedTile = null;
+                _draggedSlot = -1;
+                _isDragging = false;
+                gridView.ClearAllHighlights();
+                _hoveredSlot = null;
+                OnTileDeselected?.Invoke();
             }
-
-            // Reset tile visuals before applying move
-            ResetDraggedTile();
-
-            // Request the move
-            OnMoveRequested?.Invoke(move);
-
-            // Cleanup
-            CleanupDragState();
         }
 
         private void HandleHover()
@@ -214,28 +273,27 @@ namespace TileInput
             var worldPos = GetMouseWorldPosition();
             var slot = gridView.GetSlotAtPosition(worldPos);
 
-            if (slot != _hoveredSlot)
-            {
-                // Reset previous hovered tile
-                if (_hoveredSlot != -1)
-                {
-                    var prevTile = gridView.GetTileAt(_hoveredSlot);
-                    if (prevTile != null && enableVisualFeedback) prevTile.ResetEffect();
-                }
+            if (slot == _hoveredSlot) return;
 
-                // Highlight new tile
-                _hoveredSlot = slot;
-                if (slot != -1)
-                {
-                    var tile = gridView.GetTileAt(slot);
-                    if (tile != null && enableVisualFeedback) tile.PlayHoverEffect();
-                }
+            // Reset previous hovered tile
+            if (_hoveredSlot.HasValue)
+            {
+                var prevTile = gridView.GetTileAt(_hoveredSlot.Value);
+                if (prevTile && enableVisualFeedback) prevTile.ResetEffect();
+            }
+
+            // Highlight new tile
+            _hoveredSlot = slot;
+            if (slot.HasValue)
+            {
+                var tile = gridView.GetTileAt(slot.Value);
+                if (tile && enableVisualFeedback) tile.PlayHoverEffect();
             }
         }
 
         private Move CreateRotateMove(int slot)
         {
-            if (stateManager == null || stateManager.CurrentState == null)
+            if (!stateManager || stateManager.CurrentState == null)
             {
                 Debug.LogError("Cannot create rotate move: No current state");
                 return default;
@@ -260,9 +318,9 @@ namespace TileInput
             return Move.Swap(fromSlot, toSlot);
         }
 
-        private void ResetDraggedTile()
+        private void ResetDraggedTile(bool resetPosition = true)
         {
-            if (_draggedTile == null) return;
+            if (!_draggedTile) return;
 
             // Reset visuals
             if (enableVisualFeedback)
@@ -271,25 +329,45 @@ namespace TileInput
                 _draggedTile.ResetEffect();
             }
 
-            // Reset position to original slot
-            var originalPosition = gridView.GetSlotPosition(_draggedSlot);
-            _draggedTile.SetPosition(originalPosition);
+            // Optionally reset position to original slot
+            // For valid swaps, we skip this to avoid awkward movement back and forth
+            if (resetPosition)
+            {
+                var originalPosition = gridView.GetSlotPosition(_draggedSlot);
+                _draggedTile.SetPosition(originalPosition);
+            }
+        }
+
+        private void CleanupVisualSwapState()
+        {
+            // Reset previously hovered tile to its original position
+            // This must be called BEFORE the actual game state changes to avoid wrong positions
+            if (_previouslyHoveredTile && _previouslyHoveredSlot.HasValue)
+            {
+                var originalPos = gridView.GetSlotPosition(_previouslyHoveredSlot.Value);
+                _previouslyHoveredTile.SetPosition(originalPos, false); // No animation to avoid conflicts
+                _previouslyHoveredTile = null;
+                _previouslyHoveredSlot = null;
+            }
         }
 
         private void CleanupDragState()
         {
+            // Clean up any remaining visual swap state
+            CleanupVisualSwapState();
+
             _draggedTile = null;
             _draggedSlot = -1;
             _isDragging = false;
             gridView.ClearAllHighlights();
-            _hoveredSlot = -1;
+            _hoveredSlot = null;
 
             OnTileDeselected?.Invoke();
         }
 
         private Vector2 GetMouseWorldPosition()
         {
-            if (mainCamera == null) return Vector2.zero;
+            if (!mainCamera) return Vector2.zero;
 
             var mousePos = Input.mousePosition;
             return mainCamera.ScreenToWorldPoint(mousePos);

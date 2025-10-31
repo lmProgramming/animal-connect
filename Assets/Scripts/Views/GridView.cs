@@ -33,6 +33,7 @@ namespace Views
 
         private readonly Dictionary<int, TileView> _tileViews = new();
         private GridState _lastGridState; // Track previous state to detect swaps
+        private (int, int)? _pendingSwap; // Track the slots that should swap
 
         public IReadOnlyDictionary<int, TileView> TileViews => _tileViews;
 
@@ -96,8 +97,12 @@ namespace Views
                 return;
             }
 
-            // Detect swaps by comparing old and new states
-            if (_lastGridState != null) DetectAndApplySwaps(_lastGridState, gridState);
+            // Check if we have a pending swap to apply
+            if (_pendingSwap.HasValue)
+            {
+                SwapTileViews(_pendingSwap.Value.Item1, _pendingSwap.Value.Item2);
+                _pendingSwap = null;
+            }
 
             // Now update each slot
             for (var slot = 0; slot < 9; slot++)
@@ -120,33 +125,19 @@ namespace Views
                 }
             }
 
+            // Verify all tiles are at correct positions after update
+            VerifyAndCorrectTilePositions();
+
             _lastGridState = gridState;
         }
 
         /// <summary>
-        ///     Detects swaps between two grid states and physically moves the GameObjects.
+        ///     Notifies the grid view that a swap move was made.
+        ///     This allows us to detect swaps even when tiles are identical.
         /// </summary>
-        private void DetectAndApplySwaps(GridState oldState, GridState newState)
+        public void NotifySwapMove(int slot1, int slot2)
         {
-            // Find pairs of slots that swapped
-            for (var i = 0; i < 9; i++)
-            for (var j = i + 1; j < 9; j++)
-            {
-                var oldI = oldState.GetTile(i);
-                var oldJ = oldState.GetTile(j);
-                var newI = newState.GetTile(i);
-                var newJ = newState.GetTile(j);
-
-                // Check if slots i and j swapped their contents
-                // They must have changed AND swapped
-                if (TileDataEquals(oldI, newI) ||
-                    TileDataEquals(oldJ, newJ) ||
-                    !TileDataEquals(oldI, newJ) ||
-                    !TileDataEquals(oldJ, newI)) continue;
-                // Swap detected! Physically swap the GameObjects
-                SwapTileViews(i, j);
-                return; // Only one swap per update
-            }
+            _pendingSwap = (slot1, slot2);
         }
 
         /// <summary>
@@ -170,23 +161,24 @@ namespace Views
             if (tile1 && tile2)
             {
                 // Both slots have tiles - swap them
-                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
-                tile1.SlotIndex = slot2;
-
-                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
-                tile2.SlotIndex = slot1;
-
+                // Important: Update dictionary BEFORE setting positions to prevent race conditions
                 _tileViews[slot1] = tile2;
                 _tileViews[slot2] = tile1;
+
+                tile1.SlotIndex = slot2;
+                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
+
+                tile2.SlotIndex = slot1;
+                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
             }
             else if (tile1)
             {
                 // Only slot1 has a tile - move it to slot2
-                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
-                tile1.SlotIndex = slot2;
-
                 _tileViews.Remove(slot1);
                 _tileViews[slot2] = tile1;
+
+                tile1.SlotIndex = slot2;
+                tile1.SetPosition(GetSlotPosition(slot2), animateTileChanges);
 
                 if (slotViews[slot1])
                     slotViews[slot1].SetOccupied(false);
@@ -196,16 +188,46 @@ namespace Views
             else if (tile2)
             {
                 // Only slot2 has a tile - move it to slot1
-                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
-                tile2.SlotIndex = slot1;
-
                 _tileViews.Remove(slot2);
                 _tileViews[slot1] = tile2;
+
+                tile2.SlotIndex = slot1;
+                tile2.SetPosition(GetSlotPosition(slot1), animateTileChanges);
 
                 if (slotViews[slot2])
                     slotViews[slot2].SetOccupied(false);
                 if (slotViews[slot1])
                     slotViews[slot1].SetOccupied(true);
+            }
+        }
+
+        /// <summary>
+        ///     Verifies that all tiles are at their correct slot positions.
+        ///     Corrects any tiles that are in the wrong position.
+        /// </summary>
+        private void VerifyAndCorrectTilePositions()
+        {
+            foreach (var kvp in _tileViews)
+            {
+                var slot = kvp.Key;
+                var tile = kvp.Value;
+
+                if (tile == null) continue;
+
+                var expectedPosition = GetSlotPosition(slot);
+                var currentPosition = (Vector2)tile.transform.position;
+                var distance = Vector2.Distance(currentPosition, expectedPosition);
+
+                // If tile is more than 0.1 units away from where it should be, correct it
+                if (distance > 0.1f) tile.SetPosition(expectedPosition, animateTileChanges);
+
+                // Also verify SlotIndex is correct
+                if (tile.SlotIndex != slot)
+                {
+                    Debug.LogWarning("GridView: Tile SlotIndex mismatch. " +
+                                     $"Dictionary says slot {slot}, but tile thinks it's at {tile.SlotIndex}. Correcting...");
+                    tile.SlotIndex = slot;
+                }
             }
         }
 
@@ -325,13 +347,13 @@ namespace Views
         ///     Gets the slot index at a world position.
         ///     Returns -1 if no slot is at that position.
         /// </summary>
-        public int GetSlotAtPosition(Vector2 worldPosition)
+        public int? GetSlotAtPosition(Vector2 worldPosition)
         {
             for (var i = 0; i < slotViews.Length; i++)
                 if (slotViews[i] && slotViews[i].ContainsPoint(worldPosition))
                     return i;
 
-            return -1;
+            return null;
         }
 
         /// <summary>

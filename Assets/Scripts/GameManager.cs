@@ -1,3 +1,4 @@
+using Core.Logic;
 using Core.Models;
 using Managers;
 using TileInput;
@@ -36,6 +37,7 @@ public sealed class GameManager : MonoBehaviour
         if (stateManager != null)
         {
             stateManager.OnStateChanged += OnGameStateChanged;
+            stateManager.OnMoveMade += OnMoveMade;
             stateManager.OnGameWon += OnGameWon;
         }
         else
@@ -56,6 +58,7 @@ public sealed class GameManager : MonoBehaviour
         if (stateManager != null)
         {
             stateManager.OnStateChanged -= OnGameStateChanged;
+            stateManager.OnMoveMade -= OnMoveMade;
             stateManager.OnGameWon -= OnGameWon;
         }
 
@@ -92,6 +95,12 @@ public sealed class GameManager : MonoBehaviour
     {
         _stateChangeCallCount = 0;
         if (stateManager) stateManager.ProcessMove(move);
+    }
+
+    private void OnMoveMade(MoveResult result)
+    {
+        if (gridView && result.Move is { Type: MoveType.Swap, TargetSlot: not null })
+            gridView.NotifySwapMove(result.Move.Slot, result.Move.TargetSlot.Value);
     }
 
     private void OnGameStateChanged(GameState newState)
