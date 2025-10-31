@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class EntitySprites : MonoBehaviour
+[CreateAssetMenu(fileName = "EntitySprites", menuName = "Animal Connect/Entity Sprites", order = 2)]
+public class EntitySprites : ScriptableObject
 {
-    public Sprite[] sprites;
+    [field: SerializeField]
+    public Sprite[] Sprites { get; private set; } = new Sprite[12];
 }

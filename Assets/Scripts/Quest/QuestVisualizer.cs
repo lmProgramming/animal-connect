@@ -8,7 +8,7 @@ namespace Quest
 {
     public class QuestVisualizer : MonoBehaviour
     {
-        [SerializeField] private EntitySprites sprites;
+        [SerializeField] private EntitySpriteSetter spriteSetter;
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject arrowDisconnectPrefab;
 
@@ -274,7 +274,7 @@ namespace Quest
 
         public Sprite GetSpriteFromEntityID(int entityID)
         {
-            return sprites.sprites[entityID];
+            return spriteSetter.EntitySprites.Sprites[entityID];
         }
 
         public int GetPrioritizedEntity(List<int> entities)

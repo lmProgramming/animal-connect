@@ -9,6 +9,6 @@ public class EntitySetup : MonoBehaviour
 
     private void Start()
     {
-        for (var i = 0; i < entitiesSpriteRenderers.Length; i++) entitiesSpriteRenderers[i].sprite = sprites.sprites[i];
+        for (var i = 0; i < entitiesSpriteRenderers.Length; i++) entitiesSpriteRenderers[i].sprite = sprites.Sprites[i];
     }
 }

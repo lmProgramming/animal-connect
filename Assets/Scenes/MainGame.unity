@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d96cf9125b6e8d48af9eda5d0ca0264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: {fileID: 1671147289}
+  sprites: {fileID: 0}
   entitiesSpriteRenderers:
   - {fileID: 1185316555}
   - {fileID: 671375277}
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609bfa54b4727f94b9b707b38189a1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: {fileID: 1671147289}
+  sprites: {fileID: 11400000, guid: dc1a9f54ebb14854a8af58ae84157a2d, type: 2}
   arrowPrefab: {fileID: 7694998839086655907, guid: 44892c59289297c4d9ce880fa58b39c5, type: 3}
   arrowDisconnectPrefab: {fileID: 7694998839086655907, guid: 92a0b523ae710364a9378e0ed61d7236, type: 3}
   distanceBetweenPaths: 400
@@ -1495,6 +1495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1069147793}
+  - component: {fileID: 1069147794}
   m_Layer: 0
   m_Name: Entities
   m_TagString: Untagged
@@ -1533,6 +1534,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1069147794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069147792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64b042f3c16140e784d72f412756c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Main::EntitySpriteSetter
+  entitySprites: {fileID: 11400000, guid: dc1a9f54ebb14854a8af58ae84157a2d, type: 2}
+  entityImages:
+  - {fileID: 1185316555}
+  - {fileID: 671375277}
+  - {fileID: 513310851}
+  - {fileID: 1347757693}
+  - {fileID: 185378845}
+  - {fileID: 1650101778}
+  - {fileID: 3786578}
+  - {fileID: 686718367}
+  - {fileID: 1741802958}
+  - {fileID: 1803628562}
+  - {fileID: 1903898769}
+  - {fileID: 1364444260}
 --- !u!1 &1091134931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,7 +2598,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1671147288}
   - component: {fileID: 1671147287}
-  - component: {fileID: 1671147289}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -2607,31 +2633,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1671147289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671147286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7793b1340e633144bb9d985996e1e7c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 96cdf35b72107264f9fc1ea3123549c9, type: 3}
-  - {fileID: 21300000, guid: c38cffe6df299554c89ca467d601a2c0, type: 3}
-  - {fileID: 21300000, guid: 2af5b662296f5ec4a893aeb807ce1532, type: 3}
-  - {fileID: 21300000, guid: 8cc7f46b99b7cd341b02e8c4de5b0084, type: 3}
-  - {fileID: 21300000, guid: a9e77bbc27d15d346a79f0909310fc27, type: 3}
-  - {fileID: 21300000, guid: 5e6dec699e71be34ab9d8fe929515e5f, type: 3}
-  - {fileID: 21300000, guid: 15c810aed29ad6b4f9bf0d149d6143db, type: 3}
-  - {fileID: 21300000, guid: 4f697744d8e76834db9d7d9fc8bf4539, type: 3}
-  - {fileID: 21300000, guid: 70e460afe66bcc94ab883d1af30efb83, type: 3}
-  - {fileID: 21300000, guid: a7d7c2d15b94ebd40b6c144b523139ec, type: 3}
-  - {fileID: 21300000, guid: 2dd90f6101b297841b0bcd967bd45f4c, type: 3}
-  - {fileID: 21300000, guid: 0b56e472fb4cdf7479cc0c3689d0578e, type: 3}
 --- !u!1 &1681117528
 GameObject:
   m_ObjectHideFlags: 0
